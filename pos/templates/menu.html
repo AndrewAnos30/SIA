@@ -1,0 +1,706 @@
+menu.html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+  <!-- favcon -->
+  <link href="/static/img/logo.png" rel="icon">
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- boxicon -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!--Datatables Library-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+  <!-- main js -->
+  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/virtual-select.min.js' %}"></script>
+
+  <title>BevRecs-Menu</title>
+</head>
+
+<body>
+  <!-- ===========HEADER============== -->
+  <header class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
+        <img class="logo" src="/static/img/logo-with-name.png" alt="logo">
+        <i class='bx bx-menu toggle-sidebar-btn'></i>
+      </a>
+    </div>
+    <!-- Search Bar -->
+    <div class="search-bar m-auto">
+      <form class="search-form d-flex align-items-center">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <!-- End Search Bar -->
+    <!-- nav Bar -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center mt-3 list-unstyled">
+        <!-- Search Icon when the screen is small-->
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle" href="#">
+            <i class="fa fa-search"></i>
+          </a>
+        </li>
+        <!-- Search Icon when the screen is small end-->
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="fa fa-bell"></i>
+            <span class="badge bg-primary badge-number">1</span>
+          </a>
+          <!-- End Notification Icon -->
+          <!-- Notification dropdown -->
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 1 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">
+                  View all
+                </span></a> <!-- will link to th notification page -->
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer text-center">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul>
+          <!-- Notification dropdown end-->
+        </li>
+
+        <!--Profilee-->
+        <li class="nav-item dropdown pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="/static/img/profile.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Hi it's me</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Hi it's me</h6>
+              <span>Admin</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="fa fa-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+      </ul>
+    </nav>
+  </header>
+  <!-- ===========end of HEADER============== -->
+
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'pos:index'%}">
+          <i class='bx bxs-dashboard'></i><span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <!-- Menu Nav -->
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}">
+          <i class='bx bxs-food-menu'></i></i><span>Menu</span>
+        </a>
+      </li><!-- End Menu Nav -->
+      <!-- End Menu Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'pos:order' %}">
+          <i class='bx bx-cart-alt'></i><span>Orders</span>
+          <span class="badge badge-number ms-auto bg-danger">1</span>
+        </a>
+      </li><!-- Order Nav -->
+
+
+
+      <!-- Inventory Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="">
+          <i class='bx bxs-package'></i><span>Inventory</span><i class='bx bx-chevron-down ms-auto'></i>
+        </a>
+        <ul id="inventory-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{% url 'pos:inventory' %}">
+              <i class='bx bx-checkbox-square'></i><span>Stocks</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- Inventory Nav end-->
+
+      <!-- Sales Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
+          <i class='bx bxs-bar-chart-alt-2'></i><span>Sales</span><i class='bx bx-chevron-down ms-auto'></i>
+        </a>
+        <ul id="sales-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{% url 'pos:sales' %}">
+              <i class='bx bx-bar-chart'></i><span>Sales Report</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- sales Nav end-->
+
+      <!-- POS Nav -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-target="#pos-nav" href="{% url 'pos:home' %}">
+          <i class='bx-bar-chart'></i></i><span>POS</span>
+        </a>
+      </li><!-- POS end-->
+    </ul>
+  </aside><!-- End Sidebar-->
+
+
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Menu</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/templates/index.html">Home</a></li>
+          <li class="breadcrumb-item active">Menu</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section menu bg-white rounded">
+      <div class="row">
+        <!-- Left side columns -->
+        <div class="category col-lg-12 p-2">
+          <div class="d-flex justify-content-between">
+            <h5 class="categories">Categories</h5>
+            <div class="btn-category">
+              <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+                data-bs-target="#addcategorymodal">Add Category</a>
+
+              <!-- Vertically centered Modal -->
+              <div class="modal fade" id="addcategorymodal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add Category</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <form action="{% url 'pos:add_menuCategory' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="col-12">
+                          <label for="addcategory">Choose category</label>
+                          <select name="{{ menucategoryform.categorytype.name }}" id="inputCategoryName"
+                            class="form-select">
+                            {% for row in menucategoryform.categorytype %}
+                            <option value="{{row.data.value}}">{{row.data.label}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-12">
+                          <input name="{{ menucategoryform.name.name }}" type="text" class="form-control"
+                            placeholder="Category Name" id="inputCategoryName">
+                        </div>
+                        <div class="text-center ms-auto">
+                          <button type="submit" class="btn btn-primary">Add</button>
+                          <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                      </form><!-- Vertical Form -->
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Vertically centered Modal-->
+
+              <!-- Edit Category Modal -->
+              <span>
+                <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+                  data-bs-target="#editcategorymodal">Edit Category</a>
+                <div class="modal fade" id="editcategorymodal" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Edit Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <!--edit cateogrycode here++=================================================-->
+                        <!-- add menu Form -->
+                        <form action="" method="POST">
+                          {% csrf_token %}
+                          <div class="col-12">
+                            <label for="editcategory">Choose category</label>
+                            <select id="editcategory" class="form-select">
+                              <option>Coffee</option>
+                              <option>Option1</option>
+                              <option>Option2</option>
+                            </select>
+                          </div>
+
+                          <div class="col-12">
+                            <label for="editcategory">Change Type</label>
+                            <select id="editcategory" class="form-select">
+                              <option>Coffee</option>
+                              <option>Option1</option>
+                              <option>Option2</option>
+                            </select>
+                          </div>
+                          <div class="col-12">
+                            <label for="editcategory">Rename</label>
+                            <input type="text" placeholder="Category Name" class="form-control" id="editcategory"
+                              required>
+                          </div>
+                          <div class=" col-12 text-center d-grip gap-2">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                          </div>
+                        </form><!-- Vertical Form -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- Edit Category Modal-->
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="category col-lg-12 p-2">
+          <div class="d-flex justify-content-between">
+            <h5 class="categories">Menu</h5>
+            <div class="row">
+              <div class="col-12 btn-category">
+                <!-- add menu button -->
+                <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+                  data-bs-target="#addmenumodal">Add Menu</a>
+                <!-- add menu button -->
+                <!-- Add Menu Modal -->
+                <div class="modal fade" id="addmenumodal" tabindex="-1">
+                  <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Add Menu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body justify-content-center">
+                        <!-- add menu Form -->
+                        <form method="POST" enctype="multipart/form-data" action="{% url 'pos:add_menuDrinks' %}">
+                          {% csrf_token %}
+
+                          <div class="col-6">
+                            <label>Categories</label>
+                            <select name="{{ menudrinksform.menucategory.name }}" id="inputState" class="form-select">
+                              {% for category in mcategory %}
+                              <option value="{{ category.id }}">{{ category.name }}</option>
+                              {%endfor%}
+                            </select>
+                          </div>
+
+                          <div class="col-12">
+                            <label for="inputMenuImage" class="form-label">Menu Image</label>
+                            <input type="file" name="{{ menudrinksform.menuimage.name }}" class="form-control"
+                              id="inputMenuImage" required>
+                          </div>
+
+                          <div class="col-12">
+                            <label for="inputMenuName" class="form-label">Menu</label>
+                            <input type="text" name="{{ menudrinksform.menuname.name }}" placeholder="Menu Name"
+                              class="form-control" id="inputMenuName" required>
+                          </div>
+
+                          <div class="col-12">
+                            <label for="inputPrice" class="form-label">Price</label>
+                            <input type="number" name="{{ menudrinksform.menuprice.name }}" placeholder="Price"
+                              class="form-control" id="inputPrice" required>
+                          </div>
+
+                          <div class="col-6">
+                            <label name="{{ menudrinksform.sugarlevel.id_for_label }}">Sugar Level</label>
+                            {{ menudrinksform.sugarlevel }}
+                          </div>
+
+                          <div class="col-6">
+                            <label name="{{ menudrinksform.alcohollevel.id_for_label }}">Alcohol Level</label>
+                            {{ menudrinksform.alcohollevel }}
+                          </div>
+
+
+
+
+                          <div class="col-6">
+                            <label for="inputIngredientName1" class="form-label">Ingredient 1</label>
+                          
+                            <select name="{{ menudrinksform.ingredient1.name }}" id="inputIngredientName1" class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                                {% if ing.stockcategory == 'INGR' %}
+                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice1.name }}" id="menuIngrPrice1" type="text" readonly value="">
+                          </div>
+                          
+                          <div class="col-6">
+                            <label for="inputIngredientName2" class="form-label">Ingredient 2</label>
+                          
+                            <select name="{{ menudrinksform.ingredient2.name }}" id="inputIngredientName2" class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                                {% if ing.stockcategory == 'INGR' %}
+                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice2.name }}" id="menuIngrPrice2" type="text" readonly value="">
+                          </div>
+                          
+                          <div class="col-6">
+                            <label for="inputIngredientName3" class="form-label">Ingredient 3</label>
+                          
+                            <select name="{{ menudrinksform.ingredient3.name }}" id="inputIngredientName3" class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                                {% if ing.stockcategory == 'INGR' %}
+                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice3.name }}" id="menuIngrPrice3" type="text" readonly value="">
+                          </div>
+                          
+                          <div class="col-6">
+                            <label for="inputIngredientName4" class="form-label">Ingredient 4</label>
+                          
+                            <select name="{{ menudrinksform.ingredient4.name }}" id="inputIngredientName4" class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                                {% if ing.stockcategory == 'INGR' %}
+                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice4.name }}" id="menuIngrPrice4" type="text" readonly value="">
+                          </div>
+                          
+                          <div class="col-6">
+                            <label for="inputIngredientName5" class="form-label">Ingredient 5</label>
+                          
+                            <select name="{{ menudrinksform.ingredient5.name }}" id="inputIngredientName5" class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                              {% if ing.stockcategory == 'INGR' %}
+                                <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                          <input name="{{ menudrinksform.menuIngrPrice5.name }}" id="menuIngrPrice5" type="text" readonly value="">
+                        </div>
+
+                        <div class="col-6">
+                          <label for="inputAddOns1" class="form-label">Add ons</label>
+                          <select name="{{ menudrinksform.addons1.name }}" id="inputAddOns1" class="form-select mb-1">
+                            <option value="">-- Select an add on --</option>
+                            {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                          <input name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="text" readonly value="">
+                        </div>
+                        
+                        <div class="col-6">
+                          <label for="inputAddOns2" class="form-label">Add ons</label>
+                          <select name="{{ menudrinksform.addons2.name }}" id="inputAddOns2" class="form-select mb-1">
+                            <option value="">-- Select an add on --</option>
+                            {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                          <input name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" type="text" readonly value="">
+                        </div>
+                        
+                        <div class="col-6">
+                          <label for="inputAddOns3" class="form-label">Add ons</label>
+                          <select name="{{ menudrinksform.addons3.name }}" id="inputAddOns3" class="form-select mb-1">
+                            <option value="">-- Select an add on --</option>
+                            {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                          <input name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" type="text" readonly value="">
+                        </div>
+                        
+                        <div class="col-6">
+                          <label for="inputAddOns4" class="form-label">Add ons</label>
+                          <select name="{{ menudrinksform.addons4.name }}" id="inputAddOns4" class="form-select mb-1">
+                            <option value="">-- Select an add on --</option>
+                            {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                          <input name="{{ menudrinksform.menuAOPrice4.name }}" id="menuAOPrice4" type="text" readonly value="">
+                        </div>
+                        
+                        <div class="col-6">
+                          <label for="inputAddOns5" class="form-label">Add ons</label>
+                          <select name="{{ menudrinksform.addons5.name }}" id="inputAddOns5" class="form-select mb-1">
+                            <option value="">-- Select an add on --</option>
+                            {% for ao in stocks %}
+                            {% if ao.stockcategory == "AO" %}
+                              <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                            {% endif %}
+                          {% endfor %}
+                        </select>
+                        <input name="{{ menudrinksform.menuAOPrice5.name }}" id="menuAOPrice5" type="text" readonly value="">
+                      </div>
+
+                        
+                          <div class="text-center d-grip gap-2">
+                            <button type="submit" class="btn px-4">Add</button>
+                            <button type="reset" class="btn px-4">Reset</button>
+                          </div>
+                        </form><!-- Vertical Form -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Vertically centered Modal-->
+              </div>
+            </div>
+          </div>
+
+
+          <!---->
+          <div class="menu-grid mt-2">
+            <ul class="nav nav-pills">
+                {% for categories in menuCategory %}
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name}}">
+                            <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
+                            <span>{{categories.name}}</span>
+                        </a>
+                    </li>
+                {% endfor %}               
+            </ul>
+            
+            <!-- Tab panes -->
+            <div class="tab-content mt-4">
+                {% for categories in menuCategory %}
+                    <!-- Coffeee or Category 1 pane -->
+                    <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{categories.name}}">
+                        <div class="d-flex justify-content-between mb-2">
+                            <h5 class="categories">{{categories.name}}</h5>
+                        </div>
+                        <!-- list of menu -->
+                        <div class="row row-cols-4 gy-2">
+                            {% for data in categories.menudrinks_set.all %}
+                                <div class="col">
+                                    <!-- Card with an image on top -->
+                                    <div class="card menu-item-card">
+                                        <img src="{{data.menuimage.url}}" class="card-img-top" alt="{{data.menuname}}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{data.menuname}}</h5>
+                                            <div class="d-flex">
+                                                <img class="peso-sign my-auto" src="/static/img/peso-sign.png" alt="">
+                                                <p class="card-text">{{data.menuprice}}</p>
+                                            </div>
+                                            <div class="text-center d-grip gap-2">
+                                                <button class="btn btn-sm bg-danger" data-bs-toggle="modal" data-bs-target="#editmenu{{categories.name}}">Edit</button>
+                                               
+                                                <!-- Add Menu Modal -->
+                                          
+                                                <div class="modal fade" id="editmenu{{categories.name}}" tabindex="-1">
+                                                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit Menu</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body justify-content-center">
+                                                                <!-- add menu Form -->
+                                                                <form class="row g-2">
+                                                                   </form><!-- Vertical Form -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- End Vertically centered Modal-->
+                                            
+                                                <button class="btn btn-sm bg-danger">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div><!-- End Card with an image on top -->
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+
+          
+        </div>
+      </div>
+ 
+    </section>
+  </main>
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>BevRecs 2020</span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
+
+ 
+<script>
+  // add an event listener to each select element
+  document.querySelectorAll('select').forEach(select => {
+    // get the corresponding input element
+    const input = document.getElementById(`menuIngrPrice${select.id.slice(-1)}`);
+    // add an event listener to the select element
+    select.addEventListener('change', (event) => {
+      // get the selected option
+      const selectedOption = event.target.options[event.target.selectedIndex];
+      // get the price from the data-price attribute of the selected option
+      const price = selectedOption.getAttribute('data-price');
+      // set the value of the input element to the price
+      input.value = price;
+    });
+  });
+</script>
+<script>
+  // function to update addon prices
+  function updateAddonPrice(addonSelectID, addonPriceID) {
+    // get selected option value and price data attribute
+    var selectedOption = document.getElementById(addonSelectID).options[document.getElementById(addonSelectID).selectedIndex];
+    var addonPrice = selectedOption.getAttribute('data-price');
+
+    // update price input value
+    document.getElementById(addonPriceID).value = addonPrice;
+  }
+
+  // add onchange event listener to addon selects
+  document.getElementById('inputAddOns1').addEventListener('change', function() {
+    updateAddonPrice('inputAddOns1', 'menuAOPrice1');
+  });
+
+  document.getElementById('inputAddOns2').addEventListener('change', function() {
+    updateAddonPrice('inputAddOns2', 'menuAOPrice2');
+  });
+
+  document.getElementById('inputAddOns3').addEventListener('change', function() {
+    updateAddonPrice('inputAddOns3', 'menuAOPrice3');
+  });
+
+  document.getElementById('inputAddOns4').addEventListener('change', function() {
+    updateAddonPrice('inputAddOns4', 'menuAOPrice4');
+  });
+
+  document.getElementById('inputAddOns5').addEventListener('change', function() {
+    updateAddonPrice('inputAddOns5', 'menuAOPrice5');
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
+  <script type="text/javascript">
+    VirtualSelect.init({
+      ele: '#multiSelect'
+    });
+  </script>
+</body>
+
+</html>

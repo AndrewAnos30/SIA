@@ -1,0 +1,299 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+  <!-- favcon -->
+  <link href="/static/img/logo.png" rel="icon">
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- boxicon -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!--Datatables Library-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+  <!-- main js -->
+  <script src="{% static 'js/main.js' %}"></script>
+  <title>BevRecs-Menu</title>
+</head>
+
+<body>
+  <!-- ===========HEADER============== -->
+  <header class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
+        <img class="logo" src="/static/img/logo-with-name.png" alt="logo">
+
+      </a>
+    </div>
+    <!-- Search Bar -->
+    <div class="search-bar m-auto">
+      <form class="search-form d-flex align-items-center">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center mt-3 list-unstyled">
+        <!-- Search Icon when the screen is small-->
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle" href="#">
+            <i class="fa fa-search"></i>
+          </a>
+        </li>
+        <!-- Search Icon when the screen is small end-->
+
+        <!-- cart-->
+        <li class="nav-item d-block m-auto px-4">
+          <a type="button" class="cart-btn" href="{% url 'pos:cart'%}">
+            Cart(0)
+          </a>
+        </li>
+        <!-- cart end-->
+      </ul>
+    </nav>
+    <!-- End Search Bar -->
+  </header>
+  <!-- ===========end of HEADER============== -->
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar" data-bs-hidden="false">
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'pos:reco' %}">
+          <i class='bx bxs-cog'></i><span>Recommend</span>
+        </a>
+      </li><!-- Recommendation Nav -->
+      <!-- Menu Nav -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-target="#menu-nav" href="{% url 'pos:home'%}">
+          <i class='bx bxs-food-menu'></i></i><span>Menu</span>
+        </a>
+      </li><!-- End Menu Nav -->
+    </ul>
+  </aside><!-- End Sidebar-->
+
+  <!-- main container -->
+
+  <main id="main" class="main">
+    <section class="section menu rounded">
+      <!-- Nav for categories -->
+      <div class="row mb-2 mx-1 rounded bg-white category-tab-div">
+        <div class="col-12 py-2 category-tab">
+          <ul class="nav nav-pills">
+            {% for category in menuCategory %}
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="pill" href="#{{ category.name }}">
+                <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
+                <span>{{ category.name }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-content mt-4">
+        {% for category in menuCategory %}
+        <!-- Coffee or Category 1 pane -->
+        <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ category.name }}">
+          <div class="d-flex justify-content-between mb-2">
+            <h5 class="categories">{{ category.name }}</h5>
+          </div>
+
+          <!-- menu items div display each category -->
+          <div class="tab-content bg-white rounded">
+            <div class="tab-pane container active py-2" id="{{ category.name }}">
+              <div class="row g-1">
+                {% for row in menuDrinks %}
+                
+                {% if row.menucategory == category %}
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                  <div class="card">
+                    <img src="{{ row.menuimage.url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title fs-6 text-nowrap">{{ row.menuname }}</h5>
+                      <div class="d-flex">
+                        <p class="card-text">PHP <strong>{{ row.menuprice }}</strong></p>
+                      </div>
+                      <a class="btn add-to-cart btn-primary btn-sm mt-2" data-bs-toggle="offcanvas"
+                        href="#menuinformation-{{ row.id }}" role="button" aria-controls="menuinformation-{{ row.id }}">
+                        Add to Cart
+                      </a>
+
+                      <!-- off-canvas display menu Info -->
+                      <div class="offcanvas offcanvas-end" tabindex="-1" id="menuinformation-{{ row.id }}"
+                        aria-labelledby="menuinformation-{{ row.id }}">
+                        <div class="offcanvas-header">
+                          <button type="button" class="btn btn-primary ">
+                            <a type="button" class="cart-btn text-decoration-none text-white"
+                              href="{% url 'pos:cart'%}">
+                              Cart(0)
+                            </a>
+                          </button>
+                          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                        </div>
+                        <div class="form-container" style="height: 600px; overflow-y: auto;">
+
+                            <form action="" class="order-form m-4">
+                              <div class="imageholder justify-content-center">
+                                <img class="img-thumbnail" src="{{row.menuimage.url}}" alt="menupic">
+                              </div>
+
+                              <div class="menu_name_price">
+                                <div class="d-flex justify-content-between">
+                                  <h4 class="menu_name">{{row.menuname}}</h4>
+                                  <h5 class="price">{{row.menuprice}}</h5>
+                                </div>
+                              </div>
+
+                              <div class="size-option-div">
+                                <div class="d-block size-option">
+                                  <h6 class="sizetxt fw-light">Size</h6>
+                                  <div class="d-flex justify-content-center g-2">
+                                    <div class="form-check">
+                                      <input type="radio" class="form-check-input" id="radio1" name="optradio"
+                                        value="regular">
+                                      Regular
+                                      <label class="form-check-label" for="regular"></label>
+                                    </div>
+                                    <div class="form-check">
+                                      <input type="radio" class="form-check-input" id="radio2" name="optradio"
+                                        value="medium">Medium
+                                      <label class="form-check-label" for="medium"></label>
+                                    </div>
+                                    <div class="form-check">
+                                      <input type="radio" class="form-check-input" id="radio3" name="optradio"
+                                        value="large">Large
+                                      <label class="form-check-label" for="large"></label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="addons-option-div">
+                                <div class="d-block add-on-option mt-2">
+                                  <h6 class="sizetxt fw-light">Add Ons</h6>
+                                  <div class="d-block">
+                                    <div class="form-check d-flex justify-content-between">
+                                      <div>
+                                        <input class="form-check-input" type="checkbox" id="check1" name="option1"
+                                          value="something">
+                                        <label class="form-check-label fw-bold">{{row.addons1}}</label>
+                                      </div>
+                                      <div>
+                                        <h6 class="priceAddOns">{{ addons1_stockprice }}</h6>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-check d-flex justify-content-between">
+                                      <div>
+                                        <input class="form-check-input" type="checkbox" id="check1" name="option1"
+                                          value="something">
+                                        <label class="form-check-label fw-bold">{{row.addons2}}</label>
+                                      </div>
+                                      <div>
+                                        <h6 class="priceAddOns">{{ stocks.stockprice }}</h6>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row justify-content-center">
+                                <div class="col-12">
+                                  <h6 class="sizetxt fw-light">Quantity</h6>
+                                  <div class="input-group">
+                                    <button class="btn btn-secondary" type="button" id="decrementBtn">-</button>
+                                    <input type="number" class="form-control" id="numberInput" value="1">
+                                    <button class="btn btn-secondary" type="button" id="incrementBtn">+</button>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="text-center col-12 d-grid mt-2">
+                                <button type="submit" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
+                              </div>
+
+                              <div class="ingredient_list mt-2">
+                                <h6 class="sizetxt fw-light">Ingredients</h6>
+                                <div class="d-flex">
+                                  <p class="ingredient_name px-3">{{row.ingredient1}}</p>
+                                  <p class="ingredient_name px-3">{{row.ingredient2}}</p>
+                                  <p class="ingredient_name px-3">{{row.ingredient3}}</p>
+                                  <p class="ingredient_name px-3">{{row.ingredient4}}</p>
+                                </div>
+                              </div>
+
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var numberInput = document.getElementById('numberInput');
+      var incrementBtn = document.getElementById('incrementBtn');
+      var decrementBtn = document.getElementById('decrementBtn');
+
+      // increment the number when the increment button is clicked
+      incrementBtn.addEventListener('click', function () {
+        numberInput.value = parseInt(numberInput.value) + 1;
+      });
+
+      // decrement the number when the decrement button is clicked
+      decrementBtn.addEventListener('click', function () {
+        if (parseInt(numberInput.value) > 1) {
+          numberInput.value = parseInt(numberInput.value) - 1;
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

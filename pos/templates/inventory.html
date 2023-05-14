@@ -1,0 +1,630 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+  <!-- favcon -->
+  <link href="/static/img/logo.png" rel="icon">
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- boxicon -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!--Datatables Library-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+  <!-- main js -->
+  <script src="{% static 'js/main.js' %}"></script>
+  <title>BevRecs-Menu</title>
+</head>
+
+<body>
+  <!-- ===========HEADER============== -->
+  <header class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
+        <img class="logo" src="/static/img/logo-with-name.png" alt="logo">
+        <i class='bx bx-menu toggle-sidebar-btn'></i>
+      </a>
+    </div>
+    <!-- Search Bar -->
+    <div class="search-bar m-auto">
+      <form class="search-form d-flex align-items-center">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <!-- End Search Bar -->
+    <!-- nav Bar -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center mt-3 list-unstyled">
+        <!-- Search Icon when the screen is small-->
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle" href="#">
+            <i class="fa fa-search"></i>
+          </a>
+        </li>
+        <!-- Search Icon when the screen is small end-->
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="fa fa-bell"></i>
+            <span class="badge bg-primary badge-number">1</span>
+          </a>
+          <!-- End Notification Icon -->
+          <!-- Notification dropdown -->
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 1 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">
+                  View all
+                </span></a> <!-- will link to th notification page -->
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer text-center">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul>
+          <!-- Notification dropdown end-->
+        </li>
+
+        <!--Profilee-->
+        <li class="nav-item dropdown pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="/static/img/profile.png" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Hi it's me</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Hi it's me</h6>
+              <span>Admin</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="fa fa-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+      </ul>
+    </nav>
+  </header>
+  <!-- ===========end of HEADER============== -->
+
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'pos:index'%}">
+          <i class='bx bxs-dashboard'></i><span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <!-- Menu Nav -->
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}" >
+          <i class='bx bxs-food-menu' ></i></i><span>Menu</span>
+        </a>
+      </li><!-- End Menu Nav -->
+      <!-- End Menu Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'pos:order' %}">
+          <i class='bx bx-cart-alt'></i><span>Orders</span>
+          <span class="badge badge-number ms-auto bg-danger">1</span>
+        </a>
+      </li><!-- Order Nav -->
+
+
+
+      <!-- Inventory Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="">
+          <i class='bx bxs-package'></i><span>Inventory</span><i class='bx bx-chevron-down ms-auto'></i>
+        </a>
+        <ul id="inventory-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{% url 'pos:inventory' %}">
+              <i class='bx bx-checkbox-square'></i><span>Stocks</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- Inventory Nav end-->
+
+      <!-- Sales Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
+          <i class='bx bxs-bar-chart-alt-2'></i><span>Sales</span><i class='bx bx-chevron-down ms-auto'></i>
+        </a>
+        <ul id="sales-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{% url 'pos:sales' %}">
+              <i class='bx bx-bar-chart'></i><span>Sales Report</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- sales Nav end-->
+
+      <!-- POS Nav -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-target="#pos-nav" href="{% url 'pos:home' %}">
+          <i class='bx-bar-chart' ></i></i><span>POS</span>
+        </a>
+      </li><!-- POS end-->
+    </ul>
+  </aside><!-- End Sidebar-->
+
+
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Inventory</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/templates/index.html">Home</a></li>
+          <li class="breadcrumb-item active">Inventory</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section dashboard">
+      <div class="row">
+  
+        <div class="col-lg-12 mb-2">
+          <div class="row g-2">
+            <!-- buttons for adding ingredients and category -->
+              <div class="col-12 d-flex d-grip gap-2">
+                <button type="button" class="btn btn-outline-warning btn-sm"  data-bs-toggle="modal" data-bs-target="#addingredientmodal">Add Ingredient</button>
+                 <!-- Add Ingredient Modal -->
+                 <div class="modal fade" id="addingredientmodal" tabindex="-1">
+                  <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Add Ingredient</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body justify-content-center">
+                        <!-- add Ingridient Form -->
+                        <form action="{% url 'pos:add_ingridients' %}" method="POST">
+                            {% csrf_token %}
+  
+                                <div class="row">
+                                  <div class="col-6 mt-2">
+                                    <label for="inputCategory"  class="form-label">Category</label>
+                                    <select name="{{ ingridientForm.stockcategory.name }}" id="inputCategory" class="form-select">
+                                        <option value="{{ ingridientForm.stockcategory.0.data.value }}">{{ ingridientForm.stockcategory.0.data.label }}</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-6  mt-2">
+                                    <label for="inputIngredientName" class="form-label">Ingredient</label>
+                                    <input name="{{ ingridientForm.stockname.name }}" type="text" placeholder="ingredient name...." class="form-control" id="inputIngredientName" required>
+                                  </div>
+  
+                                  <div class="col-6  mt-2">
+                                    <label for="inputQty" class="form-label">Quantity (g)</label>
+                                    <input name="{{ ingridientForm.stockquantity.name }}" type="number"  placeholder="e.g. 20g..." class="form-control" id="inputQty" required>
+                                  </div>
+                                  
+                               
+                                    <div class="col-6 mt-2">
+                                      <label for="inputMeasurement"  class="form-label">Measurement</label>
+                                      <select name="{{ ingridientForm.stockmeasurement.name }}" id="inputMeasurement" class="form-select">
+                                        {% for option in stock_quantity %}
+                                          <option value="{{ option.0 }}">{{ option.1 }}</option>
+                                        {% endfor %}
+                                      </select>
+                                    </div>
+
+                                  <div class="col-6  mt-2">
+                                    <label for="inputPrice" class="form-label">Price</label>
+                                    <input name="{{ ingridientForm.stockprice.name }}" type="number"  placeholder="price.." class="form-control" id="inputPrice" required>
+                                  </div>
+  
+  
+                                  <div class="col-6  mt-2">
+                                    <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
+                                    <input name="{{ ingridientForm.stockdate_in.name }}" type="date" class="form-control">
+                                  </div>
+  
+                                  <div class="col-6 mt-2">
+                                     <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
+                                    <input name="{{ ingridientForm.stockexpiration.name }}" type="date" class="form-control">
+                                  </div>
+  
+                                  <div class="text-center d-grip gap-2  mt-3">
+                                    <button type="submit" class="btn btn-warning">Add Ingredient</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                  </div>
+                                </div>
+                              </form><!-- Vertical Form -->
+  
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Vertically centered Modal-->
+  
+  
+            <!-- buttons for adding add ons -->
+                <button type="button" class="btn btn-outline-warning btn-sm"  data-bs-toggle="modal" data-bs-target="#addonsmodal">Add Addons</button>
+  
+                    <!-- Add Addon Modal -->
+                    <div class="modal fade" id="addonsmodal" tabindex="-1">
+                      <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Add Addons</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body justify-content-center">
+                            <!-- add menu Form -->
+                                  <form action="{% url 'pos:add_addOns' %}" method="POST">
+                                    {% csrf_token %}
+  
+                                    <div class="row">
+                                      <div class="col-6 mt-2">
+                                        <label for="inputCategory"  class="form-label">Category</label>
+                                        <select name="{{ addOnsForm.stockcategory.name }}" id="inputCategory" class="form-select">
+                                          <option value="{{ addOnsForm.stockcategory.1.data.value }}">{{ addOnsForm.stockcategory.1.data.label }}</option>
+                                      </select>
+                                      </div>
+                                      <div class="col-6  mt-2">
+                                        <label for="inputAddOnsName" class="form-label">Add Ons</label>
+                                        <input name="{{ addOnsForm.stockname.name }}" type="text" placeholder="Add Ons Name...." class="form-control" id="inputIngredientName" required>
+                                      </div>
+  
+                                      <div class="col-6  mt-2">
+                                        <label for="inputQty" class="form-label">Quantity (g)</label>
+                                        <input name="{{ addOnsForm.stockquantity.name }}" type="number"  placeholder="e.g. 20g..." class="form-control" id="inputQty" required>
+                                      </div>
+                                      
+                                      <div class="col-6 mt-2">
+                                        <label for="inputMeasurement"  class="form-label">Measurement</label>
+                                        <select name="{{ addOnsForm.stockmeasurement.name }}" id="inputMeasurement" class="form-select">
+                                          {% for option in stock_quantity %}
+                                            <option value="{{ option.0 }}">{{ option.1 }}</option>
+                                          {% endfor %}
+                                        </select>
+                                      </div>
+  
+
+                                      <div class="col-6  mt-2">
+                                        <label for="inputPrice" class="form-label">Price</label>
+                                        <input name="{{ addOnsForm.stockprice.name }}" type="number"  placeholder="price.." class="form-control" id="inputPrice" required>
+                                      </div>
+  
+  
+                                      <div class="col-6  mt-2">
+                                        <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
+                                        <input name="{{ addOnsForm.stockdate_in.name }}" type="date" class="form-control">
+                                      </div>
+  
+                                      <div class="col-6 mt-2">
+                                         <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
+                                         <input name="{{ addOnsForm.stockexpiration.name }}" type="date" class="form-control">
+                                       </div>
+  
+                                      <div class="text-center d-grip gap-2  mt-3">
+                                        <button type="submit" class="btn btn-warning">Add Addon</button>
+                                        <button type="reset" class="btn btn-warning">Reset</button>
+                                      </div>
+                                    </div>
+  
+                                  </form><!-- Vertical Form -->
+  
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- End Vertically centered Modal-->
+  
+  
+  
+            <!-- buttons for adding utensils-->
+                <button type="button" class="btn btn-outline-warning btn-sm"  data-bs-toggle="modal" data-bs-target="#utensilsmodal">Add Utensils</button>
+  
+                <!-- Add Addon Modal -->
+                <div class="modal fade" id="utensilsmodal" tabindex="-1">
+                  <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Add Utensils</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body justify-content-center">
+                        <!-- add menu Form -->
+                        <form action="{% url 'pos:add_utensils' %}" method="POST">
+                          
+  
+                                <div class="row">
+                                  <div class="col-6 mt-2">
+                                    <label for="inputCategory"  class="form-label">Category</label>
+                                    <select name="{{ utensilsForm.stockcategory.name }}" id="inputCategory" class="form-select">
+                                      <option value="{{ utensilsForm.stockcategory.2.data.value }}">{{ utensilsForm.stockcategory.2.data.label }}</option>
+                                  </select>
+                                  </div>
+                                  <div class="col-6  mt-2">
+                                    <label for="inputUtensilsName" class="form-label">Utensils</label>
+                                    <input name="{{ utensilsForm.stockname.name }}" type="text" placeholder="ingredient name...." class="form-control" id="inputIngredientName" required>
+                                  </div>
+  
+                                  <div class="col-6  mt-2">
+                                    <label for="inputQty" class="form-label">Quantity (g)</label>
+                                    <input name="{{ utensilsForm.stockquantity.name }}" type="number"  placeholder="e.g. 20g..." class="form-control" id="inputQty" required>
+                                  </div>
+                                  
+                                  <div class="col-6 mt-2">
+                                    <label for="inputMeasurement"  class="form-label">Measurement</label>
+                                    <select name="{{ utensilsForm.stockmeasurement.name }}" id="inputMeasurement" class="form-select">
+                                      {% for option in stock_quantity %}
+                                        <option value="{{ option.0 }}">{{ option.1 }}</option>
+                                      {% endfor %}
+                                    </select>
+                                  </div>
+
+                                  <div class="col-6  mt-2">
+                                    <label for="inputPrice" class="form-label">Price</label>
+                                    <input name="{{ utensilsForm.stockprice.name }}" type="number"  placeholder="price.." class="form-control" id="inputPrice" required>
+                                  </div>
+  
+  
+                                  <div class="col-6  mt-2">
+                                    <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
+                                    <input name="{{ utensilsForm.stockdate_in.name }}" type="date" class="form-control">
+                                  </div>
+  
+                                  <div class="col-6 mt-2">
+                                     <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
+                                     <input name="{{ utensilsForm.stockexpiration.name }}" type="date" class="form-control">
+                                  </div>
+  
+                                  <div class="text-center d-grip gap-2  mt-3">
+                                    <button type="submit" class="btn btn-warning">Add Utensils</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                  </div>
+                                </div>
+  
+  
+                              </form><!-- Vertical Form -->
+  
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Vertically centered Modal-->
+              </div>
+              <!-- Inventory Table-->
+  
+             <div class="col-12">
+              <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#ingredient">Ingredients</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#addons">Add ons</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#utensils">Utensils</a>
+                  </li>
+                </ul>
+  
+                <!-- Tab panes -->
+                <div class="tab-content mt-2">
+                  <!-- content for ingredient table  -->
+                  <div class="tab-pane container active" id="ingredient">
+                    <div class="card overflow-auto">
+                      <div class="card-body pb-0">
+                        <h5 class="card-title">Ingredients</span></h5>
+                        <table class="table rounded table-striped table-warning" id="IngredientTable">
+                          <thead>
+                            <tr>
+                              <th scope="col">Category</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Measurement</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Stock In Date</th>
+                              <th scope="col">Expiration Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for item in my_data_i %}
+                            <tr>
+                             
+                              <th>{{item.stockcategory}}</th>
+                              <td>{{item.stockname}}</td>
+                              <td>{{item.stockquantity}}</td>
+                              <th>{{item.stockmeasurement}}</th>
+                              <td>{{item.stockprice}}</td>
+                              <td>{{item.stockdate_in}}</td>
+                              <td>{{item.stockexpiration}}</td>
+                          
+                          
+                            </tr>
+                            {% endfor %}
+                          
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+  
+                <!-- content for addon tabla  -->
+  
+                  <div class="tab-pane container fade" id="addons">
+                    <div class="card overflow-auto">
+                      <div class="card-body pb-0">
+                        <h5 class="card-title">Addons</span></h5>
+                        <table class="table rounded table-striped table-warning" id="AddonsTable">
+                          <thead>
+                            <tr>
+                              <th scope="col">Category</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Measurement</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Stock In Date</th>
+                              <th scope="col">Expiration Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for item in my_data_a %}
+                            <tr>
+                             
+                              <th>{{item.stockcategory}}</th>
+                              <td>{{item.stockname}}</td>
+                              <td>{{item.stockquantity}}</td>
+                              <th>{{item.stockmeasurement}}</th>
+                              <td>{{item.stockprice}}</td>
+                              <td>{{item.stockdate_in}}</td>
+                              <td>{{item.stockexpiration}}</td>
+                          
+                          
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+  
+                <!-- content for utensils table  -->
+                  <div class="tab-pane container fade" id="utensils">
+                    <div class="card overflow-auto">
+                      <div class="card-body pb-0">
+                        <h5 class="card-title">Utensils</span></h5>
+                        <table class="table rounded table-striped table-warning" id="UtensilsTable">
+                          <thead>
+                            <tr>
+                              <th scope="col">Category</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Measurement</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Stock In Date</th>
+                              <th scope="col">Expiration Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for item in my_data_u %}
+                            <tr>
+                             
+                              <th>{{item.stockcategory}}</th>
+                              <td>{{item.stockname}}</td>
+                              <td>{{item.stockquantity}}</td>
+                              <th>{{item.stockmeasurement}}</th>
+                              <td>{{item.stockprice}}</td>
+                              <td>{{item.stockdate_in}}</td>
+                              <td>{{item.stockexpiration}}</td>
+                          
+                          
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+  
+  
+            </div>
+  
+          </div>
+        </div>
+        </div>
+      </section>
+  </main>
+<footer id="footer" class="footer">
+  <div class="copyright">
+    &copy; Copyright <strong><span>BevRecs 2020</span></strong>. All Rights Reserved
+  </div>
+</footer><!-- End Footer -->
+
+<script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
+<script type="text/javascript">
+  VirtualSelect.init({
+    ele: '#multiSelect'
+  });
+</script>
+</body>
+
+</html>
