@@ -203,30 +203,70 @@
                                 <div class="d-block add-on-option mt-2">
                                   <h6 class="sizetxt fw-light">Add Ons</h6>
                                   <div class="d-block">
-                                    <div class="form-check d-flex justify-content-between">
-                                      <div>
-                                        <input class="form-check-input" type="checkbox" id="check1" name="option1"
-                                          value="something">
-                                        <label class="form-check-label fw-bold">{{row.addons1}}</label>
+                                    {% if row.addons1 %}
+                                      <div class="form-check d-flex justify-content-between">
+                                        <div>
+                                          <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something">
+                                          <label class="form-check-label fw-bold">{{ row.addons1 }}</label>
+                                        </div>
+                                        <div>
+                                          <h6 class="priceAddOns">{{ row.menuAOPrice1 }}</h6>
+                                        </div>
                                       </div>
-                                      <div>
-                                        <h6 class="priceAddOns">{{ addons1_stockprice }}</h6>
+                                    {% endif %}
+                              
+                                    {% if row.addons2 %}
+                                      <div class="form-check d-flex justify-content-between">
+                                        <div>
+                                          <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something">
+                                          <label class="form-check-label fw-bold">{{ row.addons2 }}</label>
+                                        </div>
+                                        <div>
+                                          <h6 class="priceAddOns">{{ row.menuAOPrice2 }}</h6>
+                                        </div>
                                       </div>
-                                    </div>
-
-                                    <div class="form-check d-flex justify-content-between">
-                                      <div>
-                                        <input class="form-check-input" type="checkbox" id="check1" name="option1"
-                                          value="something">
-                                        <label class="form-check-label fw-bold">{{row.addons2}}</label>
+                                    {% endif %}
+                              
+                                    {% if row.addons3 %}
+                                      <div class="form-check d-flex justify-content-between">
+                                        <div>
+                                          <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something">
+                                          <label class="form-check-label fw-bold">{{ row.addons3 }}</label>
+                                        </div>
+                                        <div>
+                                          <h6 class="priceAddOns">{{ row.menuAOPrice3 }}</h6>
+                                        </div>
                                       </div>
-                                      <div>
-                                        <h6 class="priceAddOns">{{ stocks.stockprice }}</h6>
+                                    {% endif %}
+                              
+                                    {% if row.addons4 %}
+                                      <div class="form-check d-flex justify-content-between">
+                                        <div>
+                                          <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something">
+                                          <label class="form-check-label fw-bold">{{ row.addons4 }}</label>
+                                        </div>
+                                        <div>
+                                          <h6 class="priceAddOns">{{ row.menuAOPrice4 }}</h6>
+                                        </div>
                                       </div>
-                                    </div>
+                                    {% endif %}
+                              
+                                    {% if row.addons5 %}
+                                      <div class="form-check d-flex justify-content-between">
+                                        <div>
+                                          <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something">
+                                          <label class="form-check-label fw-bold">{{ row.addons5 }}</label>
+                                        </div>
+                                        <div>
+                                          <h6 class="priceAddOns">{{ row.menuAOPrice5 }}</h6>
+                                        </div>
+                                      </div>
+                                    {% endif %}
+                              
                                   </div>
                                 </div>
                               </div>
+                              
 
                               <div class="row justify-content-center">
                                 <div class="col-12">
@@ -246,12 +286,24 @@
                               <div class="ingredient_list mt-2">
                                 <h6 class="sizetxt fw-light">Ingredients</h6>
                                 <div class="d-flex">
-                                  <p class="ingredient_name px-3">{{row.ingredient1}}</p>
-                                  <p class="ingredient_name px-3">{{row.ingredient2}}</p>
-                                  <p class="ingredient_name px-3">{{row.ingredient3}}</p>
-                                  <p class="ingredient_name px-3">{{row.ingredient4}}</p>
+                                  {% if row.ingredient1 %}
+                                    <p class="ingredient_name px-3">{{row.ingredient1}}</p>
+                                  {% endif %}
+                                  {% if row.ingredient2 %}
+                                    <p class="ingredient_name px-3">{{row.ingredient2}}</p>
+                                  {% endif %}
+                                  {% if row.ingredient3 %}
+                                    <p class="ingredient_name px-3">{{row.ingredient3}}</p>
+                                  {% endif %}
+                                  {% if row.ingredient4 %}
+                                    <p class="ingredient_name px-3">{{row.ingredient4}}</p>
+                                  {% endif %}
+                                  {% if row.ingredient5 %}
+                                    <p class="ingredient_name px-3">{{row.ingredient5}}</p>
+                                  {% endif %}
                                 </div>
                               </div>
+                              
 
                             </form>
                         </div>

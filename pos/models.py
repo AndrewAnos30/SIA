@@ -35,6 +35,11 @@ TYPES_MENU = (
     ("FOOD", "Food"),
 )
 
+HOT_AND_COLD_CHOICES = (
+        ('hot', 'Hot'),
+        ('cold', 'Cold'),
+        ('both', 'Hot and Cold'),
+    )
 
 class MenuCategory (models.Model):
     name = models.CharField(max_length=100)
@@ -82,6 +87,17 @@ class MenuDrinks (models.Model):
         Stocks, on_delete=models.CASCADE, related_name='addons4', null=True, blank=True)
     addons5 = models.ForeignKey(
         Stocks, on_delete=models.CASCADE, related_name='addons5', null=True, blank=True)
-
+    hotAndCold =models.CharField(max_length=4, choices=HOT_AND_COLD_CHOICES, default='hot')
+    quantityIng1 = models.PositiveIntegerField(null=True, blank=True)
+    quantityIng2 = models.PositiveIntegerField(null=True, blank=True)
+    quantityIng3 = models.PositiveIntegerField(null=True, blank=True)
+    quantityIng4 = models.PositiveIntegerField(null=True, blank=True)
+    quantityIng5 = models.PositiveIntegerField(null=True, blank=True)
+    quantityAO1 = models.PositiveIntegerField(null=True, blank=True)
+    quantityAO2 = models.PositiveIntegerField(null=True, blank=True)
+    quantityAO3 = models.PositiveIntegerField(null=True, blank=True)
+    quantityAO4 = models.PositiveIntegerField(null=True, blank=True)
+    quantityAO5 = models.PositiveIntegerField(null=True, blank=True)
+    
     def __str__(self):
         return f"{self.menuname} ({self.menucategory.name})"

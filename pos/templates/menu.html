@@ -399,6 +399,11 @@ menu.html
                           </div>
 
                           <div class="col-6">
+                            <label name="{{ menudrinksform.hotAndCold.id_for_label }}">Temperature</label>
+                            {{ menudrinksform.hotAndCold }}
+                          </div>
+
+                          <div class="col-6">
                             <label name="{{ menudrinksform.sugarlevel.id_for_label }}">Sugar Level</label>
                             {{ menudrinksform.sugarlevel }}
                           </div>
@@ -424,7 +429,12 @@ menu.html
                             </select>
                             <input name="{{ menudrinksform.menuIngrPrice1.name }}" id="menuIngrPrice1" type="text" readonly value="">
                           </div>
-                          
+                          <div class="col-3">
+                            <label for="inputquantityIng1" class="form-label">Quantity Ing1</label>
+                            <input type="number" name="quantityIng1" placeholder="Quantity Ing1"
+                              class="form-control" id="inputquantityIng1">
+                          </div>
+
                           <div class="col-6">
                             <label for="inputIngredientName2" class="form-label">Ingredient 2</label>
                           
@@ -438,6 +448,12 @@ menu.html
                             </select>
                             <input name="{{ menudrinksform.menuIngrPrice2.name }}" id="menuIngrPrice2" type="text" readonly value="">
                           </div>
+                          <div class="col-3">
+                            <label for="inputquantityIng2" class="form-label">Quantity Ing2</label>
+                            <input type="number" name="quantityIng2" placeholder="Quantity Ing2"
+                              class="form-control" id="inputquantityIng2">
+                          </div>
+                          
                           
                           <div class="col-6">
                             <label for="inputIngredientName3" class="form-label">Ingredient 3</label>
@@ -451,6 +467,11 @@ menu.html
                               {% endfor %}
                             </select>
                             <input name="{{ menudrinksform.menuIngrPrice3.name }}" id="menuIngrPrice3" type="text" readonly value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityIng3" class="form-label">Quantity Ing3</label>
+                            <input type="number" name="quantityIng3" placeholder="Quantity Ing3"
+                              class="form-control" id="inputquantityIng3">
                           </div>
                           
                           <div class="col-6">
@@ -466,6 +487,11 @@ menu.html
                             </select>
                             <input name="{{ menudrinksform.menuIngrPrice4.name }}" id="menuIngrPrice4" type="text" readonly value="">
                           </div>
+                          <div class="col-3">
+                            <label for="inputquantityIng4" class="form-label">Quantity Ing4</label>
+                            <input type="number" name="quantityIng4" placeholder="Quantity Ing4"
+                              class="form-control" id="inputquantityIng4">
+                          </div>
                           
                           <div class="col-6">
                             <label for="inputIngredientName5" class="form-label">Ingredient 5</label>
@@ -480,6 +506,12 @@ menu.html
                           </select>
                           <input name="{{ menudrinksform.menuIngrPrice5.name }}" id="menuIngrPrice5" type="text" readonly value="">
                         </div>
+                        <div class="col-3">
+                          <label for="inputquantityIng5" class="form-label">Quantity Ing5</label>
+                          <input type="number" name="quantityIng5" placeholder="Quantity Ing5"
+                            class="form-control" id="inputquantityIng5">
+                        </div>
+                        
 
                         <div class="col-6">
                           <label for="inputAddOns1" class="form-label">Add ons</label>
@@ -492,6 +524,11 @@ menu.html
                             {% endfor %}
                           </select>
                           <input name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="text" readonly value="">
+                        </div>
+                        <div class="col-3">
+                          <label for="inputquantityAO1" class="form-label">Quantity AO1</label>
+                          <input type="number" name="quantityAO1" placeholder="Quantity AO1"
+                            class="form-control" id="inputquantityAO1">
                         </div>
                         
                         <div class="col-6">
@@ -506,6 +543,11 @@ menu.html
                           </select>
                           <input name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" type="text" readonly value="">
                         </div>
+                        <div class="col-3">
+                          <label for="inputquantityAO2" class="form-label">Quantity AO2</label>
+                          <input type="number" name="quantityAO2" placeholder="Quantity AO2"
+                            class="form-control" id="inputquantityAO2">
+                        </div>
                         
                         <div class="col-6">
                           <label for="inputAddOns3" class="form-label">Add ons</label>
@@ -518,6 +560,11 @@ menu.html
                             {% endfor %}
                           </select>
                           <input name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" type="text" readonly value="">
+                        </div>
+                        <div class="col-3">
+                          <label for="inputquantityAO3" class="form-label">Quantity AO3</label>
+                          <input type="number" name="quantityAO3" placeholder="Quantity AO3"
+                            class="form-control" id="inputquantityAO3">
                         </div>
                         
                         <div class="col-6">
@@ -532,6 +579,11 @@ menu.html
                           </select>
                           <input name="{{ menudrinksform.menuAOPrice4.name }}" id="menuAOPrice4" type="text" readonly value="">
                         </div>
+                        <div class="col-3">
+                          <label for="inputquantityAO4" class="form-label">Quantity AO4</label>
+                          <input type="number" name="quantityAO4" placeholder="Quantity AO4"
+                            class="form-control" id="inputquantityAO4">
+                        </div>
                         
                         <div class="col-6">
                           <label for="inputAddOns5" class="form-label">Add ons</label>
@@ -544,6 +596,11 @@ menu.html
                           {% endfor %}
                         </select>
                         <input name="{{ menudrinksform.menuAOPrice5.name }}" id="menuAOPrice5" type="text" readonly value="">
+                      </div>
+                      <div class="col-3">
+                        <label for="inputquantityAO5" class="form-label">Quantity AO5</label>
+                        <input type="number" name="quantityAO5" placeholder="Quantity AO5"
+                          class="form-control" id="inputquantityAO5">
                       </div>
 
                         
