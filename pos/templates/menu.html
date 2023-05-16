@@ -294,6 +294,39 @@ menu.html
                 </div>
               </div><!-- End Vertically centered Modal-->
 
+              <span>
+                <button class="btn btn-sm ms-2" type="button" data-bs-toggle="modal"
+                  data-bs-target="#deletecategorymodal">Delete Category</button>
+
+                <!-- Delete Category Modal -->
+                <div class="modal fade" id="deletecategorymodal" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Delete Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="{% url 'pos:delete_category' %}" method="POST">
+                          {% csrf_token %}
+                          <div class="col-12">
+                            <label for="deletecategory">Choose category to delete</label>
+                            <select name="category_id" class="form-select">
+                              {% for category in menuCategory %}
+                              <option value="{{ category.id }}">{{ category.name }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-12 text-center mt-3">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- Delete Category Modal -->
+              </span>
+
               <!-- Edit Category Modal -->
               <span>
                 <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
@@ -308,35 +341,33 @@ menu.html
                       <div class="modal-body">
                         <!--edit cateogrycode here++=================================================-->
                         <!-- add menu Form -->
-                        <form action="" method="POST">
+                        <form action="{% url 'pos:edit_menuCategory' %}" method="POST">
                           {% csrf_token %}
                           <div class="col-12">
                             <label for="editcategory">Choose category</label>
-                            <select id="editcategory" class="form-select">
-                              <option>Coffee</option>
-                              <option>Option1</option>
-                              <option>Option2</option>
-                            </select>
-                          </div>
-
-                          <div class="col-12">
-                            <label for="editcategory">Change Type</label>
-                            <select id="editcategory" class="form-select">
-                              <option>Coffee</option>
-                              <option>Option1</option>
-                              <option>Option2</option>
+                            <select name="category_id" class="form-select">
+                              {% for category in menuCategory %}
+                              <option value="{{ category.id }}">{{ category.name }}</option>
+                              {% endfor %}
                             </select>
                           </div>
                           <div class="col-12">
-                            <label for="editcategory">Rename</label>
-                            <input type="text" placeholder="Category Name" class="form-control" id="editcategory"
+                            <label for="categorytype">Change Type</label>
+                            <select name="categorytype" class="form-select">
+                              <option value="DRINKS">Drinks</option>
+                              <option value="FOOD">Food</option>
+                            </select>
+                          </div>
+                          <div class="col-12">
+                            <label for="new_name">Rename</label>
+                            <input type="text" name="new_name" placeholder="Category Name" class="form-control"
                               required>
                           </div>
-                          <div class=" col-12 text-center d-grip gap-2">
+                          <div class="col-12 text-center d-grip gap-2">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
                           </div>
-                        </form><!-- Vertical Form -->
+                        </form>
 
                       </div>
                     </div>
@@ -374,7 +405,7 @@ menu.html
                           <div class="col-6">
                             <label>Categories</label>
                             <select name="{{ menudrinksform.menucategory.name }}" id="inputState" class="form-select">
-                              {% for category in mcategory %}
+                              {% for category in menuCategory %}
                               <option value="{{ category.id }}">{{ category.name }}</option>
                               {%endfor%}
                             </select>
@@ -418,192 +449,212 @@ menu.html
 
                           <div class="col-6">
                             <label for="inputIngredientName1" class="form-label">Ingredient 1</label>
-                          
-                            <select name="{{ menudrinksform.ingredient1.name }}" id="inputIngredientName1" class="form-select mb-1">
+
+                            <select name="{{ menudrinksform.ingredient1.name }}" id="inputIngredientName1"
+                              class="form-select mb-1">
                               <option value="">-- Select an ingredient --</option>
                               {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
-                                {% endif %}
+                              {% if ing.stockcategory == 'INGR' %}
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
+                              {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuIngrPrice1.name }}" id="menuIngrPrice1" type="text" readonly value="">
+                            <input name="{{ menudrinksform.menuIngrPrice1.name }}" id="menuIngrPrice1" type="text"
+                              readonly value="">
                           </div>
                           <div class="col-3">
                             <label for="inputquantityIng1" class="form-label">Quantity Ing1</label>
-                            <input type="number" name="quantityIng1" placeholder="Quantity Ing1"
-                              class="form-control" id="inputquantityIng1">
+                            <input type="number" name="quantityIng1" placeholder="Quantity Ing1" class="form-control"
+                              id="inputquantityIng1">
                           </div>
 
                           <div class="col-6">
                             <label for="inputIngredientName2" class="form-label">Ingredient 2</label>
-                          
-                            <select name="{{ menudrinksform.ingredient2.name }}" id="inputIngredientName2" class="form-select mb-1">
-                              <option value="">-- Select an ingredient --</option>
-                              {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
-                                {% endif %}
-                              {% endfor %}
-                            </select>
-                            <input name="{{ menudrinksform.menuIngrPrice2.name }}" id="menuIngrPrice2" type="text" readonly value="">
-                          </div>
-                          <div class="col-3">
-                            <label for="inputquantityIng2" class="form-label">Quantity Ing2</label>
-                            <input type="number" name="quantityIng2" placeholder="Quantity Ing2"
-                              class="form-control" id="inputquantityIng2">
-                          </div>
-                          
-                          
-                          <div class="col-6">
-                            <label for="inputIngredientName3" class="form-label">Ingredient 3</label>
-                          
-                            <select name="{{ menudrinksform.ingredient3.name }}" id="inputIngredientName3" class="form-select mb-1">
-                              <option value="">-- Select an ingredient --</option>
-                              {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
-                                {% endif %}
-                              {% endfor %}
-                            </select>
-                            <input name="{{ menudrinksform.menuIngrPrice3.name }}" id="menuIngrPrice3" type="text" readonly value="">
-                          </div>
-                          <div class="col-3">
-                            <label for="inputquantityIng3" class="form-label">Quantity Ing3</label>
-                            <input type="number" name="quantityIng3" placeholder="Quantity Ing3"
-                              class="form-control" id="inputquantityIng3">
-                          </div>
-                          
-                          <div class="col-6">
-                            <label for="inputIngredientName4" class="form-label">Ingredient 4</label>
-                          
-                            <select name="{{ menudrinksform.ingredient4.name }}" id="inputIngredientName4" class="form-select mb-1">
-                              <option value="">-- Select an ingredient --</option>
-                              {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
-                                {% endif %}
-                              {% endfor %}
-                            </select>
-                            <input name="{{ menudrinksform.menuIngrPrice4.name }}" id="menuIngrPrice4" type="text" readonly value="">
-                          </div>
-                          <div class="col-3">
-                            <label for="inputquantityIng4" class="form-label">Quantity Ing4</label>
-                            <input type="number" name="quantityIng4" placeholder="Quantity Ing4"
-                              class="form-control" id="inputquantityIng4">
-                          </div>
-                          
-                          <div class="col-6">
-                            <label for="inputIngredientName5" class="form-label">Ingredient 5</label>
-                          
-                            <select name="{{ menudrinksform.ingredient5.name }}" id="inputIngredientName5" class="form-select mb-1">
+
+                            <select name="{{ menudrinksform.ingredient2.name }}" id="inputIngredientName2"
+                              class="form-select mb-1">
                               <option value="">-- Select an ingredient --</option>
                               {% for ing in stocks %}
                               {% if ing.stockcategory == 'INGR' %}
-                                <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}</option>
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
                               {% endif %}
-                            {% endfor %}
-                          </select>
-                          <input name="{{ menudrinksform.menuIngrPrice5.name }}" id="menuIngrPrice5" type="text" readonly value="">
-                        </div>
-                        <div class="col-3">
-                          <label for="inputquantityIng5" class="form-label">Quantity Ing5</label>
-                          <input type="number" name="quantityIng5" placeholder="Quantity Ing5"
-                            class="form-control" id="inputquantityIng5">
-                        </div>
-                        
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice2.name }}" id="menuIngrPrice2" type="text"
+                              readonly value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityIng2" class="form-label">Quantity Ing2</label>
+                            <input type="number" name="quantityIng2" placeholder="Quantity Ing2" class="form-control"
+                              id="inputquantityIng2">
+                          </div>
 
-                        <div class="col-6">
-                          <label for="inputAddOns1" class="form-label">Add ons</label>
-                          <select name="{{ menudrinksform.addons1.name }}" id="inputAddOns1" class="form-select mb-1">
-                            <option value="">-- Select an add on --</option>
-                            {% for ao in stocks %}
-                              {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+
+                          <div class="col-6">
+                            <label for="inputIngredientName3" class="form-label">Ingredient 3</label>
+
+                            <select name="{{ menudrinksform.ingredient3.name }}" id="inputIngredientName3"
+                              class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                              {% if ing.stockcategory == 'INGR' %}
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
                               {% endif %}
-                            {% endfor %}
-                          </select>
-                          <input name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="text" readonly value="">
-                        </div>
-                        <div class="col-3">
-                          <label for="inputquantityAO1" class="form-label">Quantity AO1</label>
-                          <input type="number" name="quantityAO1" placeholder="Quantity AO1"
-                            class="form-control" id="inputquantityAO1">
-                        </div>
-                        
-                        <div class="col-6">
-                          <label for="inputAddOns2" class="form-label">Add ons</label>
-                          <select name="{{ menudrinksform.addons2.name }}" id="inputAddOns2" class="form-select mb-1">
-                            <option value="">-- Select an add on --</option>
-                            {% for ao in stocks %}
-                              {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice3.name }}" id="menuIngrPrice3" type="text"
+                              readonly value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityIng3" class="form-label">Quantity Ing3</label>
+                            <input type="number" name="quantityIng3" placeholder="Quantity Ing3" class="form-control"
+                              id="inputquantityIng3">
+                          </div>
+
+                          <div class="col-6">
+                            <label for="inputIngredientName4" class="form-label">Ingredient 4</label>
+
+                            <select name="{{ menudrinksform.ingredient4.name }}" id="inputIngredientName4"
+                              class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                              {% if ing.stockcategory == 'INGR' %}
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
                               {% endif %}
-                            {% endfor %}
-                          </select>
-                          <input name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" type="text" readonly value="">
-                        </div>
-                        <div class="col-3">
-                          <label for="inputquantityAO2" class="form-label">Quantity AO2</label>
-                          <input type="number" name="quantityAO2" placeholder="Quantity AO2"
-                            class="form-control" id="inputquantityAO2">
-                        </div>
-                        
-                        <div class="col-6">
-                          <label for="inputAddOns3" class="form-label">Add ons</label>
-                          <select name="{{ menudrinksform.addons3.name }}" id="inputAddOns3" class="form-select mb-1">
-                            <option value="">-- Select an add on --</option>
-                            {% for ao in stocks %}
-                              {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice4.name }}" id="menuIngrPrice4" type="text"
+                              readonly value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityIng4" class="form-label">Quantity Ing4</label>
+                            <input type="number" name="quantityIng4" placeholder="Quantity Ing4" class="form-control"
+                              id="inputquantityIng4">
+                          </div>
+
+                          <div class="col-6">
+                            <label for="inputIngredientName5" class="form-label">Ingredient 5</label>
+
+                            <select name="{{ menudrinksform.ingredient5.name }}" id="inputIngredientName5"
+                              class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                              {% if ing.stockcategory == 'INGR' %}
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
                               {% endif %}
-                            {% endfor %}
-                          </select>
-                          <input name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" type="text" readonly value="">
-                        </div>
-                        <div class="col-3">
-                          <label for="inputquantityAO3" class="form-label">Quantity AO3</label>
-                          <input type="number" name="quantityAO3" placeholder="Quantity AO3"
-                            class="form-control" id="inputquantityAO3">
-                        </div>
-                        
-                        <div class="col-6">
-                          <label for="inputAddOns4" class="form-label">Add ons</label>
-                          <select name="{{ menudrinksform.addons4.name }}" id="inputAddOns4" class="form-select mb-1">
-                            <option value="">-- Select an add on --</option>
-                            {% for ao in stocks %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuIngrPrice5.name }}" id="menuIngrPrice5" type="text"
+                              readonly value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityIng5" class="form-label">Quantity Ing5</label>
+                            <input type="number" name="quantityIng5" placeholder="Quantity Ing5" class="form-control"
+                              id="inputquantityIng5">
+                          </div>
+
+
+                          <div class="col-6">
+                            <label for="inputAddOns1" class="form-label">Add ons</label>
+                            <select name="{{ menudrinksform.addons1.name }}" id="inputAddOns1" class="form-select mb-1">
+                              <option value="">-- Select an add on --</option>
+                              {% for ao in stocks %}
                               {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
-                              {% endif %}
-                            {% endfor %}
-                          </select>
-                          <input name="{{ menudrinksform.menuAOPrice4.name }}" id="menuAOPrice4" type="text" readonly value="">
-                        </div>
-                        <div class="col-3">
-                          <label for="inputquantityAO4" class="form-label">Quantity AO4</label>
-                          <input type="number" name="quantityAO4" placeholder="Quantity AO4"
-                            class="form-control" id="inputquantityAO4">
-                        </div>
-                        
-                        <div class="col-6">
-                          <label for="inputAddOns5" class="form-label">Add ons</label>
-                          <select name="{{ menudrinksform.addons5.name }}" id="inputAddOns5" class="form-select mb-1">
-                            <option value="">-- Select an add on --</option>
-                            {% for ao in stocks %}
-                            {% if ao.stockcategory == "AO" %}
                               <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
-                            {% endif %}
-                          {% endfor %}
-                        </select>
-                        <input name="{{ menudrinksform.menuAOPrice5.name }}" id="menuAOPrice5" type="text" readonly value="">
-                      </div>
-                      <div class="col-3">
-                        <label for="inputquantityAO5" class="form-label">Quantity AO5</label>
-                        <input type="number" name="quantityAO5" placeholder="Quantity AO5"
-                          class="form-control" id="inputquantityAO5">
-                      </div>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="text" readonly
+                              value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityAO1" class="form-label">Quantity AO1</label>
+                            <input type="number" name="quantityAO1" placeholder="Quantity AO1" class="form-control"
+                              id="inputquantityAO1">
+                          </div>
 
-                        
+                          <div class="col-6">
+                            <label for="inputAddOns2" class="form-label">Add ons</label>
+                            <select name="{{ menudrinksform.addons2.name }}" id="inputAddOns2" class="form-select mb-1">
+                              <option value="">-- Select an add on --</option>
+                              {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                              <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" type="text" readonly
+                              value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityAO2" class="form-label">Quantity AO2</label>
+                            <input type="number" name="quantityAO2" placeholder="Quantity AO2" class="form-control"
+                              id="inputquantityAO2">
+                          </div>
+
+                          <div class="col-6">
+                            <label for="inputAddOns3" class="form-label">Add ons</label>
+                            <select name="{{ menudrinksform.addons3.name }}" id="inputAddOns3" class="form-select mb-1">
+                              <option value="">-- Select an add on --</option>
+                              {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                              <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" type="text" readonly
+                              value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityAO3" class="form-label">Quantity AO3</label>
+                            <input type="number" name="quantityAO3" placeholder="Quantity AO3" class="form-control"
+                              id="inputquantityAO3">
+                          </div>
+
+                          <div class="col-6">
+                            <label for="inputAddOns4" class="form-label">Add ons</label>
+                            <select name="{{ menudrinksform.addons4.name }}" id="inputAddOns4" class="form-select mb-1">
+                              <option value="">-- Select an add on --</option>
+                              {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                              <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuAOPrice4.name }}" id="menuAOPrice4" type="text" readonly
+                              value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityAO4" class="form-label">Quantity AO4</label>
+                            <input type="number" name="quantityAO4" placeholder="Quantity AO4" class="form-control"
+                              id="inputquantityAO4">
+                          </div>
+
+                          <div class="col-6">
+                            <label for="inputAddOns5" class="form-label">Add ons</label>
+                            <select name="{{ menudrinksform.addons5.name }}" id="inputAddOns5" class="form-select mb-1">
+                              <option value="">-- Select an add on --</option>
+                              {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                              <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                            <input name="{{ menudrinksform.menuAOPrice5.name }}" id="menuAOPrice5" type="text" readonly
+                              value="">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputquantityAO5" class="form-label">Quantity AO5</label>
+                            <input type="number" name="quantityAO5" placeholder="Quantity AO5" class="form-control"
+                              id="inputquantityAO5">
+                          </div>
+
+
                           <div class="text-center d-grip gap-2">
                             <button type="submit" class="btn px-4">Add</button>
                             <button type="reset" class="btn px-4">Reset</button>
@@ -622,75 +673,62 @@ menu.html
           <!---->
           <div class="menu-grid mt-2">
             <ul class="nav nav-pills">
-                {% for categories in menuCategory %}
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name}}">
-                            <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
-                            <span>{{categories.name}}</span>
-                        </a>
-                    </li>
-                {% endfor %}               
+              {% for categories in menuCategory %}
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name}}">
+                  <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
+                  <span>{{categories.name}}</span>
+                </a>
+              </li>
+              {% endfor %}
             </ul>
-            
+
             <!-- Tab panes -->
             <div class="tab-content mt-4">
-                {% for categories in menuCategory %}
-                    <!-- Coffeee or Category 1 pane -->
-                    <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{categories.name}}">
-                        <div class="d-flex justify-content-between mb-2">
-                            <h5 class="categories">{{categories.name}}</h5>
+              {% for categories in menuCategory %}
+              <!-- Coffeee or Category 1 pane -->
+              <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{categories.name}}">
+                <div class="d-flex justify-content-between mb-2">
+                  <h5 class="categories">{{categories.name}}</h5>
+                </div>
+                <!-- list of menu -->
+                <div class="row row-cols-4 gy-2">
+                  {% for data in categories.menudrinks_set.all %}
+                  <div class="col">
+                    <!-- Card with an image on top -->
+                    <div class="card menu-item-card">
+                      <img src="{{data.menuimage.url}}" class="card-img-top" alt="{{data.menuname}}">
+                      <div class="card-body">
+                        <h5 class="card-title">{{data.menuname}}</h5>
+                        <div class="d-flex">
+                          <img class="peso-sign my-auto" src="/static/img/peso-sign.png" alt="">
+                          <p class="card-text">{{data.menuprice}}</p>
                         </div>
-                        <!-- list of menu -->
-                        <div class="row row-cols-4 gy-2">
-                            {% for data in categories.menudrinks_set.all %}
-                                <div class="col">
-                                    <!-- Card with an image on top -->
-                                    <div class="card menu-item-card">
-                                        <img src="{{data.menuimage.url}}" class="card-img-top" alt="{{data.menuname}}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{data.menuname}}</h5>
-                                            <div class="d-flex">
-                                                <img class="peso-sign my-auto" src="/static/img/peso-sign.png" alt="">
-                                                <p class="card-text">{{data.menuprice}}</p>
-                                            </div>
-                                            <div class="text-center d-grip gap-2">
-                                                <button class="btn btn-sm bg-danger" data-bs-toggle="modal" data-bs-target="#editmenu{{categories.name}}">Edit</button>
-                                               
-                                                <!-- Add Menu Modal -->
-                                          
-                                                <div class="modal fade" id="editmenu{{categories.name}}" tabindex="-1">
-                                                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Edit Menu</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body justify-content-center">
-                                                                <!-- add menu Form -->
-                                                                <form class="row g-2">
-                                                                   </form><!-- Vertical Form -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- End Vertically centered Modal-->
-                                            
-                                                <button class="btn btn-sm bg-danger">Delete</button>
-                                            </div>
-                                        </div>
-                                    </div><!-- End Card with an image on top -->
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        
+                        <div class="text-center d-grip gap-2">
+                        
 
-          
+                          <div class="text-center d-grip gap-2">
+                            <form method="POST" action="{% url 'pos:delete_menu' data.id %}">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-sm bg-danger">Delete</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- End Card with an image on top -->
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+
+
         </div>
       </div>
- 
+
     </section>
   </main>
   <!-- ======= Footer ======= -->
@@ -700,55 +738,55 @@ menu.html
     </div>
   </footer><!-- End Footer -->
 
- 
-<script>
-  // add an event listener to each select element
-  document.querySelectorAll('select').forEach(select => {
-    // get the corresponding input element
-    const input = document.getElementById(`menuIngrPrice${select.id.slice(-1)}`);
-    // add an event listener to the select element
-    select.addEventListener('change', (event) => {
-      // get the selected option
-      const selectedOption = event.target.options[event.target.selectedIndex];
-      // get the price from the data-price attribute of the selected option
-      const price = selectedOption.getAttribute('data-price');
-      // set the value of the input element to the price
-      input.value = price;
+
+  <script>
+    // add an event listener to each select element
+    document.querySelectorAll('select').forEach(select => {
+      // get the corresponding input element
+      const input = document.getElementById(`menuIngrPrice${select.id.slice(-1)}`);
+      // add an event listener to the select element
+      select.addEventListener('change', (event) => {
+        // get the selected option
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        // get the price from the data-price attribute of the selected option
+        const price = selectedOption.getAttribute('data-price');
+        // set the value of the input element to the price
+        input.value = price;
+      });
     });
-  });
-</script>
-<script>
-  // function to update addon prices
-  function updateAddonPrice(addonSelectID, addonPriceID) {
-    // get selected option value and price data attribute
-    var selectedOption = document.getElementById(addonSelectID).options[document.getElementById(addonSelectID).selectedIndex];
-    var addonPrice = selectedOption.getAttribute('data-price');
+  </script>
+  <script>
+    // function to update addon prices
+    function updateAddonPrice(addonSelectID, addonPriceID) {
+      // get selected option value and price data attribute
+      var selectedOption = document.getElementById(addonSelectID).options[document.getElementById(addonSelectID).selectedIndex];
+      var addonPrice = selectedOption.getAttribute('data-price');
 
-    // update price input value
-    document.getElementById(addonPriceID).value = addonPrice;
-  }
+      // update price input value
+      document.getElementById(addonPriceID).value = addonPrice;
+    }
 
-  // add onchange event listener to addon selects
-  document.getElementById('inputAddOns1').addEventListener('change', function() {
-    updateAddonPrice('inputAddOns1', 'menuAOPrice1');
-  });
+    // add onchange event listener to addon selects
+    document.getElementById('inputAddOns1').addEventListener('change', function () {
+      updateAddonPrice('inputAddOns1', 'menuAOPrice1');
+    });
 
-  document.getElementById('inputAddOns2').addEventListener('change', function() {
-    updateAddonPrice('inputAddOns2', 'menuAOPrice2');
-  });
+    document.getElementById('inputAddOns2').addEventListener('change', function () {
+      updateAddonPrice('inputAddOns2', 'menuAOPrice2');
+    });
 
-  document.getElementById('inputAddOns3').addEventListener('change', function() {
-    updateAddonPrice('inputAddOns3', 'menuAOPrice3');
-  });
+    document.getElementById('inputAddOns3').addEventListener('change', function () {
+      updateAddonPrice('inputAddOns3', 'menuAOPrice3');
+    });
 
-  document.getElementById('inputAddOns4').addEventListener('change', function() {
-    updateAddonPrice('inputAddOns4', 'menuAOPrice4');
-  });
+    document.getElementById('inputAddOns4').addEventListener('change', function () {
+      updateAddonPrice('inputAddOns4', 'menuAOPrice4');
+    });
 
-  document.getElementById('inputAddOns5').addEventListener('change', function() {
-    updateAddonPrice('inputAddOns5', 'menuAOPrice5');
-  });
-</script>
+    document.getElementById('inputAddOns5').addEventListener('change', function () {
+      updateAddonPrice('inputAddOns5', 'menuAOPrice5');
+    });
+  </script>
 
 
 

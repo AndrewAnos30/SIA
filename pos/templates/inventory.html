@@ -182,8 +182,8 @@
 
       <!-- Menu Nav -->
       <li class="nav-item">
-        <a class="nav-link active" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}" >
-          <i class='bx bxs-food-menu' ></i></i><span>Menu</span>
+        <a class="nav-link active" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}">
+          <i class='bx bxs-food-menu'></i></i><span>Menu</span>
         </a>
       </li><!-- End Menu Nav -->
       <!-- End Menu Nav -->
@@ -228,7 +228,7 @@
       <!-- POS Nav -->
       <li class="nav-item">
         <a class="nav-link" data-bs-target="#pos-nav" href="{% url 'pos:home' %}">
-          <i class='bx-bar-chart' ></i></i><span>POS</span>
+          <i class='bx-bar-chart'></i></i><span>POS</span>
         </a>
       </li><!-- POS end-->
     </ul>
@@ -246,385 +246,497 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
+
     <section class="section dashboard">
       <div class="row">
-  
+        <!-- Button to trigger off-canvas update form -->
+        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="offcanvas"
+          data-bs-target="#updateStockForm">Update Stock</button>
+
+        <!-- Off-canvas update form -->
+
+
         <div class="col-lg-12 mb-2">
           <div class="row g-2">
             <!-- buttons for adding ingredients and category -->
-              <div class="col-12 d-flex d-grip gap-2">
-                <button type="button" class="btn btn-outline-warning btn-sm"  data-bs-toggle="modal" data-bs-target="#addingredientmodal">Add Ingredient</button>
-                 <!-- Add Ingredient Modal -->
-                 <div class="modal fade" id="addingredientmodal" tabindex="-1">
-                  <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Add Ingredient</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body justify-content-center">
-                        <!-- add Ingridient Form -->
-                        <form action="{% url 'pos:add_ingridients' %}" method="POST">
-                            {% csrf_token %}
-  
-                                <div class="row">
-                                  <div class="col-6 mt-2">
-                                    <label for="inputCategory"  class="form-label">Category</label>
-                                    <select name="{{ ingridientForm.stockcategory.name }}" id="inputCategory" class="form-select">
-                                        <option value="{{ ingridientForm.stockcategory.0.data.value }}">{{ ingridientForm.stockcategory.0.data.label }}</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-6  mt-2">
-                                    <label for="inputIngredientName" class="form-label">Ingredient</label>
-                                    <input name="{{ ingridientForm.stockname.name }}" type="text" placeholder="ingredient name...." class="form-control" id="inputIngredientName" required>
-                                  </div>
-  
-                                  <div class="col-6  mt-2">
-                                    <label for="inputQty" class="form-label">Quantity (g)</label>
-                                    <input name="{{ ingridientForm.stockquantity.name }}" type="number"  placeholder="e.g. 20g..." class="form-control" id="inputQty" required>
-                                  </div>
-                                  
-                               
-                                    <div class="col-6 mt-2">
-                                      <label for="inputMeasurement"  class="form-label">Measurement</label>
-                                      <select name="{{ ingridientForm.stockmeasurement.name }}" id="inputMeasurement" class="form-select">
-                                        {% for option in stock_quantity %}
-                                          <option value="{{ option.0 }}">{{ option.1 }}</option>
-                                        {% endfor %}
-                                      </select>
-                                    </div>
-
-                                  <div class="col-6  mt-2">
-                                    <label for="inputPrice" class="form-label">Price</label>
-                                    <input name="{{ ingridientForm.stockprice.name }}" type="number"  placeholder="price.." class="form-control" id="inputPrice" required>
-                                  </div>
-  
-  
-                                  <div class="col-6  mt-2">
-                                    <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
-                                    <input name="{{ ingridientForm.stockdate_in.name }}" type="date" class="form-control">
-                                  </div>
-  
-                                  <div class="col-6 mt-2">
-                                     <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
-                                    <input name="{{ ingridientForm.stockexpiration.name }}" type="date" class="form-control">
-                                  </div>
-  
-                                  <div class="text-center d-grip gap-2  mt-3">
-                                    <button type="submit" class="btn btn-warning">Add Ingredient</button>
-                                    <button type="reset" class="btn btn-warning">Reset</button>
-                                  </div>
-                                </div>
-                              </form><!-- Vertical Form -->
-  
-                      </div>
+            <div class="col-12 d-flex d-grip gap-2">
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="updateStockForm"
+                aria-labelledby="updateStockFormLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="updateStockFormLabel">Update Stock</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                  <form action="{% url 'pos:update_stock' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="col-12">
+                      <label for="stockname">Choose stock name</label>
+                      <select name="stockname" class="form-select">
+                        {% for stock in all_stocks %}
+                        <option value="{{ stock.id }}">{{ stock.stockname }}</option>
+                        {% endfor %}
+                      </select>
                     </div>
-                  </div>
-                </div><!-- End Vertically centered Modal-->
-  
-  
-            <!-- buttons for adding add ons -->
-                <button type="button" class="btn btn-outline-warning btn-sm"  data-bs-toggle="modal" data-bs-target="#addonsmodal">Add Addons</button>
-  
-                    <!-- Add Addon Modal -->
-                    <div class="modal fade" id="addonsmodal" tabindex="-1">
-                      <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Add Addons</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body justify-content-center">
-                            <!-- add menu Form -->
-                                  <form action="{% url 'pos:add_addOns' %}" method="POST">
-                                    {% csrf_token %}
-  
-                                    <div class="row">
-                                      <div class="col-6 mt-2">
-                                        <label for="inputCategory"  class="form-label">Category</label>
-                                        <select name="{{ addOnsForm.stockcategory.name }}" id="inputCategory" class="form-select">
-                                          <option value="{{ addOnsForm.stockcategory.1.data.value }}">{{ addOnsForm.stockcategory.1.data.label }}</option>
-                                      </select>
-                                      </div>
-                                      <div class="col-6  mt-2">
-                                        <label for="inputAddOnsName" class="form-label">Add Ons</label>
-                                        <input name="{{ addOnsForm.stockname.name }}" type="text" placeholder="Add Ons Name...." class="form-control" id="inputIngredientName" required>
-                                      </div>
-  
-                                      <div class="col-6  mt-2">
-                                        <label for="inputQty" class="form-label">Quantity (g)</label>
-                                        <input name="{{ addOnsForm.stockquantity.name }}" type="number"  placeholder="e.g. 20g..." class="form-control" id="inputQty" required>
-                                      </div>
-                                      
-                                      <div class="col-6 mt-2">
-                                        <label for="inputMeasurement"  class="form-label">Measurement</label>
-                                        <select name="{{ addOnsForm.stockmeasurement.name }}" id="inputMeasurement" class="form-select">
-                                          {% for option in stock_quantity %}
-                                            <option value="{{ option.0 }}">{{ option.1 }}</option>
-                                          {% endfor %}
-                                        </select>
-                                      </div>
-  
+                    <div class="col-12">
+                      <label for="new_stockname">Change Stock Name</label>
+                      <input type="text" name="new_stockname" class="form-control" value="{{ stock.stockname }}" required>
+                    </div>
+                    <div class="col-12">
+                      <label for="stockcategory">Change Category</label>
+                      <select name="stockcategory" class="form-select">
+                        {% for category in stock_category %}
+                        <option value="{{ category.0 }}">{{ category.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label for="stockquantity">Change Quantity</label>
+                      <input type="number" name="stockquantity" class="form-control" required>
+                    </div>
+                    <div class="col-12">
+                      <label for="stockmeasurement">Change Measurement</label>
+                      <select name="stockmeasurement" class="form-select">
+                        {% for measurement in stock_quantity %}
+                        <option value="{{ measurement.0 }}">{{ measurement.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label for="stockprice">Change Price</label>
+                      <input type="number" name="stockprice" class="form-control" required>
+                    </div>
+                    <div class="col-12">
+                      <label for="stockdate_in">Change Date In</label>
+                      <input type="date" name="stockdate_in" class="form-control" required>
+                    </div>
+                    <div class="col-12">
+                      <label for="stockexpiration">Change Expiration Date</label>
+                      <input type="date" name="stockexpiration" class="form-control" required>
+                    </div>
+                    <div class="col-12 text-center d-grip gap-2 mt-3">
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <button type="reset" class="btn btn-secondary">Reset</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
 
-                                      <div class="col-6  mt-2">
-                                        <label for="inputPrice" class="form-label">Price</label>
-                                        <input name="{{ addOnsForm.stockprice.name }}" type="number"  placeholder="price.." class="form-control" id="inputPrice" required>
-                                      </div>
-  
-  
-                                      <div class="col-6  mt-2">
-                                        <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
-                                        <input name="{{ addOnsForm.stockdate_in.name }}" type="date" class="form-control">
-                                      </div>
-  
-                                      <div class="col-6 mt-2">
-                                         <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
-                                         <input name="{{ addOnsForm.stockexpiration.name }}" type="date" class="form-control">
-                                       </div>
-  
-                                      <div class="text-center d-grip gap-2  mt-3">
-                                        <button type="submit" class="btn btn-warning">Add Addon</button>
-                                        <button type="reset" class="btn btn-warning">Reset</button>
-                                      </div>
-                                    </div>
-  
-                                  </form><!-- Vertical Form -->
-  
+              <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+                data-bs-target="#addingredientmodal">Add Ingredient</button>
+              <!-- Add Ingredient Modal -->
+              <div class="modal fade" id="addingredientmodal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add Ingredient</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body justify-content-center">
+                      <!-- add Ingridient Form -->
+                      <form action="{% url 'pos:add_ingridients' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="row">
+                          <div class="col-6 mt-2">
+                            <label for="inputCategory" class="form-label">Category</label>
+                            <select name="stockcategory" id="inputCategory" class="form-select">
+                              {% for category in stock_category %}
+                              {% if category.0 == "INGR" %}
+                              <option value="{{ category.0 }}">{{ category.1 }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-6  mt-2">
+                            <label for="inputIngredientName" class="form-label">Ingredient</label>
+                            <input name="{{ ingridientForm.stockname.name }}" type="text"
+                              placeholder="ingredient name...." class="form-control" id="inputIngredientName" required>
+                          </div>
+
+                          <div class="col-6  mt-2">
+                            <label for="inputQty" class="form-label">Quantity (g)</label>
+                            <input name="{{ ingridientForm.stockquantity.name }}" type="number"
+                              placeholder="e.g. 20g..." class="form-control" id="inputQty" required>
+                          </div>
+
+
+                          <div class="col-6 mt-2">
+                            <label for="inputMeasurement" class="form-label">Measurement</label>
+                            <select name="{{ ingridientForm.stockmeasurement.name }}" id="inputMeasurement"
+                              class="form-select">
+                              {% for option in stock_quantity %}
+                              <option value="{{ option.0 }}">{{ option.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+                          <div class="col-6  mt-2">
+                            <label for="inputPrice" class="form-label">Price</label>
+                            <input name="{{ ingridientForm.stockprice.name }}" type="number" placeholder="price.."
+                              class="form-control" id="inputPrice" required>
+                          </div>
+
+
+                          <div class="col-6  mt-2">
+                            <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
+                            <input name="{{ ingridientForm.stockdate_in.name }}" type="date" class="form-control">
+                          </div>
+
+                          <div class="col-6 mt-2">
+                            <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
+                            <input name="{{ ingridientForm.stockexpiration.name }}" type="date" class="form-control">
+                          </div>
+
+                          <div class="text-center d-grip gap-2  mt-3">
+                            <button type="submit" class="btn btn-warning">Add Ingredient</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
                           </div>
                         </div>
-                      </div>
-                    </div><!-- End Vertically centered Modal-->
-  
-  
-  
-            <!-- buttons for adding utensils-->
-                <button type="button" class="btn btn-outline-warning btn-sm"  data-bs-toggle="modal" data-bs-target="#utensilsmodal">Add Utensils</button>
-  
-                <!-- Add Addon Modal -->
-                <div class="modal fade" id="utensilsmodal" tabindex="-1">
-                  <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Add Utensils</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body justify-content-center">
-                        <!-- add menu Form -->
-                        <form action="{% url 'pos:add_utensils' %}" method="POST">
-                          
-  
-                                <div class="row">
-                                  <div class="col-6 mt-2">
-                                    <label for="inputCategory"  class="form-label">Category</label>
-                                    <select name="{{ utensilsForm.stockcategory.name }}" id="inputCategory" class="form-select">
-                                      <option value="{{ utensilsForm.stockcategory.2.data.value }}">{{ utensilsForm.stockcategory.2.data.label }}</option>
-                                  </select>
-                                  </div>
-                                  <div class="col-6  mt-2">
-                                    <label for="inputUtensilsName" class="form-label">Utensils</label>
-                                    <input name="{{ utensilsForm.stockname.name }}" type="text" placeholder="ingredient name...." class="form-control" id="inputIngredientName" required>
-                                  </div>
-  
-                                  <div class="col-6  mt-2">
-                                    <label for="inputQty" class="form-label">Quantity (g)</label>
-                                    <input name="{{ utensilsForm.stockquantity.name }}" type="number"  placeholder="e.g. 20g..." class="form-control" id="inputQty" required>
-                                  </div>
-                                  
-                                  <div class="col-6 mt-2">
-                                    <label for="inputMeasurement"  class="form-label">Measurement</label>
-                                    <select name="{{ utensilsForm.stockmeasurement.name }}" id="inputMeasurement" class="form-select">
-                                      {% for option in stock_quantity %}
-                                        <option value="{{ option.0 }}">{{ option.1 }}</option>
-                                      {% endfor %}
-                                    </select>
-                                  </div>
+                      </form><!-- Vertical Form -->
 
-                                  <div class="col-6  mt-2">
-                                    <label for="inputPrice" class="form-label">Price</label>
-                                    <input name="{{ utensilsForm.stockprice.name }}" type="number"  placeholder="price.." class="form-control" id="inputPrice" required>
-                                  </div>
-  
-  
-                                  <div class="col-6  mt-2">
-                                    <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
-                                    <input name="{{ utensilsForm.stockdate_in.name }}" type="date" class="form-control">
-                                  </div>
-  
-                                  <div class="col-6 mt-2">
-                                     <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
-                                     <input name="{{ utensilsForm.stockexpiration.name }}" type="date" class="form-control">
-                                  </div>
-  
-                                  <div class="text-center d-grip gap-2  mt-3">
-                                    <button type="submit" class="btn btn-warning">Add Utensils</button>
-                                    <button type="reset" class="btn btn-warning">Reset</button>
-                                  </div>
-                                </div>
-  
-  
-                              </form><!-- Vertical Form -->
-  
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- End Vertically centered Modal-->
-              </div>
-              <!-- Inventory Table-->
-  
-             <div class="col-12">
-              <!-- Nav tabs -->
-                <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#ingredient">Ingredients</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#addons">Add ons</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#utensils">Utensils</a>
-                  </li>
-                </ul>
-  
-                <!-- Tab panes -->
-                <div class="tab-content mt-2">
-                  <!-- content for ingredient table  -->
-                  <div class="tab-pane container active" id="ingredient">
-                    <div class="card overflow-auto">
-                      <div class="card-body pb-0">
-                        <h5 class="card-title">Ingredients</span></h5>
-                        <table class="table rounded table-striped table-warning" id="IngredientTable">
-                          <thead>
-                            <tr>
-                              <th scope="col">Category</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Quantity</th>
-                              <th scope="col">Measurement</th>
-                              <th scope="col">Price</th>
-                              <th scope="col">Stock In Date</th>
-                              <th scope="col">Expiration Date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for item in my_data_i %}
-                            <tr>
-                             
-                              <th>{{item.stockcategory}}</th>
-                              <td>{{item.stockname}}</td>
-                              <td>{{item.stockquantity}}</td>
-                              <th>{{item.stockmeasurement}}</th>
-                              <td>{{item.stockprice}}</td>
-                              <td>{{item.stockdate_in}}</td>
-                              <td>{{item.stockexpiration}}</td>
-                          
-                          
-                            </tr>
-                            {% endfor %}
-                          
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-  
-                <!-- content for addon tabla  -->
-  
-                  <div class="tab-pane container fade" id="addons">
-                    <div class="card overflow-auto">
-                      <div class="card-body pb-0">
-                        <h5 class="card-title">Addons</span></h5>
-                        <table class="table rounded table-striped table-warning" id="AddonsTable">
-                          <thead>
-                            <tr>
-                              <th scope="col">Category</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Quantity</th>
-                              <th scope="col">Measurement</th>
-                              <th scope="col">Price</th>
-                              <th scope="col">Stock In Date</th>
-                              <th scope="col">Expiration Date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for item in my_data_a %}
-                            <tr>
-                             
-                              <th>{{item.stockcategory}}</th>
-                              <td>{{item.stockname}}</td>
-                              <td>{{item.stockquantity}}</td>
-                              <th>{{item.stockmeasurement}}</th>
-                              <td>{{item.stockprice}}</td>
-                              <td>{{item.stockdate_in}}</td>
-                              <td>{{item.stockexpiration}}</td>
-                          
-                          
-                            </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-  
-                <!-- content for utensils table  -->
-                  <div class="tab-pane container fade" id="utensils">
-                    <div class="card overflow-auto">
-                      <div class="card-body pb-0">
-                        <h5 class="card-title">Utensils</span></h5>
-                        <table class="table rounded table-striped table-warning" id="UtensilsTable">
-                          <thead>
-                            <tr>
-                              <th scope="col">Category</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Quantity</th>
-                              <th scope="col">Measurement</th>
-                              <th scope="col">Price</th>
-                              <th scope="col">Stock In Date</th>
-                              <th scope="col">Expiration Date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for item in my_data_u %}
-                            <tr>
-                             
-                              <th>{{item.stockcategory}}</th>
-                              <td>{{item.stockname}}</td>
-                              <td>{{item.stockquantity}}</td>
-                              <th>{{item.stockmeasurement}}</th>
-                              <td>{{item.stockprice}}</td>
-                              <td>{{item.stockdate_in}}</td>
-                              <td>{{item.stockexpiration}}</td>
-                          
-                          
-                            </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>
-                      </div>
                     </div>
                   </div>
                 </div>
-  
-  
-  
+              </div><!-- End Vertically centered Modal-->
+
+
+              <!-- buttons for adding add ons -->
+              <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+                data-bs-target="#addonsmodal">Add Addons</button>
+
+              <!-- Add Addon Modal -->
+              <div class="modal fade" id="addonsmodal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add Addons</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body justify-content-center">
+                      <!-- add menu Form -->
+                      <form action="{% url 'pos:add_addOns' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="row">
+                          <div class="col-6 mt-2">
+                            <label for="inputCategory" class="form-label">Category</label>
+                            <select name="{{ addOnsForm.stockcategory.name }}" id="inputCategory" class="form-select">
+                              {% for category in stock_category %}
+                              {% if category.0 == addOnsForm.stockcategory.1.data.value %}
+                              <option value="{{ category.0 }}">{{ category.1 }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-6  mt-2">
+                            <label for="inputAddOnsName" class="form-label">Add Ons</label>
+                            <input name="{{ addOnsForm.stockname.name }}" type="text" placeholder="Add Ons Name...."
+                              class="form-control" id="inputIngredientName" required>
+                          </div>
+
+                          <div class="col-6  mt-2">
+                            <label for="inputQty" class="form-label">Quantity (g)</label>
+                            <input name="{{ addOnsForm.stockquantity.name }}" type="number" placeholder="e.g. 20g..."
+                              class="form-control" id="inputQty" required>
+                          </div>
+
+                          <div class="col-6 mt-2">
+                            <label for="inputMeasurement" class="form-label">Measurement</label>
+                            <select name="{{ addOnsForm.stockmeasurement.name }}" id="inputMeasurement"
+                              class="form-select">
+                              {% for option in stock_quantity %}
+                              <option value="{{ option.0 }}">{{ option.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+
+                          <div class="col-6  mt-2">
+                            <label for="inputPrice" class="form-label">Price</label>
+                            <input name="{{ addOnsForm.stockprice.name }}" type="number" placeholder="price.."
+                              class="form-control" id="inputPrice" required>
+                          </div>
+
+
+                          <div class="col-6  mt-2">
+                            <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
+                            <input name="{{ addOnsForm.stockdate_in.name }}" type="date" class="form-control">
+                          </div>
+
+                          <div class="col-6 mt-2">
+                            <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
+                            <input name="{{ addOnsForm.stockexpiration.name }}" type="date" class="form-control">
+                          </div>
+
+                          <div class="text-center d-grip gap-2  mt-3">
+                            <button type="submit" class="btn btn-warning">Add Addon</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
+                          </div>
+                        </div>
+
+                      </form><!-- Vertical Form -->
+
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Vertically centered Modal-->
+
+
+
+              <!-- buttons for adding utensils-->
+              <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+                data-bs-target="#utensilsmodal">Add Utensils</button>
+
+              <!-- Add Addon Modal -->
+              <div class="modal fade" id="utensilsmodal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add Utensils</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body justify-content-center">
+                      <!-- add menu Form -->
+                      <form action="{% url 'pos:add_utensils' %}" method="POST">
+
+
+                        <div class="row">
+                          <div class="col-6 mt-2">
+                            <label for="inputCategory" class="form-label">Category</label>
+                            <select name="{{ utensilsForm.stockcategory.name }}" id="inputCategory" class="form-select">
+                              {% for category in stock_category %}
+                              {% if category.0 == utensilsForm.stockcategory.2.data.value %}
+                              <option value="{{ category.0 }}">{{ category.1 }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                        
+                          </div>
+                          <div class="col-6  mt-2">
+                            <label for="inputUtensilsName" class="form-label">Utensils</label>
+                            <input name="{{ utensilsForm.stockname.name }}" type="text"
+                              placeholder="ingredient name...." class="form-control" id="inputIngredientName" required>
+                          </div>
+
+                          <div class="col-6  mt-2">
+                            <label for="inputQty" class="form-label">Quantity (g)</label>
+                            <input name="{{ utensilsForm.stockquantity.name }}" type="number" placeholder="e.g. 20g..."
+                              class="form-control" id="inputQty" required>
+                          </div>
+
+                          <div class="col-6 mt-2">
+                            <label for="inputMeasurement" class="form-label">Measurement</label>
+                            <select name="{{ utensilsForm.stockmeasurement.name }}" id="inputMeasurement"
+                              class="form-select">
+                              {% for option in stock_quantity %}
+                              <option value="{{ option.0 }}">{{ option.1 }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+
+                          <div class="col-6  mt-2">
+                            <label for="inputPrice" class="form-label">Price</label>
+                            <input name="{{ utensilsForm.stockprice.name }}" type="number" placeholder="price.."
+                              class="form-control" id="inputPrice" required>
+                          </div>
+
+
+                          <div class="col-6  mt-2">
+                            <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
+                            <input name="{{ utensilsForm.stockdate_in.name }}" type="date" class="form-control">
+                          </div>
+
+                          <div class="col-6 mt-2">
+                            <label for="inputExpDate" class="col-sm-2 col-form-label">ExpirationDate</label>
+                            <input name="{{ utensilsForm.stockexpiration.name }}" type="date" class="form-control">
+                          </div>
+
+                          <div class="text-center d-grip gap-2  mt-3">
+                            <button type="submit" class="btn btn-warning">Add Utensils</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
+                          </div>
+                        </div>
+
+
+                      </form><!-- Vertical Form -->
+
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Vertically centered Modal-->
             </div>
-  
+            <!-- Inventory Table-->
+
+            <div class="col-12">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" data-bs-toggle="tab" href="#ingredient">Ingredients</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#addons">Add ons</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#utensils">Utensils</a>
+                </li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content mt-2">
+                <!-- content for ingredient table  -->
+                <div class="tab-pane container active" id="ingredient">
+                  <div class="card overflow-auto">
+                    <div class="card-body pb-0">
+                      <h5 class="card-title">Ingredients</span></h5>
+                      <table class="table rounded table-striped table-warning" id="IngredientTable">
+                        <thead>
+                          <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Measurement</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Stock In Date</th>
+                            <th scope="col">Expiration Date</th>
+                            <th scope="col">Actions</th> <!-- New column for delete button -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for item in my_data_i %}
+                          <tr>
+                            <th>{{item.stockcategory}}</th>
+                            <td>{{item.stockname}}</td>
+                            <td>{{item.stockquantity}}</td>
+                            <th>{{item.stockmeasurement}}</th>
+                            <td>{{item.stockprice}}</td>
+                            <td>{{item.stockdate_in}}</td>
+                            <td>{{item.stockexpiration}}</td>
+                            <td>
+                              <form action="{% url 'pos:delete_stock' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="stock_id" value="{{ item.id }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                              </form>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+
+                <!-- content for addon tabla  -->
+
+                <div class="tab-pane container fade" id="addons">
+                  <div class="card overflow-auto">
+                    <div class="card-body pb-0">
+                      <h5 class="card-title">Addons</span></h5>
+                      <table class="table rounded table-striped table-warning" id="AddonsTable">
+                        <thead>
+                          <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Measurement</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Stock In Date</th>
+                            <th scope="col">Expiration Date</th>
+                            <th scope="col">Actions</th> <!-- New column for delete button -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for item in my_data_a %}
+                          <tr>
+                            <th>{{item.stockcategory}}</th>
+                            <td>{{item.stockname}}</td>
+                            <td>{{item.stockquantity}}</td>
+                            <th>{{item.stockmeasurement}}</th>
+                            <td>{{item.stockprice}}</td>
+                            <td>{{item.stockdate_in}}</td>
+                            <td>{{item.stockexpiration}}</td>
+                            <td>
+                              <form action="{% url 'pos:delete_stock' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="stock_id" value="{{ item.id }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                              </form>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- content for utensils table  -->
+                <div class="tab-pane container fade" id="utensils">
+                  <div class="card overflow-auto">
+                    <div class="card-body pb-0">
+                      <h5 class="card-title">Utensils</span></h5>
+                      <table class="table rounded table-striped table-warning" id="UtensilsTable">
+                        <thead>
+                          <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Measurement</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Stock In Date</th>
+                            <th scope="col">Expiration Date</th>
+                            <th scope="col">Actions</th> <!-- New column for delete button -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for item in my_data_u %}
+                          <tr>
+                            <th>{{item.stockcategory}}</th>
+                            <td>{{item.stockname}}</td>
+                            <td>{{item.stockquantity}}</td>
+                            <th>{{item.stockmeasurement}}</th>
+                            <td>{{item.stockprice}}</td>
+                            <td>{{item.stockdate_in}}</td>
+                            <td>{{item.stockexpiration}}</td>
+                            <td>
+                              <form action="{% url 'pos:delete_stock' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="stock_id" value="{{ item.id }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                              </form>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+
           </div>
         </div>
-        </div>
-      </section>
+      </div>
+    </section>
   </main>
-<footer id="footer" class="footer">
-  <div class="copyright">
-    &copy; Copyright <strong><span>BevRecs 2020</span></strong>. All Rights Reserved
-  </div>
-</footer><!-- End Footer -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>BevRecs 2020</span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
 
-<script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
-<script type="text/javascript">
-  VirtualSelect.init({
-    ele: '#multiSelect'
-  });
-</script>
+  <script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
+  <script type="text/javascript">
+    VirtualSelect.init({
+      ele: '#multiSelect'
+    });
+  </script>
 </body>
 
 </html>

@@ -76,4 +76,9 @@ class MenuDrinksForm(forms.ModelForm):
             'alcohollevel': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
             'hotAndCold': forms.RadioSelect(choices=(('hot', 'Hot'), ('cold', 'Cold'), ('hot and cold', 'Both'))),           
         }
+#Menu End
 
+#home Start
+class BuyItemForms(forms.ModelForm):
+    class Meta:
+        fields = ["buyImage","buySize","buySize","buyName","buyPrice","buyAddOns1","buyAddOns2","buyAddOns3","buyAddOns4","buyAddOns5","buyAOPrice1","buyAOPrice2","buyAOPrice3","buyAOPrice4","buyAOPrice5","buyQuantity","buyIng1","buyIng2","buyIng3","buyIng4","buyIng5"]
