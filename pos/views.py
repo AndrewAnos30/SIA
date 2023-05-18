@@ -4,10 +4,12 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .models import Stocks, STOCK_CATEGORY, STOCK_QUANTITY
 from .models import MenuCategory, MenuDrinks, TYPES_MENU
-
+from .models import buyItem
+from pos import views
 from .forms import IngridientsForm, AddOnsForm, UtensilsForm
 from .forms import MenuCategoryForm, MenuDrinksForm
-
+from .forms import BuyItemForms
+import logging
 def base(request):
   
     return render(request, 'base.html')
@@ -71,7 +73,6 @@ def update_stock(request):
         stockcategory = request.POST.get('stockcategory')
         stockquantity = request.POST.get('stockquantity')
         stockmeasurement = request.POST.get('stockmeasurement')
-        stockprice = request.POST.get('stockprice')
         stockdate_in = request.POST.get('stockdate_in')
         stockexpiration = request.POST.get('stockexpiration')
 
@@ -80,7 +81,6 @@ def update_stock(request):
         stock.stockcategory = stockcategory
         stock.stockquantity = stockquantity
         stock.stockmeasurement = stockmeasurement
-        stock.stockprice = stockprice
         stock.stockdate_in = stockdate_in
         stock.stockexpiration = stockexpiration
         stock.save()
@@ -145,7 +145,7 @@ def edit_menu_category(request):
     return redirect('pos:menu')  # Replace with your appropriate redirect URL
 
 
-import logging
+
 
 def addMenuDrinks(request):
     if request.method == "POST":
@@ -189,26 +189,36 @@ def delete_menu(request, menu_id):
 
 #HOME START
 def home(request):
-
-    menucategoryform = MenuCategoryForm   
-    menudrinksform = MenuDrinksForm
+    buyitemform = BuyItemForms()  # Instantiate the form
     stocks = Stocks.objects.first()
     menuDrinks = MenuDrinks.objects.all()
-    menuCategory= MenuCategory.objects.all()
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
 
-    
-    context ={
-    "menucategoryform" : menucategoryform,
-    "menudrinksform" : menudrinksform,
-    "stocks" : stocks,
-    "menuDrinks" : menuDrinks,
-    "menuCategory" : menuCategory,
+    context = {
+        'buyitemform': buyitemform,
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
     }
-    return render(request, 'home.html',context)
+    return render(request, 'home.html', context)
+
+
+def buy_item_drinks(request):
+    if request.method == 'POST':
+        form = BuyItemForms(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("pos:home"))
+        else:
+            print(form.errors)  # Check for any form errors in the console
+
+    return HttpResponseRedirect(reverse("pos:home"))
 
 
 
-#menu end
+#home end
 
 def index(request):
   
@@ -224,14 +234,61 @@ def order(request):
   
     return render(request, 'order.html')
 
-def reco(request):
-  
-    return render(request, 'recommendation.html')
+
 
 def reco(request):
+    buyitemform = BuyItemForms()  # Instantiate the form
+    stocks = Stocks.objects.first()
+    menuDrinks = MenuDrinks.objects.all()
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
+
+    context = {
+        'buyitemform': buyitemform,
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
+    }
   
-    return render(request, 'recommendation.html')
+    return render(request, 'recommendation.html', context)
+
+def buy_item_drinks1(request):
+    if request.method == 'POST':
+        form = BuyItemForms(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("pos:home"))
+        else:
+            print(form.errors)  # Check for any form errors in the console
+
+    return HttpResponseRedirect(reverse("pos:reco"))
 
 def cart(request):
+    stocks = Stocks.objects.first()
+    menuDrinks = MenuDrinks.objects.all()
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
+    total_price = calculate_total_price(buyitem)
+    
+
+    context = {
+   
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
+        'total_price': total_price
+
+    }
   
-    return render(request, 'cart.html')
+  
+    return render(request, 'cart.html',context)
+
+def calculate_total_price(buyitem):
+    total = 0
+    for item in buyitem:
+        if item.total_price:
+            total += item.total_price
+    rounded_total = round(total, 2)
+    return rounded_total

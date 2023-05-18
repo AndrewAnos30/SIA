@@ -302,10 +302,6 @@
                       </select>
                     </div>
                     <div class="col-12">
-                      <label for="stockprice">Change Price</label>
-                      <input type="number" name="stockprice" class="form-control" required>
-                    </div>
-                    <div class="col-12">
                       <label for="stockdate_in">Change Date In</label>
                       <input type="date" name="stockdate_in" class="form-control" required>
                     </div>
@@ -369,13 +365,6 @@
                               {% endfor %}
                             </select>
                           </div>
-
-                          <div class="col-6  mt-2">
-                            <label for="inputPrice" class="form-label">Price</label>
-                            <input name="{{ ingridientForm.stockprice.name }}" type="number" placeholder="price.."
-                              class="form-control" id="inputPrice" required>
-                          </div>
-
 
                           <div class="col-6  mt-2">
                             <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
@@ -448,13 +437,6 @@
                               <option value="{{ option.0 }}">{{ option.1 }}</option>
                               {% endfor %}
                             </select>
-                          </div>
-
-
-                          <div class="col-6  mt-2">
-                            <label for="inputPrice" class="form-label">Price</label>
-                            <input name="{{ addOnsForm.stockprice.name }}" type="number" placeholder="price.."
-                              class="form-control" id="inputPrice" required>
                           </div>
 
 
@@ -535,13 +517,6 @@
                           </div>
 
                           <div class="col-6  mt-2">
-                            <label for="inputPrice" class="form-label">Price</label>
-                            <input name="{{ utensilsForm.stockprice.name }}" type="number" placeholder="price.."
-                              class="form-control" id="inputPrice" required>
-                          </div>
-
-
-                          <div class="col-6  mt-2">
                             <label for="inputStockInDate" class="col-sm-2 form-label">StockDate</label>
                             <input name="{{ utensilsForm.stockdate_in.name }}" type="date" class="form-control">
                           </div>
@@ -595,7 +570,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Measurement</th>
-                            <th scope="col">Price</th>
                             <th scope="col">Stock In Date</th>
                             <th scope="col">Expiration Date</th>
                             <th scope="col">Actions</th> <!-- New column for delete button -->
@@ -608,7 +582,6 @@
                             <td>{{item.stockname}}</td>
                             <td>{{item.stockquantity}}</td>
                             <th>{{item.stockmeasurement}}</th>
-                            <td>{{item.stockprice}}</td>
                             <td>{{item.stockdate_in}}</td>
                             <td>{{item.stockexpiration}}</td>
                             <td>
@@ -640,7 +613,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Measurement</th>
-                            <th scope="col">Price</th>
                             <th scope="col">Stock In Date</th>
                             <th scope="col">Expiration Date</th>
                             <th scope="col">Actions</th> <!-- New column for delete button -->
@@ -653,7 +625,6 @@
                             <td>{{item.stockname}}</td>
                             <td>{{item.stockquantity}}</td>
                             <th>{{item.stockmeasurement}}</th>
-                            <td>{{item.stockprice}}</td>
                             <td>{{item.stockdate_in}}</td>
                             <td>{{item.stockexpiration}}</td>
                             <td>
@@ -683,7 +654,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Measurement</th>
-                            <th scope="col">Price</th>
                             <th scope="col">Stock In Date</th>
                             <th scope="col">Expiration Date</th>
                             <th scope="col">Actions</th> <!-- New column for delete button -->

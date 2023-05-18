@@ -425,31 +425,17 @@ menu.html
 
                           <div class="col-12">
                             <label for="inputPrice" class="form-label">Price</label>
-                            <input type="number" name="{{ menudrinksform.menuprice.name }}" placeholder="Price"
+                            <input type="number" step="0.01" name="{{ menudrinksform.menuprice.name }}" placeholder="Price"
                               class="form-control" id="inputPrice" required>
                           </div>
 
                           <div class="col-6">
-                            <label name="{{ menudrinksform.hotAndCold.id_for_label }}">Temperature</label>
+                            <label name="{{ menudrinksform.hotAndCold.id_for_label }}">hot/cold</label>
                             {{ menudrinksform.hotAndCold }}
                           </div>
 
                           <div class="col-6">
-                            <label name="{{ menudrinksform.sugarlevel.id_for_label }}">Sugar Level</label>
-                            {{ menudrinksform.sugarlevel }}
-                          </div>
-
-                          <div class="col-6">
-                            <label name="{{ menudrinksform.alcohollevel.id_for_label }}">Alcohol Level</label>
-                            {{ menudrinksform.alcohollevel }}
-                          </div>
-
-
-
-
-                          <div class="col-6">
                             <label for="inputIngredientName1" class="form-label">Ingredient 1</label>
-
                             <select name="{{ menudrinksform.ingredient1.name }}" id="inputIngredientName1"
                               class="form-select mb-1">
                               <option value="">-- Select an ingredient --</option>
@@ -460,18 +446,14 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuIngrPrice1.name }}" id="menuIngrPrice1" type="text"
-                              readonly value="">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityIng1" class="form-label">Quantity Ing1</label>
                             <input type="number" name="quantityIng1" placeholder="Quantity Ing1" class="form-control"
                               id="inputquantityIng1">
                           </div>
 
                           <div class="col-6">
                             <label for="inputIngredientName2" class="form-label">Ingredient 2</label>
-
                             <select name="{{ menudrinksform.ingredient2.name }}" id="inputIngredientName2"
                               class="form-select mb-1">
                               <option value="">-- Select an ingredient --</option>
@@ -482,11 +464,8 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuIngrPrice2.name }}" id="menuIngrPrice2" type="text"
-                              readonly value="">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityIng2" class="form-label">Quantity Ing2</label>
                             <input type="number" name="quantityIng2" placeholder="Quantity Ing2" class="form-control"
                               id="inputquantityIng2">
                           </div>
@@ -494,7 +473,6 @@ menu.html
 
                           <div class="col-6">
                             <label for="inputIngredientName3" class="form-label">Ingredient 3</label>
-
                             <select name="{{ menudrinksform.ingredient3.name }}" id="inputIngredientName3"
                               class="form-select mb-1">
                               <option value="">-- Select an ingredient --</option>
@@ -505,18 +483,14 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuIngrPrice3.name }}" id="menuIngrPrice3" type="text"
-                              readonly value="">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityIng3" class="form-label">Quantity Ing3</label>
                             <input type="number" name="quantityIng3" placeholder="Quantity Ing3" class="form-control"
                               id="inputquantityIng3">
                           </div>
 
                           <div class="col-6">
                             <label for="inputIngredientName4" class="form-label">Ingredient 4</label>
-
                             <select name="{{ menudrinksform.ingredient4.name }}" id="inputIngredientName4"
                               class="form-select mb-1">
                               <option value="">-- Select an ingredient --</option>
@@ -527,18 +501,14 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuIngrPrice4.name }}" id="menuIngrPrice4" type="text"
-                              readonly value="">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityIng4" class="form-label">Quantity Ing4</label>
                             <input type="number" name="quantityIng4" placeholder="Quantity Ing4" class="form-control"
                               id="inputquantityIng4">
                           </div>
 
                           <div class="col-6">
                             <label for="inputIngredientName5" class="form-label">Ingredient 5</label>
-
                             <select name="{{ menudrinksform.ingredient5.name }}" id="inputIngredientName5"
                               class="form-select mb-1">
                               <option value="">-- Select an ingredient --</option>
@@ -549,11 +519,8 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuIngrPrice5.name }}" id="menuIngrPrice5" type="text"
-                              readonly value="">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityIng5" class="form-label">Quantity Ing5</label>
                             <input type="number" name="quantityIng5" placeholder="Quantity Ing5" class="form-control"
                               id="inputquantityIng5">
                           </div>
@@ -569,12 +536,10 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="text" readonly
-                              value="">
+                            <input step="0.01" placeholder="Php 00.00" name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="number">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityAO1" class="form-label">Quantity AO1</label>
-                            <input type="number" name="quantityAO1" placeholder="Quantity AO1" class="form-control"
+                            <input type="number"  name="quantityAO1" placeholder="Quantity AO1" class="form-control"
                               id="inputquantityAO1">
                           </div>
 
@@ -588,11 +553,9 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" type="text" readonly
-                              value="">
+                            <input step="0.01" name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" placeholder="Php 00.00" type="number">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityAO2" class="form-label">Quantity AO2</label>
                             <input type="number" name="quantityAO2" placeholder="Quantity AO2" class="form-control"
                               id="inputquantityAO2">
                           </div>
@@ -607,11 +570,9 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" type="text" readonly
-                              value="">
+                            <input step="0.01" name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" placeholder="Php 00.00" type="number">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityAO3" class="form-label">Quantity AO3</label>
                             <input type="number" name="quantityAO3" placeholder="Quantity AO3" class="form-control"
                               id="inputquantityAO3">
                           </div>
@@ -626,11 +587,9 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuAOPrice4.name }}" id="menuAOPrice4" type="text" readonly
-                              value="">
+                            <input step="0.01" name="{{ menudrinksform.menuAOPrice4.name }}" placeholder="Php 00.00" id="menuAOPrice4" type="number">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityAO4" class="form-label">Quantity AO4</label>
                             <input type="number" name="quantityAO4" placeholder="Quantity AO4" class="form-control"
                               id="inputquantityAO4">
                           </div>
@@ -645,11 +604,9 @@ menu.html
                               {% endif %}
                               {% endfor %}
                             </select>
-                            <input name="{{ menudrinksform.menuAOPrice5.name }}" id="menuAOPrice5" type="text" readonly
-                              value="">
+                            <input  step="0.01" name="{{ menudrinksform.menuAOPrice5.name }}" placeholder="Php 00.00" id="menuAOPrice5" type="number">
                           </div>
                           <div class="col-3">
-                            <label for="inputquantityAO5" class="form-label">Quantity AO5</label>
                             <input type="number" name="quantityAO5" placeholder="Quantity AO5" class="form-control"
                               id="inputquantityAO5">
                           </div>
@@ -738,56 +695,69 @@ menu.html
     </div>
   </footer><!-- End Footer -->
 
-
-  <script>
-    // add an event listener to each select element
-    document.querySelectorAll('select').forEach(select => {
-      // get the corresponding input element
-      const input = document.getElementById(`menuIngrPrice${select.id.slice(-1)}`);
-      // add an event listener to the select element
-      select.addEventListener('change', (event) => {
-        // get the selected option
-        const selectedOption = event.target.options[event.target.selectedIndex];
-        // get the price from the data-price attribute of the selected option
-        const price = selectedOption.getAttribute('data-price');
-        // set the value of the input element to the price
-        input.value = price;
-      });
+<script>
+  // add an event listener to each select element
+  document.querySelectorAll('select').forEach(select => {
+    // get the corresponding input element
+    const input = document.getElementById(`inputquantityIng${select.id.slice(-1)}`);
+    // add an event listener to the select element
+    select.addEventListener('change', (event) => {
+      // get the selected option
+      const selectedOption = event.target.options[event.target.selectedIndex];
+      // get the price from the data-price attribute of the selected option
+      const price = selectedOption.getAttribute('data-price');
+      // set the placeholder of the input element to the price
+      input.placeholder = price;
+      // require the input field if a stock name is selected
+      input = !!selectedOption.value;
     });
-  </script>
+  });
+</script>
+
+  
+  
   <script>
     // function to update addon prices
     function updateAddonPrice(addonSelectID, addonPriceID) {
       // get selected option value and price data attribute
       var selectedOption = document.getElementById(addonSelectID).options[document.getElementById(addonSelectID).selectedIndex];
       var addonPrice = selectedOption.getAttribute('data-price');
-
+      var addonName = selectedOption.innerText.trim(); // Get the text of the selected option
+  
       // update price input value
       document.getElementById(addonPriceID).value = addonPrice;
+  
+      // enable/disable fields based on the selection
+      var quantityField = document.getElementById('input' + addonPriceID.replace('menuAOPrice', 'quantityAO'));
+      quantityField.placeholder = 'Quantity ' + (addonName ? addonName : 'AO');
+      quantityField.required = !!addonName; // Require the field if a stock name is selected
+  
+      var priceField = document.getElementById(addonPriceID);
+      priceField.required = !!addonName; // Require the field if a stock name is selected
     }
-
+  
     // add onchange event listener to addon selects
     document.getElementById('inputAddOns1').addEventListener('change', function () {
       updateAddonPrice('inputAddOns1', 'menuAOPrice1');
     });
-
+  
     document.getElementById('inputAddOns2').addEventListener('change', function () {
       updateAddonPrice('inputAddOns2', 'menuAOPrice2');
     });
-
+  
     document.getElementById('inputAddOns3').addEventListener('change', function () {
       updateAddonPrice('inputAddOns3', 'menuAOPrice3');
     });
-
+  
     document.getElementById('inputAddOns4').addEventListener('change', function () {
       updateAddonPrice('inputAddOns4', 'menuAOPrice4');
     });
-
+  
     document.getElementById('inputAddOns5').addEventListener('change', function () {
       updateAddonPrice('inputAddOns5', 'menuAOPrice5');
     });
   </script>
-
+  
 
 
   <script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
