@@ -9,7 +9,10 @@ from pos import views
 from .forms import IngridientsForm, AddOnsForm, UtensilsForm
 from .forms import MenuCategoryForm, MenuDrinksForm
 from .forms import BuyItemForms
-import logging
+import logging, random, datetime
+from itertools import groupby
+
+
 def base(request):
   
     return render(request, 'base.html')
@@ -209,6 +212,7 @@ def buy_item_drinks(request):
     if request.method == 'POST':
         form = BuyItemForms(request.POST, request.FILES)
         if form.is_valid():
+            print("puta")
             form.save()
             return HttpResponseRedirect(reverse("pos:home"))
         else:
@@ -226,8 +230,15 @@ def index(request):
 
 
 def sales(request):
-  
-    return render(request, 'sales.html')
+   
+    buyitem = buyItem.objects.all()
+    
+
+    context = {
+ 
+    'buyitem': buyitem,
+    }
+    return render(request, 'sales.html', context)
 
 
 def order(request):
@@ -264,7 +275,17 @@ def buy_item_drinks1(request):
 
     return HttpResponseRedirect(reverse("pos:reco"))
 
+
+
+
+
+
+
+#cart start
+#
+#
 def cart(request):
+    buyitemform = BuyItemForms() 
     stocks = Stocks.objects.first()
     menuDrinks = MenuDrinks.objects.all()
     menuCategory = MenuCategory.objects.all()
@@ -273,7 +294,7 @@ def cart(request):
     
 
     context = {
-   
+        'buyitemform': buyitemform,
         'stocks': stocks,
         'menuDrinks': menuDrinks,
         'menuCategory': menuCategory,
@@ -285,10 +306,55 @@ def cart(request):
   
     return render(request, 'cart.html',context)
 
+
+def update_values(request):
+    if request.method == 'POST':
+        # Get the form data from the request
+        payment_method = request.POST.get('payment_method')
+        dine_in_out = request.POST.get('DineIn_Out')
+        tendered_payment = request.POST.get('tenderedPayment')
+        AllPayment = float(request.POST.get('AllPayment'))
+
+        # Generate a unique order number
+        order_number = str(random.randint(1, 99999)).zfill(5)
+
+        # Get only the buyItem objects with buyOrBought=False
+        buy_items = buyItem.objects.filter(buyOrBought=False)
+      
+        # Get the current date and time
+        current_datetime = datetime.datetime.now()
+
+        for item in buy_items:
+            # Update the fields for each buyItem object
+            item.payment_method = payment_method
+            item.DineIn_Out = dine_in_out
+            item.tenderedPayment = tendered_payment
+            item.AllPayment = AllPayment
+            if not item.buyOrBought:
+                item.orderNumber = order_number
+                item.buyOrBought = True  # Set buyOrBought to True
+                item.dateordered = current_datetime  # Store the current date and time
+            # Save the changes for each buyItem object
+            item.save()
+
+        # Redirect to a success page or do any further processing
+        return redirect("pos:home")
+
+    # Render the form
+    return render(request, "home.html")
+
+
+
+
+#forgroupings
+#cart end
+
+
+#computation
 def calculate_total_price(buyitem):
     total = 0
     for item in buyitem:
-        if item.total_price:
+        if not item.buyOrBought and item.total_price:
             total += item.total_price
     rounded_total = round(total, 2)
     return rounded_total

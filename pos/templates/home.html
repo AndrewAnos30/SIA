@@ -111,7 +111,7 @@ home.html
           <ul class="nav nav-pills">
             {% for category in menuCategory %}
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="pill" href="#{{ category.name }}">
+              <a class="nav-link" data-bs-toggle="pill" href="#{{ category.name|slugify }}">
                 <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
                 <span>{{ category.name }}</span>
               </a>
@@ -124,7 +124,7 @@ home.html
       <div class="tab-content mt-4">
         {% for category in menuCategory %}
         <!-- Coffee or Category 1 pane -->
-        <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ category.name }}">
+        <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ category.name|slugify }}">
           <div class="d-flex justify-content-between mb-2">
             <h5 class="categories">{{ category.name }}</h5>
           </div>
@@ -167,6 +167,7 @@ home.html
                           <form id="itemForm" action="{% url 'pos:buyitemdrinks' %}" method="post"
                             enctype="multipart/form-data">
                             {% csrf_token %}
+
                             <div class="imageholder justify-content-center">
                               <img class="img-thumbnail" name="{{ buyitemform.butImage.name }}"
                                 src="{{ row.menuimage.url }}" alt="menupic">

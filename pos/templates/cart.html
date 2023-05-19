@@ -107,14 +107,16 @@
             <div class="p-2">
                 <h6 class="page-title-cart">Your Orders</h6>
             </div>
+            {% for cart in buyitem %}
+            {% if cart.buyOrBought == False %}
+         
             <div class="row">
 
                 <div class="col-8">
-
+                   
                     <div class="d-block order-card">
                         <!-- ito ung mga inadd sa cart sa drinks  -->
-                        {% for cart in buyitem %}
-                        {% if cart.buyOrBought == False %}
+                
                         <div class="card mb-3 m-1">
                             <div class="row g-1">
 
@@ -126,7 +128,7 @@
                                             <tbody>
 
                                                 <tr>
-                                                    <td class="col-2" style="vertical-align: middle;"> <img src=""
+                                                    <td class="col-2" style="vertical-align: middle;"> <img src="{{data.menuimage.url}}"
                                                             class="img-preview rounded" alt=""></td>
                                                     <td class="col-5">
                                                         <table class="table nested-table table-sm table-borderless p-0">
@@ -202,147 +204,7 @@
                                                         <h4><strong> &#8369 {{ cart.total_price }}</strong></h4>
                                                     </td>
                                                     <td class="col-1" style="vertical-align: middle;">
-                                                        <div class="d-grid gap-2 btn-actions">
-                                                            <button class="btn edit-btn btn-sm"
-                                                                data-bs-toggle="offcanvas" href="#menuinformation"
-                                                                role="button" aria-controls="menuinformation">
-                                                                <i class='bx bxs-edit'></i>
-                                                            </button>
-                                                            <!--edit function to edit the details of the menu in the cart-->
-                                                            <!-- offcanvas display edit menu Info -->
-                                                            <div class="offcanvas offcanvas-end" tabindex="-1"
-                                                                id="menuinformation" aria-labelledby="menuinformation">
-                                                                <div class="offcanvas-header">
-                                                                    <button type="button" class="btn-close text-reset"
-                                                                        data-bs-dismiss="offcanvas"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-
-                                                                <form action="" class="order-form m-4">
-                                                                    <!-- image of the menu -->
-                                                                    <div class="imageholder justify-content-center">
-                                                                        <img class="img-fluid"
-                                                                            src="/static/img/coffee.jpg" alt="menupic">
-                                                                    </div>
-
-                                                                    <!-- menu name and price-->
-                                                                    <div class="menu_name_price">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <h4 class="menu_name ">Coffee</h4>
-                                                                            <h5 class="price">50.00</h5>
-                                                                        </div>
-                                                                    </div> <!-- menu name and price -->
-
-
-                                                                    <!-- size option -->
-                                                                    <div class="size-option-div">
-                                                                        <div class="d-block size-option">
-                                                                            <h6 class="sizetxt fw-light">Size</h6>
-                                                                            <!-- options of Sizes form -->
-                                                                            <div
-                                                                                class="d-flex justify-content-center g-2">
-                                                                                <div class="form-check">
-                                                                                    <input type="radio"
-                                                                                        class="form-check-input"
-                                                                                        id="radio1" name="optradio"
-                                                                                        value="regular"> Regular
-                                                                                    <label class="form-check-label"
-                                                                                        for="regular"></label>
-                                                                                </div>
-                                                                                <div class="form-check">
-                                                                                    <input type="radio"
-                                                                                        class="form-check-input"
-                                                                                        id="radio2" name="optradio"
-                                                                                        value="medium">Medium
-                                                                                    <label class="form-check-label"
-                                                                                        for="medium"></label>
-                                                                                </div>
-                                                                                <div class="form-check">
-                                                                                    <input type="radio"
-                                                                                        class="form-check-input"
-                                                                                        id="radio3" name="optradio"
-                                                                                        value="large">Large
-                                                                                    <label class="form-check-label"
-                                                                                        for="large"></label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> <!-- size option end -->
-                                                                    <!-- addons option -->
-                                                                    <div class="addons-option-div">
-                                                                        <div class="d-block add-on-option mt-2">
-                                                                            <h6 class="sizetxt fw-light">Add Ons</h6>
-                                                                            <div class="d-block">
-                                                                                <div
-                                                                                    class="form-check d-flex justify-content-between">
-                                                                                    <div>
-                                                                                        <input class="form-check-input"
-                                                                                            type="checkbox" id="check1"
-                                                                                            name="option1"
-                                                                                            value="something">
-                                                                                        <label
-                                                                                            class="form-check-label fw-bold">Expresso
-                                                                                            Shot</label>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <h6 class="priceAddOns">10.00
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div
-                                                                                    class="form-check d-flex justify-content-between">
-                                                                                    <div>
-                                                                                        <input class="form-check-input"
-                                                                                            type="checkbox" id="check1"
-                                                                                            name="option1"
-                                                                                            value="something">
-                                                                                        <label
-                                                                                            class="form-check-label fw-bold">Expresso
-                                                                                            Shot</label>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <h6 class="priceAddOns">10.00
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="form-check d-flex justify-content-between">
-                                                                                    <div>
-                                                                                        <input class="form-check-input"
-                                                                                            type="checkbox" id="check1"
-                                                                                            name="option1"
-                                                                                            value="something">
-                                                                                        <label
-                                                                                            class="form-check-label fw-bold">Expresso
-                                                                                            Shot</label>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <h6 class="priceAddOns">10.00
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> <!-- addons option end -->
-                                                                    <div class="text-center col-12 d-grid">
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary add-to-cart-btn">Add
-                                                                            to Cart</button>
-                                                                    </div>
-
-                                                                    <div class="ingredient_list mt-2">
-                                                                        <h6 class="sizetxt fw-light">Ingredients</h6>
-                                                                        <div class="d-flex">
-                                                                            <p class="ingredient_name px-3">coffee beans
-                                                                            </p>
-                                                                            <p class="ingredient_name px-3">sugar</p>
-                                                                            <p class="ingredient_name px-3">non-fat milk
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
+                                                
 
 
                                                             <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
@@ -390,65 +252,73 @@
                                 </div>
 
                             </div>
+                           
                         </div>
-                        {%endif%}
-                        {%endfor%}
+                      
+                      
                         <!-- ito ung mga inadd sa cart sa drinks end  -->
                     </div>
 
                 </div>
-
+                {%endif%}
+                {%endfor%}
                 <div class="col-4">
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="">
+                            <form  action="{% url 'pos:update_values' %}" method="post"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="buyItem_{{ cart.id }}_buyOrBought" value="False">
                                 <h6>Order Method: </h6>
                                 <div class="d-flex px-2 justify-content-center">
-                                    <div>
-                                        <input type="checkbox" class="btn-check d-flex" id="btn-check-1"
-                                            autocomplete="off">
-                                        <label class="btn" for="btn-check-1">Dine In</label>
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" class="btn-check d-flex" id="btn-check-2"
-                                            autocomplete="off">
-                                        <label class="btn" for="btn-check-2">Takeout</label>
-                                    </div>
+                                  <div>
+                                    <input type="radio" class="btn-check d-flex" name="DineIn_Out" id="btn-check-4" autocomplete="off" value="IN" {% if buyitemforms.DineIn_Out.name == "IN" %}checked{% endif %}>
+                                    <label class="btn" for="btn-check-4">Dine In</label>
+                                  </div>
+                                  <div>
+                                    <input type="radio" class="btn-check d-flex" name="DineIn_Out" id="btn-check-3" autocomplete="off" value="OUT" {% if buyitemforms.DineIn_Out.name == "OUT" %}checked{% endif %}>
+                                    <label class="btn" for="btn-check-3">Takeout</label>
+                                  </div>
                                 </div>
-
-                                <h6 class="mt-2">Payment Method: </h6>
+                                
+                                <h6>Payment Method:</h6>
                                 <div class="d-flex px-2 justify-content-center">
-                                    <div>
-                                        <input type="checkbox" class="btn-check d-flex" id="btn-check-3"
-                                            autocomplete="off">
-                                        <label class="btn" for="btn-check-3">Cash</label>
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" class="btn-check d-flex" id="btn-check-4"
-                                            autocomplete="off">
-                                        <label class="btn" for="btn-check-4">GCash</label>
-                                    </div>
+                                  <div>
+                                    <input type="radio" class="btn-check d-flex" name="payment_method" id="btn-check-5" autocomplete="off" value="cash" {% if buyitemforms.payment_method.name == "cash" %}checked{% endif %}>
+                                    <label class="btn" for="btn-check-5">Cash</label>
+                                  </div>
+                                  <div>
+                                    <input type="radio" class="btn-check d-flex" name="payment_method" id="btn-check-6" autocomplete="off" value="gcash" {% if buyitemforms.payment_method.name == "gcash" %}checked{% endif %}>
+                                    <label class="btn" for="btn-check-6">GCash</label>
+                                  </div>
                                 </div>
-
+                                
+                                <div class="total-amount mt-4">
+                                    <div class="d-flex justify-content-between">
+                                        <h5><strong>Tendred Payment</strong></h5>
+                                        <input name="tenderedPayment" step="0.01" type="number" class="form-control text-end ms-auto" inputmode="numeric" pattern="[0-9]*">                                    </div>
+                                </div>
+                                
                                 <div class="total-amount mt-4">
                                     <div class="d-flex justify-content-between">
                                         <h5><strong>Total Amount</strong></h5>
-                                        <h4><strong>&#8369 {{ total_price }}</strong></h4>
-
-                                    </div>
+                                        <input name="AllPayment" type="text" class="form-control bg-transparent border-0 fw-bold text-end" value="{{ total_price }}" readonly>&#8369                                    </div>
                                 </div>
+                                
 
+
+                               
                                 <div class="text-center col-12 d-grid">
-                                    <button type="submit" class="btn place-order-btn">
-                                        <a href="/templates/user order/ordernumber.html">Place Order</a></button>
+                                    <button type="submit" class="btn place-order-btn">Place Order</button> 
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-
-            </div>
+             
+                
+           
             <!-- list of menus in the cart  -->
 
         </section>

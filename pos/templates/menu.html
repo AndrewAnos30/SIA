@@ -632,7 +632,7 @@ menu.html
             <ul class="nav nav-pills">
               {% for categories in menuCategory %}
               <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name}}">
+                <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name|slugify}}">
                   <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
                   <span>{{categories.name}}</span>
                 </a>
@@ -644,7 +644,7 @@ menu.html
             <div class="tab-content mt-4">
               {% for categories in menuCategory %}
               <!-- Coffeee or Category 1 pane -->
-              <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{categories.name}}">
+              <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ categories.name|slugify }}">                
                 <div class="d-flex justify-content-between mb-2">
                   <h5 class="categories">{{categories.name}}</h5>
                 </div>
@@ -654,7 +654,7 @@ menu.html
                   <div class="col">
                     <!-- Card with an image on top -->
                     <div class="card menu-item-card">
-                      <img src="{{data.menuimage.url}}" class="card-img-top" alt="{{data.menuname}}">
+                      <img src="{{data.menuimage.url}}" class="card-img-top">
                       <div class="card-body">
                         <h5 class="card-title">{{data.menuname}}</h5>
                         <div class="d-flex">

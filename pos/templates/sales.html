@@ -276,7 +276,6 @@
                     <tr>
                       <th scope="col">Order No.</th>
                       <th scope="col">Date</th>
-                      <th scope="col">Preview</th>
                       <th scope="col">Beverage</th>
                       <th scope="col">Quantity</th>
                       <th scope="col">Size</th>
@@ -288,21 +287,34 @@
 
                     </tr>
                   </thead>
+                 
                   <tbody>
+                    {%for sale in buyitem %}
                     <tr>
-                      <td>01</td>
-                      <td>1-2-2022</td>
-                      <th scope="row"><a href="#"><img src="/static/img/logo.png" alt=""></a></th>
-                      <td><a href="#" class="text-primary fw-bold">Coffee Latte</a></td>
-                      <td>2</td>
-                      <td>Large</td>
-                      <td>50</td>
-                      <td>1 Shot Expresso</td>
-                      <td>50</td>
-                      <td>Cash</td>
-                      <td>100</td>
+                      <td>{{sale.orderNumber}}</td>
+                      <td>{{sale.dateordered.date}}</td>
+                      <td><a href="#" class="text-primary fw-bold">{{sale.buyName}}</a></td>
+                      <td>{{sale.buyQuantityMenu}}</td>
+                      <td>{{sale.buySize}}</td>
+                      <td>{{sale.buyPrice}}</td>
+                    
+                      <td>
+                        {% if sale.buyAddOns1 %}{{ sale.buyAddOns1 }}<br>{% endif %}
+                        {% if sale.buyAddOns2 %}{{ sale.buyAddOns2 }}<br>{% endif %}
+                        {% if sale.buyAddOns3 %}{{ sale.buyAddOns3 }}<br>{% endif %}
+                        {% if sale.buyAddOns4 %}{{ sale.buyAddOns4 }}<br>{% endif %}
+                        {% if sale.buyAddOns5 %}{{ sale.buyAddOns5 }}<br>{% endif %}
+                        {% if not sale.buyAddOns1 and not sale.buyAddOns2 and not sale.buyAddOns3 and not sale.buyAddOns4 and not sale.buyAddOns5 %}
+                          None
+                        {% endif %}
+                      </td>
+                      <td><br> {{sale.total_AO}}</td>
+                      <td>{{sale.payment_method}}</td>
+                      <td>{{sale.AllPayment}}</td>
                     </tr>
+                    {%endfor%}
                   </tbody>
+                
                 </table>
 
               </div>

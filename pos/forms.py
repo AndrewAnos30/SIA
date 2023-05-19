@@ -80,13 +80,24 @@ class MenuDrinksForm(forms.ModelForm):
 
 #home Start
 
+from django import forms
+
 class BuyItemForms(forms.ModelForm):
+    buySize = forms.ChoiceField(choices=(('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')), required=False)
+
     class Meta:
         model = buyItem
         fields = [
-        "buyOrBought","buySize","buyQuantityMenu", "buyName", "buyPrice","buyAddOns1","buyAddOns2","buyAddOns3","buyAddOns4","buyAddOns5", "buyQuantityAO1", "buyQuantityAO2", "buyQuantityAO3", "buyQuantityAO4", "buyQuantityAO5", "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5",
-        "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5", "buyQuantityIng1", "buyQuantityIng2", "buyQuantityIng3", "buyQuantityIng4", "buyQuantityIng5"
+            "buyOrBought", "buySize", "buyQuantityMenu", "buyName", "buyPrice",
+            "buyAddOns1", "buyAddOns2", "buyAddOns3", "buyAddOns4", "buyAddOns5",
+            "buyQuantityAO1", "buyQuantityAO2", "buyQuantityAO3", "buyQuantityAO4", "buyQuantityAO5",
+            "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5",
+            "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5",
+            "buyQuantityIng1", "buyQuantityIng2", "buyQuantityIng3", "buyQuantityIng4", "buyQuantityIng5",
+            "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered"
         ]
         widgets = {
-            'buySize': forms.RadioSelect(choices=(('small', 'Small'), ('medium', 'Medium'), ('large', 'Large'))),
+            'payment_method': forms.RadioSelect(choices=(('cash', 'Cash'),('gcash', 'GCash'))),
+            'DineIn_Out': forms.RadioSelect(choices=(('IN', 'Dine In'),('OUT', 'Dine Out'))),
         }
+

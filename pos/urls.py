@@ -31,5 +31,6 @@ urlpatterns = [
     path('delete_menu/<int:menu_id>/', views.delete_menu, name='delete_menu'), 
     path('buyitemdrinks/', views.buy_item_drinks, name='buyitemdrinks'),
     path('buy_item_drinks1/', views.buy_item_drinks1, name='buy_item_drinks1'),
+    path('update_values', views.update_values, name='update_values'),
 
     ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
