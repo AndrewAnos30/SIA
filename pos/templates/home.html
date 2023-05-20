@@ -189,6 +189,9 @@ home.html
                               {{ buyitemform.buySize }}
                             </div>
 
+                            <div>
+                              <input name="{{ buyitemform.priceSize.name }}" type="number" id="priceField" readonly>
+                          </div>
 
                             <div class="addons-option-div">
                               <div class="d-block add-on-option mt-2">
@@ -407,8 +410,43 @@ home.html
     }
   </script>
   
+  <script>
+    $(document).ready(function() {
+        $('#id_buySize').change(function() {
+            var selectedSize = $(this).val();
+            
+            $.ajax({
+                url: '/calculate_price/',
+                data: {'size': selectedSize},
+                success: function(response) {
+                    var price = response.price;
+                    $('#priceField').val(price);
+                }
+            });
+        });
+    });
+    </script>
 
-
+<script>
+  $(document).ready(function() {
+      $('#id_buySize').change(function() {
+          var selectedSize = $(this).val();
+          
+          $.ajax({
+              url: '/calculate_price/',
+              data: {'size': selectedSize},
+              success: function(response) {
+                  var price = response.price;
+                  $('#priceField').val(price);
+              }
+          });
+      });
+  
+      // Set default value to 0.00
+      $('#priceField').val('0');
+  });
+  </script>
+  
 
 </body>
 

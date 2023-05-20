@@ -1,4 +1,3 @@
-
 from . import views
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
@@ -32,5 +31,6 @@ urlpatterns = [
     path('buyitemdrinks/', views.buy_item_drinks, name='buyitemdrinks'),
     path('buy_item_drinks1/', views.buy_item_drinks1, name='buy_item_drinks1'),
     path('update_values', views.update_values, name='update_values'),
+    path('calculate_price/', views.calculate_price, name='calculate_price'),
 
     ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

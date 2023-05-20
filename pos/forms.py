@@ -83,7 +83,7 @@ class MenuDrinksForm(forms.ModelForm):
 from django import forms
 
 class BuyItemForms(forms.ModelForm):
-    buySize = forms.ChoiceField(choices=(('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')), required=False)
+    buySize = forms.ChoiceField(choices=(('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')), required=False, widget=forms.Select(attrs={'id': 'id_buySize'}))
 
     class Meta:
         model = buyItem
@@ -94,7 +94,8 @@ class BuyItemForms(forms.ModelForm):
             "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5",
             "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5",
             "buyQuantityIng1", "buyQuantityIng2", "buyQuantityIng3", "buyQuantityIng4", "buyQuantityIng5",
-            "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered"
+            "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered", "DoneOrder",
+            "priceSize"
         ]
         widgets = {
             'payment_method': forms.RadioSelect(choices=(('cash', 'Cash'),('gcash', 'GCash'))),

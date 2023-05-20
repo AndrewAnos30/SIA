@@ -10,7 +10,8 @@ from .forms import IngridientsForm, AddOnsForm, UtensilsForm
 from .forms import MenuCategoryForm, MenuDrinksForm
 from .forms import BuyItemForms
 import logging, random, datetime
-from itertools import groupby
+from datetime import datetime, timedelta
+from django.http import JsonResponse
 
 
 def base(request):
@@ -231,19 +232,39 @@ def index(request):
 
 def sales(request):
    
-    buyitem = buyItem.objects.all()
-    
+    today = datetime.now().date()
+    start_of_week = today - timedelta(days=today.weekday())  # Get the start date of the current week
+    end_of_week = start_of_week + timedelta(days=6)  # Get the end date of the current week
 
+    buyitem = buyItem.objects.filter(dateordered__date__range=[start_of_week, end_of_week])
+    
     context = {
- 
-    'buyitem': buyitem,
+        'buyitem': buyitem,
     }
+    
     return render(request, 'sales.html', context)
 
 
 def order(request):
+    buyitemform = BuyItemForms() 
+    stocks = Stocks.objects.first()
+    menuDrinks = MenuDrinks.objects.all()
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
+    total_price = calculate_total_price(buyitem)
+    
+
+    context = {
+        'buyitemform': buyitemform,
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
+        'total_price': total_price
+
+    }
   
-    return render(request, 'order.html')
+    return render(request, 'order.html', context)
 
 
 
@@ -305,6 +326,21 @@ def cart(request):
   
   
     return render(request, 'cart.html',context)
+from django.http import JsonResponse
+
+
+def get_price(request):
+    size = request.GET.get('size')
+    price = 0
+
+    if size == 'small':
+        price = 10
+    elif size == 'medium':
+        price = 20
+    elif size == 'large':
+        price = 30
+
+    return JsonResponse({'price': price})
 
 
 def update_values(request):
@@ -322,7 +358,7 @@ def update_values(request):
         buy_items = buyItem.objects.filter(buyOrBought=False)
       
         # Get the current date and time
-        current_datetime = datetime.datetime.now()
+        current_datetime = datetime.now()
 
         for item in buy_items:
             # Update the fields for each buyItem object
@@ -345,8 +381,6 @@ def update_values(request):
 
 
 
-
-#forgroupings
 #cart end
 
 
@@ -358,3 +392,15 @@ def calculate_total_price(buyitem):
             total += item.total_price
     rounded_total = round(total, 2)
     return rounded_total
+
+
+def calculate_price(request):
+    size = request.GET.get('size')
+    price = '0'
+
+    if size == 'medium':
+        price = '20'
+    elif size == 'large':
+        price = '30'
+
+    return JsonResponse({'price': price})

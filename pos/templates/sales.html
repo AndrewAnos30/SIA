@@ -289,31 +289,31 @@
                   </thead>
                  
                   <tbody>
-                    {%for sale in buyitem %}
+                    {% for sale in buyitem %}
                     <tr>
-                      <td>{{sale.orderNumber}}</td>
-                      <td>{{sale.dateordered.date}}</td>
-                      <td><a href="#" class="text-primary fw-bold">{{sale.buyName}}</a></td>
-                      <td>{{sale.buyQuantityMenu}}</td>
-                      <td>{{sale.buySize}}</td>
-                      <td>{{sale.buyPrice}}</td>
-                    
-                      <td>
-                        {% if sale.buyAddOns1 %}{{ sale.buyAddOns1 }}<br>{% endif %}
-                        {% if sale.buyAddOns2 %}{{ sale.buyAddOns2 }}<br>{% endif %}
-                        {% if sale.buyAddOns3 %}{{ sale.buyAddOns3 }}<br>{% endif %}
-                        {% if sale.buyAddOns4 %}{{ sale.buyAddOns4 }}<br>{% endif %}
-                        {% if sale.buyAddOns5 %}{{ sale.buyAddOns5 }}<br>{% endif %}
-                        {% if not sale.buyAddOns1 and not sale.buyAddOns2 and not sale.buyAddOns3 and not sale.buyAddOns4 and not sale.buyAddOns5 %}
-                          None
-                        {% endif %}
-                      </td>
-                      <td><br> {{sale.total_AO}}</td>
-                      <td>{{sale.payment_method}}</td>
-                      <td>{{sale.AllPayment}}</td>
+                        <td>{{ sale.orderNumber }}</td>
+                        <td>{{ sale.dateordered.date }}</td>
+                        <td><a href="#" class="text-primary fw-bold">{{ sale.buyName }}</a></td>
+                        <td>{{ sale.buyQuantityMenu }}</td>
+                        <td>{{ sale.buySize }}</td>
+                        <td>{{ sale.buyPrice }}</td>
+                        <td>
+                            {% if sale.buyAddOns1 %}{{ sale.buyAddOns1 }}<br>{% endif %}
+                            {% if sale.buyAddOns2 %}{{ sale.buyAddOns2 }}<br>{% endif %}
+                            {% if sale.buyAddOns3 %}{{ sale.buyAddOns3 }}<br>{% endif %}
+                            {% if sale.buyAddOns4 %}{{ sale.buyAddOns4 }}<br>{% endif %}
+                            {% if sale.buyAddOns5 %}{{ sale.buyAddOns5 }}<br>{% endif %}
+                            {% if not sale.buyAddOns1 and not sale.buyAddOns2 and not sale.buyAddOns3 and not sale.buyAddOns4 and not sale.buyAddOns5 %}
+                                None
+                            {% endif %}
+                        </td>
+                        <td><br>{{ sale.total_AO }}</td>
+                        <td>{{ sale.payment_method }}</td>
+                        <td>{{ sale.AllPayment }}</td>
                     </tr>
-                    {%endfor%}
-                  </tbody>
+                    {% endfor %}
+                </tbody>
+                
                 
                 </table>
 
