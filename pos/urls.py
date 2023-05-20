@@ -32,5 +32,5 @@ urlpatterns = [
     path('buy_item_drinks1/', views.buy_item_drinks1, name='buy_item_drinks1'),
     path('update_values', views.update_values, name='update_values'),
     path('calculate_price/', views.calculate_price, name='calculate_price'),
-
-    ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('update_done_order/<int:pk>/', views.update_done_order, name='update_done_order'),
+   ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

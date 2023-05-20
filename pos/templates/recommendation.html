@@ -144,6 +144,7 @@
                               <form id="itemForm" action="{% url 'pos:buyitemdrinks' %}" method="post"
                                 enctype="multipart/form-data">
                                 {% csrf_token %}
+    
                                 <div class="imageholder justify-content-center">
                                   <img class="img-thumbnail" name="{{ buyitemform.butImage.name }}"
                                     src="{{ row.menuimage.url }}" alt="menupic">
@@ -164,8 +165,12 @@
                                   <label for="{{ buyitemform.buySize.id_for_label }}">Size</label>
                                   {{ buyitemform.buySize }}
                                 </div>
-    
-    
+                                
+                                <div>
+                                  <input name="{{ buyitemform.priceSize.name }}" type="number" id="priceField" readonly>
+                                </div>
+                                
+                                
                                 <div class="addons-option-div">
                                   <div class="d-block add-on-option mt-2">
                                     <h6 class="sizetxt fw-light">Add Ons</h6>
@@ -351,7 +356,7 @@
                         </div>
                       </div>
                     </div>
-             
+          
                     {% endfor %}
                   </div>
                 </div>
@@ -367,27 +372,31 @@
       </div>
     </footer><!-- End Footer -->
   
-    <script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
-    <script type="text/javascript">
-      VirtualSelect.init({
-        ele: '#multiSelect'
-      });
-    </script>
-     <script>
-      function selectAllCheckboxes(check1Id, check2Id, check3Id, sourceCheckbox) {
-        var checkboxes = document.querySelectorAll('.form-check-input');
-        
-        for (var i = 0; i < checkboxes.length; i++) {
-          if (
-            checkboxes[i].id === check1Id ||
-            checkboxes[i].id === check2Id ||
-            checkboxes[i].id === check3Id
-          ) {
-            checkboxes[i].checked = sourceCheckbox.checked;
-          }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#id_buySize').change(function() {
+      var selectedSize = $(this).val();
+
+      $.ajax({
+        url: '{% url "calculate_price" %}',
+        data: {'size': selectedSize},
+        success: function(response) {
+          var price = response.price;
+          $('#priceField').val(price);
         }
-      }
-    </script>
+      });
+    });
+
+    // Set default value to 0.00
+    $('#priceField').val('0');
+  });
+</script>
+
+  
   </body>
   
   </html>

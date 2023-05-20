@@ -182,8 +182,8 @@
 
       <!-- Menu Nav -->
       <li class="nav-item">
-        <a class="nav-link active" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}" >
-          <i class='bx bxs-food-menu' ></i></i><span>Menu</span>
+        <a class="nav-link active" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}">
+          <i class='bx bxs-food-menu'></i></i><span>Menu</span>
         </a>
       </li><!-- End Menu Nav -->
       <!-- End Menu Nav -->
@@ -228,7 +228,7 @@
       <!-- POS Nav -->
       <li class="nav-item">
         <a class="nav-link" data-bs-target="#pos-nav" href="{% url 'pos:home' %}">
-          <i class='bx-bar-chart' ></i></i><span>POS</span>
+          <i class='bx-bar-chart'></i></i><span>POS</span>
         </a>
       </li><!-- POS end-->
     </ul>
@@ -236,156 +236,159 @@
 
 
 
-<main id="main" class="main">
-  <div class="pagetitle">
-    <h1>Orders</h1>
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/templates/index.html">Home</a></li>
-        <li class="breadcrumb-item active">Orders</li>
-      </ol>
-    </nav>
-  </div><!-- End Page Title -->
-  <section class="section dashboard">
-    <div class="row">
-     
-      <!-- right side -->
-      <div class="col-lg-12 col-sm-12">
-           <!-- Transactions -->
-           <div class="card">
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Orders</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/templates/index.html">Home</a></li>
+          <li class="breadcrumb-item active">Orders</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- right side -->
+        <div class="col-lg-12 col-sm-12">
+          <!-- Transactions -->
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Transactions</h5>
-               
+
               <div class="p-2">
                 <h6 class="page-title-cart">Your Orders</h6>
-            </div>
-            {% for cart in buyitem %}
-            {% if cart.buyOrBought == True %}
-         
-            <div class="row">
+              </div>
+              {% for cart in buyitem %}
+              {% if cart.buyOrBought == True %}
+              {% if cart.DoneOrder == False %}
+              <div class="row">
 
                 <div class="col-8">
-                   
-                    <div class="d-block order-card">
-                        <!-- ito ung mga inadd sa cart sa drinks  -->
-                
-                        <div class="card mb-3 m-1">
-                            <div class="row g-1">
 
-                                <div class="col-12">
+                  <div class="d-block order-card">
+                    <!-- ito ung mga inadd sa cart sa drinks  -->
 
-                                    <div class="card-body mb-0 p-0">
+                    <div class="card mb-3 m-1">
+                      <div class="row g-1">
 
-                                        <table class="table table-responsive table-borderless mb-0 p-0">
-                                            <tbody>
+                        <div class="col-12">
 
-                                                <tr>
-                                                    <td class="col-2" style="vertical-align: middle;"> <img src="{{data.menuimage.url}}"
-                                                            class="img-preview rounded" alt=""></td>
-                                                    <td class="col-5">
-                                                        <table class="table nested-table table-sm table-borderless p-0">
-                                                            <tbody>
-                                                              <td>
-                                                                <strong>{{cart.orderNumber}}</strong></td>
-                                                                <tr>
-                                                                    <!--para sa main menu-->
-                                                                    <td class="main-menu">
-                                                                        <strong>{{cart.buyName}}</strong></td>
-                                                                    <td class="main-menu-price">
-                                                                        <strong>{{cart.buySize}}</strong></td>
-                                                                       
-                                                                </tr>
-                                                                <!--para sa size-->
-                                                                <tr>
-                                                                   
-                                                             
-                                                                </tr>
-                                                                <!--para sa addons-->
-                                                                <tr>
+                          <div class="card-body mb-0 p-0">
 
-                                                                
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td class="col-2" style="vertical-align: middle;">
-                                                        <div class="input-group my-auto">
-                                                            <input  class="form-control" style="text-align: center;"
-                                                                value="{{cart.buyQuantityMenu}}" readonly>
-                                                        </div>
-                                                    </td>
-                                                    <td class="col-2 text-center total-price"
-                                                        style="vertical-align: middle;">
-                                                        <h4><strong> &#8369 {{ cart.AllPayment }}</strong></h4>
-                                                    </td>
-                                                    <td class="col-1" style="vertical-align: middle;">
-                                                
+                            <table class="table table-responsive table-borderless mb-0 p-0">
+                              <tbody>
+
+                                <tr>
+                                  <td class="col-2" style="vertical-align: middle;"> <img src="{{data.menuimage.url}}"
+                                      class="img-preview rounded" alt=""></td>
+                                  <td class="col-5">
+                                    <table class="table nested-table table-sm table-borderless p-0">
+                                      <tbody>
+                                        <td>
+                                          <strong>{{cart.orderNumber}}</strong>
+                                        </td>
+                                        <tr>
+                                          <!--para sa main menu-->
+                                          <td class="main-menu">
+                                            <strong>{{cart.buyName}}</strong>
+                                          </td>
+                                          <td class="main-menu-price">
+                                            <strong>&#8369 {{cart.buyQuantityMenu}}</strong>
+                                          </td>
+                                        </tr>
+                                        <!--para sa size-->
+                                        <tr>
+                                          <td class="td-text">{{cart.buySize}}</td>
+                                          <td class="td-text"> &#8369 10.00</td>
+                                        </tr>
+                                        <!--para sa addons-->
+                                        <tr>
 
 
-                                                            <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
-                                                                data-bs-target="#deletemodal"><i
-                                                                    class='bx bx-trash'></i></button>
-
-                                                            <!--Delete function to delfete the menu in the cart-->
-
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="deletemodal"
-                                                                data-bs-backdrop="static" data-bs-keyboard="false"
-                                                                tabindex="-1" aria-labelledby="daletemodal"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h1 class="modal-title fs-5"
-                                                                                id="staticBackdropLabel">Confirmation
-                                                                            </h1>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            Are you sure you want to delete this menu?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">Cancel</button>
-                                                                            <button type="button"
-                                                                                class="btn btn-primary">Delete</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                  <td class="col-2" style="vertical-align: middle;">
+                                    <div class="input-group my-auto">
+                                      <input class="form-control" style="text-align: center;"
+                                        value="{{cart.buyQuantityMenu}}" readonly>
                                     </div>
+                                  </td>
+                                  <td class="col-2 text-center total-price" style="vertical-align: middle;">
+                                    <h4><strong> &#8369 {{ cart.AllPayment }}</strong></h4>
+                                  </td>
+                                  <td class="col-1" style="vertical-align: middle;">
 
+
+
+                                    <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
+                                      data-bs-target="#deletemodal"><i class='bx bx-trash'></i></button>
+                                      {% url 'pos:update_done_order' cart.pk as update_done_order_url %}
+
+                                      <button type="button" class="btn btn-primary btn-sm"
+                                              onclick="location.href='{{ update_done_order_url }}'">OK</button>
+                                      
+                              
+                            </table>
+                            </tbody>
+
+                            <!--Delete function to delfete the menu in the cart-->
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="deletemodal" data-bs-backdrop="static" data-bs-keyboard="false"
+                              tabindex="-1" aria-labelledby="daletemodal" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Are you sure you want to delete this menu?
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                      data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary">Delete</button>
+                                  </div>
                                 </div>
-
+                              </div>
                             </div>
-                           
+                          </div>
+                          </td>
+                          </tr>
+                          </tbody>
+                          </table>
+
                         </div>
-                      
-                      
-                        <!-- ito ung mga inadd sa cart sa drinks end  -->
+
+                      </div>
+
                     </div>
 
+                  </div>
+
+
+                  <!-- ito ung mga inadd sa cart sa drinks end  -->
                 </div>
-                {%endif%}
-                {%endfor%}
 
               </div>
+              {%endif%}
+              {%endif%}
+              {%endfor%}
 
             </div>
-          </div><!-- End -->
+
+          </div>
+        </div><!-- End -->
       </div>
     </section>
-</main>
-   <!-- ======= Footer ======= -->
-   <footer id="footer" class="footer">
+  </main>
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>BevRecs 2020</span></strong>. All Rights Reserved
     </div>

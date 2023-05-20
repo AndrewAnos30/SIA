@@ -266,6 +266,12 @@ def order(request):
   
     return render(request, 'order.html', context)
 
+def update_done_order(request, pk):
+    cart = buyItem.objects.get(pk=pk)
+    cart.DoneOrder = True
+    cart.save()
+    return redirect('pos:order')  
+
 
 
 def reco(request):
