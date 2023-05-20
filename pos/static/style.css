@@ -307,6 +307,7 @@ h6 {
 .breadcrumb a {
   color: #899bbd;
   transition: 0.3s;
+  text-decoration: none;
 }
 
 .breadcrumb a:hover {
@@ -650,7 +651,7 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color: #000000;
   transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
@@ -660,25 +661,25 @@ h6 {
 .sidebar-nav .nav-link i {
   font-size: 24px;
   margin-right: 10px;
-  color: #4154f1;
+  color: #000000;
 }
 
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
+  color: #000000;
   background: #fff;
 }
 
 .sidebar-nav .nav-link.collapsed i {
-  color: #899bbd;
+  color: #000000;
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
-  background: #f6f9ff;
+  color: #FF862F;
+  background:#FFD699;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #00BF63;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -701,7 +702,8 @@ h6 {
   align-items: center;
   font-size: 16px;
   font-weight: 600;
-  color: #012970;
+  color: #000000;
+  background: #fff;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -718,7 +720,8 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color: #FF862F;
+  background:#FFD699;
 }
 
 .sidebar-nav .nav-content a.active i {
