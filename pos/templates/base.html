@@ -39,8 +39,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="#" class="logo d-flex align-items-center">
-        <img src="{% static 'img/logo.png'%}" alt="">
-        <span class="d-none d-lg-block">BevRecs</span>
+        <img src="{% static 'img/intelliserve.png'%}" alt="">
       </a>
       <i class='bx bx-menu toggle-sidebar-btn'></i>
     </div><!-- End Logo -->
@@ -177,14 +176,14 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'pos:index'%}">
+        <a class="nav-link collapsed" href="{% url 'pos:index'%}">
           <i class='bx bxs-dashboard'></i><span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <!-- Menu Nav -->
       <li class="nav-item">
-        <a class="nav-link active" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}">
+        <a class="nav-link collapsed" data-bs-target="#menu-nav" href="{% url 'pos:menu' %}">
           <i class='bx bxs-food-menu'></i></i><span>Menu</span>
         </a>
       </li><!-- End Menu Nav -->
@@ -204,10 +203,11 @@
         <a class="nav-link collapsed" data-bs-target="#inventory-nav" data-bs-toggle="collapse" href="">
           <i class='bx bxs-package'></i><span>Inventory</span><i class='bx bx-chevron-down ms-auto'></i>
         </a>
-        <ul id="inventory-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="inventory-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{% url 'pos:inventory' %}">
-              <i class='bx bx-checkbox-square'></i><span>Stocks</span>
+              <i class='bx bx-radio-circle'></i><span>Stocks</span>
+              
             </a>
           </li>
         </ul>
@@ -218,10 +218,10 @@
         <a class="nav-link collapsed" data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
           <i class='bx bxs-bar-chart-alt-2'></i><span>Sales</span><i class='bx bx-chevron-down ms-auto'></i>
         </a>
-        <ul id="sales-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="sales-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{% url 'pos:sales' %}">
-              <i class='bx bx-bar-chart'></i><span>Sales Report</span>
+              <i class='bx bx-radio-circle'></i><span>Sales Report</span>
             </a>
           </li>
         </ul>
@@ -229,7 +229,7 @@
 
       <!-- POS Nav -->
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#pos-nav" href="{% url 'pos:home' %}">
+        <a class="nav-link collapsed" data-bs-target="#pos-nav" href="{% url 'pos:home' %}">
           <i class='bx-bar-chart'></i></i><span>POS</span>
         </a>
       </li><!-- POS end-->
