@@ -142,7 +142,7 @@ home.html
                     <div class="card-body">
                       <h5 class="card-title fs-6 text-nowrap">{{ row.menuname }}</h5>
                       <div class="d-flex">
-                        <p class="card-text">PHP <strong>{{ row.menuprice }}</strong></p>
+                        <p class="card-text">PHP <strong>{{ row.menuprice1 }}</strong></p>
                       </div>
                       <a class="btn add-to-cart btn-primary btn-sm mt-2" data-bs-toggle="offcanvas"
                         href="#menuinformation-{{ row.id }}" role="button" aria-controls="menuinformation-{{ row.id }}">
@@ -178,20 +178,51 @@ home.html
                                 <input type="text" name="{{ buyitemform.buyName.html_name }}" value="{{ row.menuname }}"
                                   readonly class="menu_name"
                                   style="border: none; background-color: transparent; outline: none; cursor: default;">
-                                <input type="number" name="{{ buyitemform.buyPrice.html_name }}"
-                                  value="{{ row.menuprice }}" readonly class="price"
-                                  style="border: none; background-color: transparent; outline: none; cursor: default;">
+                              </div>
+                            </div>
+                            <div>
+                              <div>
+                                <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Small"
+                                  style="border: none; background-color: transparent; outline: none; cursor: default;"
+                                  onclick="selectRadiosInDiv(this);">
+                                SMALL
+                                <input type="radio" name="{{ buyitemform.priceSize.html_name }}"
+                                  value="{{ row.menuprice1 }}" class="price" style="display: none;"
+                                  onchange="updatePriceSizeValue(this);">
+                                {{ row.menuprice1 }}
+
+                              </div>
+
+                              <div>
+                                <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Medium"
+                                  style="border: none; background-color: transparent; outline: none; cursor: default;"
+                                  onclick="selectRadiosInDiv(this);">
+                                MEDIUM
+                                <input type="radio" name="{{ buyitemform.priceSize.html_name }}"
+                                  value="{{ row.menuprice2 }}" class="price" style="display: none;"
+                                  onchange="updatePriceSizeValue(this);">
+                                {{ row.menuprice2 }}
+
+                              </div>
+
+                              <div>
+
+                                <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Large"
+                                  style="border: none; background-color: transparent; outline: none; cursor: default;"
+                                  onclick="selectRadiosInDiv(this);">
+                                LARGE
+                                <input type="radio" name="{{ buyitemform.priceSize.html_name }}"
+                                  value="{{ row.menuprice3 }}" class="price" style="display: none;"
+                                  onchange="updatePriceSizeValue(this);">
+                                {{ row.menuprice3 }}
+
                               </div>
                             </div>
 
-                            <div class="col-6">
-                              <label for="{{ buyitemform.buySize.id_for_label }}">Size</label>
-                              {{ buyitemform.buySize }}
-                            </div>
 
-                            <div>
-                              <input name="{{ buyitemform.priceSize.name }}" type="number" id="priceField" readonly>
-                          </div>
+
+
+
 
                             <div class="addons-option-div">
                               <div class="d-block add-on-option mt-2">
@@ -210,87 +241,127 @@ home.html
                                   <div class="form-check d-flex justify-content-between">
                                     <div>
                                       <label for="check1">{{ row.addons1 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns1.html_name }}" type="checkbox" id="check1" value="{{ row.addons1 }}" onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
+                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns1.html_name }}"
+                                        type="checkbox" id="check1" value="{{ row.addons1 }}"
+                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
                                     </div>
                                     <div>
                                       <label for="check2">{{ row.quantityAO1 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.buyQuantityAO1.html_name }}" type="checkbox" id="check2" value="{{ row.quantityAO1 }}" onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.buyQuantityAO1.html_name }}" type="checkbox" id="check2"
+                                        value="{{ row.quantityAO1 }}"
+                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
                                     </div>
                                     <div>
                                       <label for="check3">{{ row.menuAOPrice1 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.menuAOPrice1.html_name }}" type="checkbox" id="check3" value="{{ row.menuAOPrice1 }}" onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">  
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.menuAOPrice1.html_name }}" type="checkbox" id="check3"
+                                        value="{{ row.menuAOPrice1 }}"
+                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
                                     </div>
                                   </div>
                                   {% endif %}
-                                  
+
                                   {% if row.addons2 %}
                                   <div class="form-check d-flex justify-content-between">
                                     <div>
                                       <label for="check4">{{ row.addons2 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns2.html_name }}" type="checkbox" id="check4" value="{{ row.addons2 }}" onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
+                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns2.html_name }}"
+                                        type="checkbox" id="check4" value="{{ row.addons2 }}"
+                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
                                     </div>
                                     <div>
                                       <label for="check5">{{ row.quantityAO2 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.buyQuantityAO2.html_name }}" type="checkbox" id="check5" value="{{ row.quantityAO2 }}" onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.buyQuantityAO2.html_name }}" type="checkbox" id="check5"
+                                        value="{{ row.quantityAO2 }}"
+                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
                                     </div>
                                     <div>
                                       <label for="check6">{{ row.menuAOPrice2 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.menuAOPrice2.html_name }}" type="checkbox" id="check6" value="{{ row.menuAOPrice2 }}" onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">  
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.menuAOPrice2.html_name }}" type="checkbox" id="check6"
+                                        value="{{ row.menuAOPrice2 }}"
+                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
                                     </div>
                                   </div>
                                   {% endif %}
-                                  
+
                                   {% if row.addons3 %}
                                   <div class="form-check d-flex justify-content-between">
                                     <div>
                                       <label for="check7">{{ row.addons3 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns3.html_name }}" type="checkbox" id="check7" value="{{ row.addons3 }}" onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
+                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns3.html_name }}"
+                                        type="checkbox" id="check7" value="{{ row.addons3 }}"
+                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
                                     </div>
                                     <div>
                                       <label for="check8">{{ row.quantityAO3 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.buyQuantityAO3.html_name }}" type="checkbox" id="check8" value="{{ row.quantityAO3 }}" onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.buyQuantityAO3.html_name }}" type="checkbox" id="check8"
+                                        value="{{ row.quantityAO3 }}"
+                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
                                     </div>
                                     <div>
                                       <label for="check9">{{ row.menuAOPrice3 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.menuAOPrice3.html_name }}" type="checkbox" id="check9" value="{{ row.menuAOPrice3 }}" onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">  
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.menuAOPrice3.html_name }}" type="checkbox" id="check9"
+                                        value="{{ row.menuAOPrice3 }}"
+                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
                                     </div>
                                   </div>
                                   {% endif %}
-                                  
+
                                   {% if row.addons4 %}
                                   <div class="form-check d-flex justify-content-between">
                                     <div>
                                       <label for="check10">{{ row.addons4 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns4.html_name }}" type="checkbox" id="check10" value="{{ row.addons4 }}" onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
+                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns4.html_name }}"
+                                        type="checkbox" id="check10" value="{{ row.addons4 }}"
+                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
                                     </div>
                                     <div>
                                       <label for="check11">{{ row.quantityAO4 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.buyQuantityAO4.html_name }}" type="checkbox" id="check11" value="{{ row.quantityAO4 }}" onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.buyQuantityAO4.html_name }}" type="checkbox" id="check11"
+                                        value="{{ row.quantityAO4 }}"
+                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
                                     </div>
                                     <div>
                                       <label for="check12">{{ row.menuAOPrice4 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.menuAOPrice4.html_name }}" type="checkbox" id="check12" value="{{ row.menuAOPrice4 }}" onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">  
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.menuAOPrice4.html_name }}" type="checkbox" id="check12"
+                                        value="{{ row.menuAOPrice4 }}"
+                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
                                     </div>
                                   </div>
                                   {% endif %}
-                                  
+
                                   {% if row.addons5 %}
                                   <div class="form-check d-flex justify-content-between">
                                     <div>
                                       <label for="check13">{{ row.addons5 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns5.html_name }}" type="checkbox" id="check13" value="{{ row.addons5 }}" onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
+                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns5.html_name }}"
+                                        type="checkbox" id="check13" value="{{ row.addons5 }}"
+                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
                                     </div>
                                     <div>
                                       <label for="check14">{{ row.quantityAO5 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.buyQuantityAO5.html_name }}" type="checkbox" id="check14" value="{{ row.quantityAO5 }}" onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.buyQuantityAO5.html_name }}" type="checkbox" id="check14"
+                                        value="{{ row.quantityAO5 }}"
+                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
                                     </div>
                                     <div>
                                       <label for="check15">{{ row.menuAOPrice5 }}</label>
-                                      <input style="display: none;" class="form-check-input" name="{{ buyitemform.menuAOPrice5.html_name }}" type="checkbox" id="check15" value="{{ row.menuAOPrice5 }}" onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">  
+                                      <input style="display: none;" class="form-check-input"
+                                        name="{{ buyitemform.menuAOPrice5.html_name }}" type="checkbox" id="check15"
+                                        value="{{ row.menuAOPrice5 }}"
+                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
                                     </div>
                                   </div>
                                   {% endif %}
-                                  
+
                                 </div>
                               </div>
                             </div>
@@ -397,7 +468,7 @@ home.html
   <script>
     function selectAllCheckboxes(check1Id, check2Id, check3Id, sourceCheckbox) {
       var checkboxes = document.querySelectorAll('.form-check-input');
-      
+
       for (var i = 0; i < checkboxes.length; i++) {
         if (
           checkboxes[i].id === check1Id ||
@@ -409,44 +480,31 @@ home.html
       }
     }
   </script>
-  
-  <script>
-    $(document).ready(function() {
-        $('#id_buySize').change(function() {
-            var selectedSize = $(this).val();
-            
-            $.ajax({
-                url: '/calculate_price/',
-                data: {'size': selectedSize},
-                success: function(response) {
-                    var price = response.price;
-                    $('#priceField').val(price);
-                }
-            });
-        });
-    });
-    </script>
 
-<script>
-  $(document).ready(function() {
-      $('#id_buySize').change(function() {
-          var selectedSize = $(this).val();
-          
-          $.ajax({
-              url: '/calculate_price/',
-              data: {'size': selectedSize},
-              success: function(response) {
-                  var price = response.price;
-                  $('#priceField').val(price);
-              }
-          });
-      });
-  
-      // Set default value to 0.00
-      $('#priceField').val('0');
-  });
+  <script>
+    function updatePriceSizeValue(selectedRadio) {
+      var priceSizeValue = selectedRadio.value;
+      // Update the value of {{ buyitemform.priceSize.html_name }} with priceSizeValue
+      // e.g., document.getElementById("buyitemform-priceSize").value = priceSizeValue;
+    }
   </script>
-  
+
+  <script>
+    function selectRadiosInDiv(clickedRadio) {
+      // Get the parent div of the clicked radio button
+      var parentDiv = clickedRadio.parentNode;
+
+      // Find all radio buttons within the parent div
+      var radios = parentDiv.querySelectorAll('input[type="radio"]');
+
+      // Set the checked property of each radio button to match the clicked radio button
+      for (var i = 0; i < radios.length; i++) {
+        radios[i].checked = clickedRadio.checked;
+      }
+    }
+  </script>
+
+  </div>
 
 </body>
 

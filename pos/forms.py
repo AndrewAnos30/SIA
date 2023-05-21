@@ -70,7 +70,7 @@ class MenuCategoryForm(forms.ModelForm):
 class MenuDrinksForm(forms.ModelForm):
     class Meta:
         model = MenuDrinks
-        fields = ["hotAndCold", "menucategory", "menuname","menuprice", "menuimage", "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5","ingredient1", "ingredient2", "ingredient3", "ingredient4", "ingredient5", "addons1", "addons2", "addons3", "addons4","addons5", "quantityIng1", "quantityIng2", "quantityIng3", "quantityIng4", "quantityIng5", "quantityAO1", "quantityAO2", "quantityAO3", "quantityAO4", "quantityAO5"]
+        fields = ["hotAndCold", "menucategory", "menuname", "menuimage", "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5","ingredient1", "ingredient2", "ingredient3", "ingredient4", "ingredient5", "addons1", "addons2", "addons3", "addons4","addons5", "quantityIng1", "quantityIng2", "quantityIng3", "quantityIng4", "quantityIng5", "quantityAO1", "quantityAO2", "quantityAO3", "quantityAO4", "quantityAO5","menuprice1", "menuprice2", "menuprice3"]
         widgets = {
             'sugarlevel': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
             'alcohollevel': forms.RadioSelect(choices=((True, 'Yes'), (False, 'No'))),
@@ -83,8 +83,7 @@ class MenuDrinksForm(forms.ModelForm):
 from django import forms
 
 class BuyItemForms(forms.ModelForm):
-    buySize = forms.ChoiceField(choices=(('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')), required=False, widget=forms.Select(attrs={'id': 'id_buySize'}))
-
+  
     class Meta:
         model = buyItem
         fields = [

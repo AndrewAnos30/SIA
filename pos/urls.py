@@ -9,10 +9,8 @@ from django.conf.urls.static import static
 app_name = 'pos'
 
 urlpatterns = [
-    path('', views.base, name='base'),
-    path('login', views.login, name='login'),
-    path('register', views.register, name='register'),
-    path('index', views.index, name='index'),
+    
+    path('', views.index, name='index'),
     path('/inventory/', views.inventory, name='inventory'),
     path('/menu/', views.menu, name='menu'),
     path('order', views.order, name='order'),
@@ -33,6 +31,6 @@ urlpatterns = [
     path('buyitemdrinks/', views.buy_item_drinks, name='buyitemdrinks'),
     path('buy_item_drinks1/', views.buy_item_drinks1, name='buy_item_drinks1'),
     path('update_values', views.update_values, name='update_values'),
-    path('calculate_price/', views.calculate_price, name='calculate_price'),
+
     path('update_done_order/<int:pk>/', views.update_done_order, name='update_done_order'),
    ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -14,9 +14,9 @@ from datetime import datetime, timedelta
 from django.http import JsonResponse
 
 
-def base(request):
+def index(request):
   
-    return render(request, 'base.html')
+    return render(request, 'index.html')
 
 def login (request):
   
@@ -404,13 +404,3 @@ def calculate_total_price(buyitem):
     return rounded_total
 
 
-def calculate_price(request):
-    size = request.GET.get('size')
-    price = '0'
-
-    if size == 'medium':
-        price = '20'
-    elif size == 'large':
-        price = '30'
-
-    return JsonResponse({'price': price})

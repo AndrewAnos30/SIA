@@ -58,7 +58,9 @@ class MenuDrinks (models.Model):
     menuAOPrice4 = models.FloatField( null=True, blank=True)
     menuAOPrice5 = models.FloatField( null=True, blank=True)
     menuimage = models.ImageField(upload_to="mema/")
-    menuprice = models.FloatField()
+    menuprice1 = models.FloatField()
+    menuprice2 = models.FloatField()
+    menuprice3 = models.FloatField()
     ingredient1 = models.ForeignKey(
         Stocks, on_delete=models.CASCADE, related_name='ingredient1', null=True, blank=True)
     ingredient2 = models.ForeignKey(
@@ -95,11 +97,7 @@ class MenuDrinks (models.Model):
         return f"{self.menuname} ({self.menucategory.name})"
 
 #HOME START
-SIZES = (
-        ('small', 'Small'),
-        ('medium', 'Medium'),
-        ('large', 'Large'),
-    )
+
 
 PAYMENT_CHOICES = (
         ('cash', 'Cash'),
@@ -111,9 +109,10 @@ IN_OUT = (
         ('OUT', 'Dine Out'),
     )
 
+
 class buyItem(models.Model):
     buyName= models.CharField (max_length=255, null=True, blank=True)
-    buySize = models.CharField(max_length=15, choices=SIZES, null=True, blank=True)
+    buySize = models.CharField(max_length=15, null=True, blank=True)
     buyQuantityMenu = models.PositiveIntegerField (null=True, blank=True)
     buyPrice = models.FloatField (null=True, blank=True)
     buyAddOns1 = models.CharField (max_length=255, null=True, blank=True)
@@ -149,23 +148,33 @@ class buyItem(models.Model):
     tenderedPayment = models.FloatField(null=True, blank=True)
     orderNumber = models.PositiveIntegerField (null=True, blank=True)
     dateordered = models.DateTimeField (null=True, blank=True)
-    priceSize = models.FloatField (null=True, blank=True)
+    priceSize = models.FloatField( null=True, blank=True)
 
     @property
     def total_price(self):
-         if not self.buyOrBought and self.priceSize and self.buyPrice and self.menuAOPrice1 and self.menuAOPrice2 and self.menuAOPrice3 and self.menuAOPrice4 and self.menuAOPrice5 and self.buyQuantityMenu:
-            total = (self.buyPrice+ self.priceSize + self.menuAOPrice1 + self.menuAOPrice2 + self.menuAOPrice3 + self.menuAOPrice4 + self.menuAOPrice5) * self.buyQuantityMenu
+        if not self.buyOrBought:
+            buyPrice = self.buyPrice or 0.0
+            priceSize = self.priceSize or 0.0
+            menuAOPrice1 = self.menuAOPrice1 or 0.0
+            menuAOPrice2 = self.menuAOPrice2 or 0.0
+            menuAOPrice3 = self.menuAOPrice3 or 0.0
+            menuAOPrice4 = self.menuAOPrice4 or 0.0
+            menuAOPrice5 = self.menuAOPrice5 or 0.0
+
+            return round((buyPrice + priceSize + menuAOPrice1 + menuAOPrice2 + menuAOPrice3 + menuAOPrice4 + menuAOPrice5) * self.buyQuantityMenu, 2)
 
 
-            return total
-         return round((self.buyPrice + self.priceSize + self.menuAOPrice1 + self.menuAOPrice2 + self.menuAOPrice3 + self.menuAOPrice4 + self.menuAOPrice5) * self.buyQuantityMenu, 2)
-
-    @property
-    def total_AO(self):
-         if  self.buyOrBought and self.menuAOPrice1 and self.menuAOPrice2 and self.menuAOPrice3 and self.menuAOPrice4 and self.menuAOPrice5:
-            totalAO = (self.priceSize + self.menuAOPrice1 + self.menuAOPrice2 + self.menuAOPrice3 + self.menuAOPrice4 + self.menuAOPrice5)
-
-
-            return totalAO
-         return round((self.priceSize + self.menuAOPrice1 + self.menuAOPrice2 + self.menuAOPrice3 + self.menuAOPrice4 + self.menuAOPrice5), 2)
+@property
+def total_AO(self):
+    menuAOPrice1 = self.menuAOPrice1 or 0.0
+    menuAOPrice2 = self.menuAOPrice2 or 0.0
+    menuAOPrice3 = self.menuAOPrice3 or 0.0
+    menuAOPrice4 = self.menuAOPrice4 or 0.0
+    menuAOPrice5 = self.menuAOPrice5 or 0.0
+    
+    if self.buyOrBought and menuAOPrice1 and menuAOPrice2 and menuAOPrice3 and menuAOPrice4 and menuAOPrice5:
+        total_AO = menuAOPrice1 + menuAOPrice2 + menuAOPrice3 + menuAOPrice4 + menuAOPrice5
+        return round(total_AO, 2)
+    
+    return round(menuAOPrice1 + menuAOPrice2 + menuAOPrice3 + menuAOPrice4 + menuAOPrice5, 2)
 
