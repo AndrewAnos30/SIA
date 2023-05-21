@@ -18,6 +18,15 @@ def base(request):
   
     return render(request, 'base.html')
 
+def login (request):
+  
+    return render(request, 'login.html')
+
+def register (request):
+  
+    return render(request, 'register.html')
+
+
 #inventory start
 def inventory(request):
     ingridientForm = IngridientsForm()
@@ -226,8 +235,18 @@ def buy_item_drinks(request):
 #home end
 
 def index(request):
-  
-    return render(request, 'index.html')
+     
+    today = datetime.now().date()
+    start_of_week = today - timedelta(days=today.weekday())  # Get the start date of the current week
+    end_of_week = start_of_week + timedelta(days=6)  # Get the end date of the current week
+
+    buyitem = buyItem.objects.filter(dateordered__date__range=[start_of_week, end_of_week])
+    
+    context = {
+        'buyitem': buyitem,
+    }
+    
+    return render(request, 'index.html',context)
 
 
 def sales(request):
@@ -332,21 +351,6 @@ def cart(request):
   
   
     return render(request, 'cart.html',context)
-from django.http import JsonResponse
-
-
-def get_price(request):
-    size = request.GET.get('size')
-    price = 0
-
-    if size == 'small':
-        price = 10
-    elif size == 'medium':
-        price = 20
-    elif size == 'large':
-        price = 30
-
-    return JsonResponse({'price': price})
 
 
 def update_values(request):

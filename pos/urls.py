@@ -10,6 +10,8 @@ app_name = 'pos'
 
 urlpatterns = [
     path('', views.base, name='base'),
+    path('login', views.login, name='login'),
+    path('register', views.register, name='register'),
     path('index', views.index, name='index'),
     path('/inventory/', views.inventory, name='inventory'),
     path('/menu/', views.menu, name='menu'),

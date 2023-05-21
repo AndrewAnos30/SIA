@@ -290,6 +290,8 @@
                  
                   <tbody>
                     {% for sale in buyitem %}
+                    {% if sale.buyOrBought == True %}
+                    {% if sale.DoneOrder == True%}
                     <tr>
                         <td>{{ sale.orderNumber }}</td>
                         <td>{{ sale.dateordered.date }}</td>
@@ -311,6 +313,8 @@
                         <td>{{ sale.payment_method }}</td>
                         <td>{{ sale.AllPayment }}</td>
                     </tr>
+                    {%endif%}
+                    {%endif%}
                     {% endfor %}
                 </tbody>
                 
