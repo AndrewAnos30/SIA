@@ -14,9 +14,9 @@ from datetime import datetime, timedelta
 from django.http import JsonResponse
 
 
-def base(request):
+def index(request):
   
-    return render(request, 'base.html')
+    return render(request, 'index.html')
 
 #inventory start
 def inventory(request):

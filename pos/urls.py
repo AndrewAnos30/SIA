@@ -9,8 +9,8 @@ from django.conf.urls.static import static
 app_name = 'pos'
 
 urlpatterns = [
-    path('', views.base, name='base'),
-    path('index', views.index, name='index'),
+   # path('', views.base, name='base'),
+    path('', views.index, name='index'),
     path('/inventory/', views.inventory, name='inventory'),
     path('/menu/', views.menu, name='menu'),
     path('order', views.order, name='order'),
