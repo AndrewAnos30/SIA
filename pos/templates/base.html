@@ -22,7 +22,9 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <!-- css -->
   <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link href="{% static 'simple-datatables/style.css'%}" rel="stylesheet">
   <!--Datatables Library-->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -32,7 +34,7 @@
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
   <!-- ======= Header ======= -->
@@ -41,6 +43,7 @@
       <a href="#" class="logo d-flex align-items-center">
         <img src="{% static 'img/intelliserve.png'%}" alt="">
       </a>
+
       <i class='bx bx-menu toggle-sidebar-btn'></i>
     </div><!-- End Logo -->
 
@@ -64,7 +67,7 @@
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bx bx-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
+            <span class="badge bg-primary badge-number bg-danger">4</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -255,6 +258,7 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'simple-datatables/simple-datatables.js' %}"></script>
 
   
 <script>
