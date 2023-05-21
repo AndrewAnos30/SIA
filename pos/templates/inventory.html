@@ -15,16 +15,16 @@
     <section class="section dashboard">
       <div class="row">
         <!-- Button to trigger off-canvas update form -->
-        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="offcanvas"
-          data-bs-target="#updateStockForm">Update Stock</button>
+        
 
         <!-- Off-canvas update form -->
-
 
         <div class="col-lg-12 mb-2">
           <div class="row g-2">
             <!-- buttons for adding ingredients and category -->
             <div class="col-12 d-flex d-grip gap-2">
+              <button type="button" class="btn btn-sm border-0 inventoryBtn" data-bs-toggle="offcanvas"
+          data-bs-target="#updateStockForm">Update Stock</button>
               <div class="offcanvas offcanvas-end" tabindex="-1" id="updateStockForm"
                 aria-labelledby="updateStockFormLabel">
                 <div class="offcanvas-header">
@@ -82,7 +82,7 @@
                 </div>
               </div>
 
-              <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+              <button type="button" class="btn btn-sm border-0 inventoryBtn" data-bs-toggle="modal"
                 data-bs-target="#addingredientmodal">Add Ingredient</button>
               <!-- Add Ingredient Modal -->
               <div class="modal fade" id="addingredientmodal" tabindex="-1">
@@ -155,7 +155,7 @@
 
 
               <!-- buttons for adding add ons -->
-              <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+              <button type="button" class="btn btn-sm border-0 inventoryBtn" data-bs-toggle="modal"
                 data-bs-target="#addonsmodal">Add Addons</button>
 
               <!-- Add Addon Modal -->
@@ -231,7 +231,7 @@
 
 
               <!-- buttons for adding utensils-->
-              <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+              <button type="button" class="btn btn-sm border-0 inventoryBtn" data-bs-toggle="modal"
                 data-bs-target="#utensilsmodal">Add Utensils</button>
 
               <!-- Add Addon Modal -->
@@ -322,13 +322,13 @@
               </ul>
 
               <!-- Tab panes -->
-              <div class="tab-content mt-2">
+              <div class="tab-content bg-white pt-3 pb-1 rounded">
                 <!-- content for ingredient table  -->
                 <div class="tab-pane container active" id="ingredient">
                   <div class="card overflow-auto">
                     <div class="card-body pb-0">
                       <h5 class="card-title">Ingredients</span></h5>
-                      <table class="table rounded table-striped table-warning" id="IngredientTable">
+                      <table class="table data table rounded table-striped table-warning" id="IngredientTable">
                         <thead>
                           <tr>
                             <th scope="col">Category</th>

@@ -11,6 +11,10 @@ body {
   background-color: #EDF1F4 !important;
 }
 
+.menu_info{
+  overflow-x: hidden;
+}
+
 a {
   color: #4154f1;
   text-decoration: none;
@@ -97,6 +101,14 @@ h6 {
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
 /* Dropdown menus */
+.filter .icon {
+  color: #aab7cf;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  transition: 0.3s;
+  font-size: 20px;
+} 
+
 .dropdown-menu {
   border-radius: 4px;
   padding: 10px 0;
@@ -213,8 +225,9 @@ h6 {
 .card {
   margin-bottom: 30px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  
 }
 
 .card-header,
@@ -1187,7 +1200,74 @@ h6 {
     max-width: 50%;
   }
 }
+/*--------------------------------------------------------------
+# Inventory
+--------------------------------------------------------------*/
+.inventoryBtn{
+  background-color: white !important;
+  padding: 10px !important;
 
+}
+.inventoryBtn:hover{
+  background-color: #ff771d !important;
+}
+
+.nav-tabs .nav-link{
+  color:#000000;
+}
+
+.nav-tabs .nav-link:hover{
+  color:#00BF63;
+}
+
+/*--
+------------------------------------------------------------
+# Menu page
+--------------------------------------------------------------*/
+
+.menu-grid .nav-item{
+  background-color: white;
+  margin: 5px;
+  width: 90px;
+  border-radius: 10px;
+}
+
+.menu-grid .nav-item .nav-pills{
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.menu-grid .nav-item .nav-pills:after{
+  background-color: #00BF63 !important;
+}
+
+.menu-grid .nav-item i{
+  color:  #FF862F;
+  font-size: 40px;
+}
+
+.menu-grid .nav-item p{
+  color: #000000;
+  font-size: 10px;
+  margin: 0;
+}
+
+.menu-item-card{
+  height: 100px !important;
+}
+.menu-item-card-add{
+  background-color: none !important;
+}
+
+.menu_name_price{
+  outline: #000000 1px dashed;
+}
+
+.add-to-cart-btn{
+  background-color: #FF862F !important;
+}
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/

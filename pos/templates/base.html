@@ -22,9 +22,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <!-- css -->
   <link rel="stylesheet" href="{% static 'style.css' %}">
-  <link href="{% static 'simple-datatables/style.css'%}" rel="stylesheet">
   <!--Datatables Library-->
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -258,7 +256,6 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
-  <script src="{% static 'simple-datatables/simple-datatables.js' %}"></script>
 
   
 <script>
@@ -323,13 +320,13 @@
       updateAddonPrice('inputAddOns5', 'menuAOPrice5');
     });
   </script>
-  
-  <script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
-  <script type="text/javascript">
-    VirtualSelect.init({
-      ele: '#multiSelect'
-    });
-  </script>
 
+  <script>
+  $(document).ready(function () {
+    $('#topsellingTable').DataTable();
+    $('#salesTable').DataTable();
+    $('#AdonsTable').DataTable();
+    $('#UtensilsTable').DataTable();
+});</script>
 </body>
 </html>

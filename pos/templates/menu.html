@@ -14,144 +14,215 @@
       </div><!-- End Page Title -->
       <section class="section menu rounded">
         <div class="row">
-          <!-- Left side columns -->
+
+          <!-- CATEGORYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY COLUMMNNNNNNNNNNNNNNNNNNNNNNNNNNN-->
+
           <div class="category col-lg-12 p-2">
-            <div class="d-flex justify-content-between">
-              <h5 class="categories">Categories</h5>
-              <div class="btn-category">
-                <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
-                  data-bs-target="#addcategorymodal">Add Category</a>
-  
-                <!-- Vertically centered Modal -->
-                <div class="modal fade" id="addcategorymodal" tabindex="-1">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Add Category</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-  
-                      <div class="modal-body">
-                        <form action="{% url 'pos:add_menuCategory' %}" method="POST">
-                          {% csrf_token %}
-                          <div class="col-12">
-                            <label for="addcategory">Choose category</label>
-                            <select name="{{ menucategoryform.categorytype.name }}" id="inputCategoryName"
-                              class="form-select">
-                              {% for row in menucategoryform.categorytype %}
-                              <option value="{{row.data.value}}">{{row.data.label}}</option>
-                              {% endfor %}
-                            </select>
-                          </div>
-                          <div class="col-12">
-                            <input name="{{ menucategoryform.name.name }}" type="text" class="form-control"
-                              placeholder="Category Name" id="inputCategoryName">
-                          </div>
-                          <div class="text-center ms-auto">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
-                          </div>
-                        </form><!-- Vertical Form -->
-                      </div>
+
+            <div class="row">
+              <div class="d-flex justify-content-between">
+                <h5 class="categories">Categories</h5>
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded '></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li>
+                      <!-- button for edi and delete?? -->
+                      <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+                      data-bs-target="#editcategorymodal">Edit Category</a></li>
+                    <li>
+                     
+                      <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+                      data-bs-target="#deletecategorymodal">Delete Category</a></li>
+
+
+                    </li>
+                  </ul>
+                </div>
+    
+              </div>
+            </div>
+
+               <!-- Delete Category Modal -->
+               <div class="modal fade" id="deletecategorymodal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Delete Category</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{% url 'pos:delete_category' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="col-12">
+                          <label for="deletecategory">Choose category to delete</label>
+                          <select name="category_id" class="form-select">
+                            {% for category in menuCategory %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
-                </div><!-- End Vertically centered Modal-->
-  
-                <span>
-                  <button class="btn btn-sm ms-2" type="button" data-bs-toggle="modal"
-                    data-bs-target="#deletecategorymodal">Delete Category</button>
-  
-                  <!-- Delete Category Modal -->
-                  <div class="modal fade" id="deletecategorymodal" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Delete Category</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+              </div><!-- Delete Category Modal -->
+
+
+<!-- Edit Category Modal-->
+              <div class="modal fade" id="editcategorymodal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Edit Category</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <!--edit cateogrycode here++=================================================-->
+                      <!-- add menu Form -->
+                      <form action="{% url 'pos:edit_menuCategory' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="col-12">
+                          <label for="editcategory">Choose category</label>
+                          <select name="category_id" class="form-select">
+                            {% for category in menuCategory %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
-                        <div class="modal-body">
-                          <form action="{% url 'pos:delete_category' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="col-12">
-                              <label for="deletecategory">Choose category to delete</label>
-                              <select name="category_id" class="form-select">
-                                {% for category in menuCategory %}
-                                <option value="{{ category.id }}">{{ category.name }}</option>
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-12 text-center mt-3">
-                              <button type="submit" class="btn btn-danger">Delete</button>
-                            </div>
-                          </form>
+                        <div class="col-12">
+                          <label for="categorytype">Change Type</label>
+                          <select name="categorytype" class="form-select">
+                            <option value="DRINKS">Drinks</option>
+                            <option value="FOOD">Food</option>
+                          </select>
+                        </div>
+                        <div class="col-12">
+                          <label for="new_name">Rename</label>
+                          <input type="text" name="new_name" placeholder="Category Name" class="form-control"
+                            required>
+                        </div>
+                        <div class="col-12 text-center d-grip gap-2">
+                          <button type="submit" class="btn btn-primary">Save Changes</button>
+                          <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div><!-- Edit Category Modal-->
+              
+            <div class="row">
+                <!--tab categoryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy-->
+
+            <div class="menu-grid">
+              <ul class="nav nav-pills">
+                <li class="nav-item"> 
+                  <a class="btn btn-sm ms-auto border-0" href="#" role="button" data-bs-toggle="modal" data-bs-target="#addcategorymodal">
+                    <i class='bx bx-plus justify-content-center mx-auto text-center'></i>
+                    <p class="text-center mb-0">Add Category</p>
+                  </a> 
+                     <!-- ADD CATEGORYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY -->
+                    <div class="modal fade" id="addcategorymodal" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Add Category</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+
+                          <div class="modal-body">
+                            <form action="{% url 'pos:add_menuCategory' %}" method="POST">
+                              {% csrf_token %}
+                              <div class="col-12">
+                                <label for="addcategory">Choose category</label>
+                                <select name="{{ menucategoryform.categorytype.name }}" id="inputCategoryName"
+                                  class="form-select">
+                                  {% for row in menucategoryform.categorytype %}
+                                  <option value="{{row.data.value}}">{{row.data.label}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="col-12">
+                                <input name="{{ menucategoryform.name.name }}" type="text" class="form-control"
+                                  placeholder="Category Name" id="inputCategoryName">
+                              </div>
+                              <div class="text-center ms-auto">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                              </div>
+                            </form><!-- Vertical Form -->
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div><!-- Delete Category Modal -->
-                </span>
+                    </div><!-- End Vertically centered Modal-->
+
+                </li>
+                {% for categories in menuCategory %}
+                <li class="nav-item">
+                  <a class="nav-link d-block" data-bs-toggle="pill" href="#{{categories.name|slugify}}">
+                    <i class='bx bxs-coffee-alt justify-content-center my-auto d-flex'></i>
+                    <p class="text-center">{{categories.name}}</p>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
   
-                <!-- Edit Category Modal -->
-                <span>
-                  <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
-                    data-bs-target="#editcategorymodal">Edit Category</a>
-                  <div class="modal fade" id="editcategorymodal" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Edit Category</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <!-- Tab panes -->
+              <div class="tab-content mt-4">
+                {% for categories in menuCategory %}
+                <!-- Coffeee or Category 1 pane -->
+                <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ categories.name|slugify }}">                
+                  <div class="d-flex justify-content-between mb-2">
+                    <h5 class="categories">{{categories.name}}</h5>
+                  </div>
+                  <!-- list of menu -->
+                  <div class="row row-cols-4 gy-2">
+                    {% for data in categories.menudrinks_set.all %}
+                    <div class="col">
+                      <!-- Card with an image on top -->
+                      <div class="card">
+                        <img src="{{data.menuimage.url}}" class="card-img-top" style="margin-bottom:0; width: 100%; height: 120px; object-fit: cover; ">
+                        <div class="card-body">
+                          <h5 class="card-title p-0 m-0">{{data.menuname}}</h5>
+                          <div class="d-flex">
+                            <p class="card-text fw-bold"> &#8369; {{data.menuprice}}</p>
+                          </div>
+                          <div class="text-center d-grip gap-2">
+                            <div class="text-center d-grip gap-2">
+                              <form method="POST" action="{% url 'pos:delete_menu' data.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm bg-danger">Delete</button>
+                              </form>
+                            </div>
+                          </div>
                         </div>
-                        <div class="modal-body">
-                          <!--edit cateogrycode here++=================================================-->
-                          <!-- add menu Form -->
-                          <form action="{% url 'pos:edit_menuCategory' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="col-12">
-                              <label for="editcategory">Choose category</label>
-                              <select name="category_id" class="form-select">
-                                {% for category in menuCategory %}
-                                <option value="{{ category.id }}">{{ category.name }}</option>
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-12">
-                              <label for="categorytype">Change Type</label>
-                              <select name="categorytype" class="form-select">
-                                <option value="DRINKS">Drinks</option>
-                                <option value="FOOD">Food</option>
-                              </select>
-                            </div>
-                            <div class="col-12">
-                              <label for="new_name">Rename</label>
-                              <input type="text" name="new_name" placeholder="Category Name" class="form-control"
-                                required>
-                            </div>
-                            <div class="col-12 text-center d-grip gap-2">
-                              <button type="submit" class="btn btn-primary">Save Changes</button>
-                              <button type="reset" class="btn btn-secondary">Reset</button>
-                            </div>
-                          </form>
-  
-                        </div>
-                      </div>
+                      </div><!-- End Card with an image on top -->
                     </div>
-                  </div><!-- Edit Category Modal-->
-                </span>
+                    {% endfor %}
+                    
+                    <div class="col">
+                        <!-- add menu button -->
+                         <a class="btn btn-sm ms-auto border-0" href="#" role="button" data-bs-toggle="modal" data-bs-target="#addmenumodal">
+                        <i class='bx bxs-plus-circle text-center my-auto mt-4 border-0' style="font-size: 150px; color: white;"></i></a>
+                    </div>
+                 
+                  </div>
+                </div>
+                {% endfor %}
               </div>
-  
             </div>
-  
+            </div>
           </div>
   
           <div class="category col-lg-12 p-2">
             <div class="d-flex justify-content-between">
-              <h5 class="categories">Menu</h5>
               <div class="row">
                 <div class="col-12 btn-category">
-                  <!-- add menu button -->
-                  <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
-                    data-bs-target="#addmenumodal">Add Menu</a>
-                  <!-- add menu button -->
+
                   <!-- Add Menu Modal -->
                   <div class="modal fade" id="addmenumodal" tabindex="-1">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -386,61 +457,6 @@
                     </div>
                   </div><!-- End Vertically centered Modal-->
                 </div>
-              </div>
-            </div>
-  
-  
-            <!---->
-            <div class="menu-grid mt-2">
-              <ul class="nav nav-pills">
-                {% for categories in menuCategory %}
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name|slugify}}">
-                    <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
-                    <span>{{categories.name}}</span>
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
-  
-              <!-- Tab panes -->
-              <div class="tab-content mt-4">
-                {% for categories in menuCategory %}
-                <!-- Coffeee or Category 1 pane -->
-                <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ categories.name|slugify }}">                
-                  <div class="d-flex justify-content-between mb-2">
-                    <h5 class="categories">{{categories.name}}</h5>
-                  </div>
-                  <!-- list of menu -->
-                  <div class="row row-cols-4 gy-2">
-                    {% for data in categories.menudrinks_set.all %}
-                    <div class="col">
-                      <!-- Card with an image on top -->
-                      <div class="card menu-item-card">
-                        <img src="{{data.menuimage.url}}" class="card-img-top">
-                        <div class="card-body">
-                          <h5 class="card-title">{{data.menuname}}</h5>
-                          <div class="d-flex">
-                            <img class="peso-sign my-auto" src="/static/img/peso-sign.png" alt="">
-                            <p class="card-text">{{data.menuprice}}</p>
-                          </div>
-                          <div class="text-center d-grip gap-2">
-                          
-  
-                            <div class="text-center d-grip gap-2">
-                              <form method="POST" action="{% url 'pos:delete_menu' data.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm bg-danger">Delete</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div><!-- End Card with an image on top -->
-                    </div>
-                    {% endfor %}
-                  </div>
-                </div>
-                {% endfor %}
               </div>
             </div>
           </div>

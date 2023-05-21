@@ -1,0 +1,182 @@
+home.html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+  <!-- favcon -->
+  <link href="/static/img/logo.png" rel="icon">
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- boxicon -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!--Datatables Library-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+
+  <!-- main js -->
+
+  <title>BevRecs-Menu</title>
+</head>
+
+<body>
+  <!-- ===========HEADER============== -->
+  <header class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="#" class="logo d-flex align-items-center">
+          <img src="{% static 'img/intelliserve.png'%}" alt="">
+        </a>
+  
+        <i class='bx bx-menu toggle-sidebar-btn'></i>
+      </div><!-- End Logo -->
+    <!-- Search Bar -->
+    <div class="search-bar my-auto">
+      <form class="search-form  my-auto d-flex align-items-center">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center list-unstyled">
+        <!-- Search Icon when the screen is small-->
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle" href="#">
+            <i class="fa fa-search"></i>
+          </a>
+        </li>
+        <!-- Search Icon when the screen is small end-->
+
+        <!-- cart-->
+        <li class="nav-item d-block m-auto px-4">
+          <a type="button" class="cart-btn" href="{% url 'pos:cart'%}">
+            <i class='bx bx-cart' style="font-size: 28px; color: #FF862F"></i>
+          </a>
+        </li>
+        <!-- cart end-->
+      </ul>
+    </nav>
+    <!-- End Search Bar -->
+  </header>
+  <!-- ===========end of HEADER============== -->
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar" data-bs-hidden="false">
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'pos:reco' %}">
+          <i class='bx bxs-cog'></i><span>Recommend</span>
+        </a>
+      </li><!-- Recommendation Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#menu-nav" href="{% url 'pos:home'%}">
+            <i class='bx bx-baguette'></i><span>Food</span>
+        </a>
+      </li><!-- End Menu Nav -->
+
+        <!-- Menu Nav -->
+        <li class="nav-item collapsed">
+          <a class="nav-link" data-bs-target="#menu-nav" href="{% url 'pos:home'%}">
+            <i class='bx bx-drink' ></i><span>Drinks</span>
+          </a>
+        </li><!-- End Menu Nav -->
+
+    </ul>
+  </aside><!-- End Sidebar-->
+
+  <!-- main container -->
+ 
+  <main id="main" class="main mt-4 py-4">
+    {% block content %}
+    
+    {% endblock  %}
+  </main>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+  function selectAllCheckboxes(check1Id, check2Id, check3Id, sourceCheckbox) {
+    var checkboxes = document.querySelectorAll('.form-check-input');
+    
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (
+        checkboxes[i].id === check1Id ||
+        checkboxes[i].id === check2Id ||
+        checkboxes[i].id === check3Id
+      ) {
+        checkboxes[i].checked = sourceCheckbox.checked;
+      }
+    }
+  }
+</script>
+
+<script>
+  $(document).ready(function() {
+      $('#id_buySize').change(function() {
+          var selectedSize = $(this).val();
+          
+          $.ajax({
+              url: '/calculate_price/',
+              data: {'size': selectedSize},
+              success: function(response) {
+                  var price = response.price;
+                  $('#priceField').val(price);
+              }
+          });
+      });
+  });
+  </script>
+
+<script>
+$(document).ready(function() {
+    $('#id_buySize').change(function() {
+        var selectedSize = $(this).val();
+        
+        $.ajax({
+            url: '/calculate_price/',
+            data: {'size': selectedSize},
+            success: function(response) {
+                var price = response.price;
+                $('#priceField').val(price);
+            }
+        });
+    });
+
+    // Set default value to 0.00
+    $('#priceField').val('0');
+});
+</script>
+
+
+</body>
+
+</html>
