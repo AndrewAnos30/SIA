@@ -27,11 +27,11 @@
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li>
                       <!-- button for edi and delete?? -->
-                      <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+                      <a class="btn btn-sm ms-auto border-0" href="#" role="button" data-bs-toggle="modal"
                       data-bs-target="#editcategorymodal">Edit Category</a></li>
                     <li>
                      
-                      <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+                      <a class="btn btn-sm ms-auto border-0" href="#" role="button" data-bs-toggle="modal"
                       data-bs-target="#deletecategorymodal">Delete Category</a></li>
 
 
@@ -53,7 +53,7 @@
                     <div class="modal-body">
                       <form action="{% url 'pos:delete_category' %}" method="POST">
                         {% csrf_token %}
-                        <div class="col-12">
+                        <div class="col-12 mb-3">
                           <label for="deletecategory">Choose category to delete</label>
                           <select name="category_id" class="form-select">
                             {% for category in menuCategory %}
@@ -62,7 +62,7 @@
                           </select>
                         </div>
                         <div class="col-12 text-center mt-3">
-                          <button type="submit" class="btn btn-danger">Delete</button>
+                          <button type="submit" class="btn border-0" style="background-color: #FF862F !important; color: white;">Delete</button>
                         </div>
                       </form>
                     </div>
@@ -84,7 +84,7 @@
                       <!-- add menu Form -->
                       <form action="{% url 'pos:edit_menuCategory' %}" method="POST">
                         {% csrf_token %}
-                        <div class="col-12">
+                        <div class="col-12 mb-3">
                           <label for="editcategory">Choose category</label>
                           <select name="category_id" class="form-select">
                             {% for category in menuCategory %}
@@ -92,20 +92,20 @@
                             {% endfor %}
                           </select>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12  mb-3">
                           <label for="categorytype">Change Type</label>
                           <select name="categorytype" class="form-select">
                             <option value="DRINKS">Drinks</option>
                             <option value="FOOD">Food</option>
                           </select>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12  mb-3">
                           <label for="new_name">Rename</label>
                           <input type="text" name="new_name" placeholder="Category Name" class="form-control"
                             required>
                         </div>
                         <div class="col-12 text-center d-grip gap-2">
-                          <button type="submit" class="btn btn-primary">Save Changes</button>
+                          <button type="submit" class="btn btn-primary border-0" style="background-color: #FF862F !important; color: white;">Save Changes</button>
                           <button type="reset" class="btn btn-secondary">Reset</button>
                         </div>
                       </form>
@@ -137,7 +137,7 @@
                           <div class="modal-body">
                             <form action="{% url 'pos:add_menuCategory' %}" method="POST">
                               {% csrf_token %}
-                              <div class="col-12">
+                              <div class="col-12 mb-3">
                                 <label for="addcategory">Choose category</label>
                                 <select name="{{ menucategoryform.categorytype.name }}" id="inputCategoryName"
                                   class="form-select">
@@ -146,12 +146,12 @@
                                   {% endfor %}
                                 </select>
                               </div>
-                              <div class="col-12">
+                              <div class="col-12 mb-3">
                                 <input name="{{ menucategoryform.name.name }}" type="text" class="form-control"
                                   placeholder="Category Name" id="inputCategoryName">
                               </div>
                               <div class="text-center ms-auto">
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="submit" class="btn" style="background-color: #FF862F !important; color: white;">Add</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                               </div>
                             </form><!-- Vertical Form -->
@@ -195,7 +195,7 @@
                             <div class="text-center d-grip gap-2">
                               <form method="POST" action="{% url 'pos:delete_menu' data.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-sm bg-danger">Delete</button>
+                                <button type="submit" class="btn btn-sm" style="background-color: #FF862F !important; color: white;">Delete</button>
                               </form>
                             </div>
                           </div>
@@ -235,150 +235,188 @@
                           <!-- add menu Form -->
                           <form method="POST" enctype="multipart/form-data" action="{% url 'pos:add_menuDrinks' %}">
                             {% csrf_token %}
+                            
+                            <div class="row mb-3">
+                              <div class="col-6">
+                                <label>Categories</label>
+                                <select name="{{ menudrinksform.menucategory.name }}" id="inputState" class="form-select">
+                                  {% for category in menuCategory %}
+                                  <option value="{{ category.id }}">{{ category.name }}</option>
+                                  {%endfor%}
+                                </select>
+                              </div>
+    
+                              <div class="col-6">
+                                <label for="inputMenuImage" class="form-label mb-0">Menu Image</label>
+                                <input type="file" name="{{ menudrinksform.menuimage.name }}" class="form-control"
+                                  id="inputMenuImage" required>
+                              </div>
+                            </div>
+                          
+                            <div class="row mb-3">
+                              <div class="col-6">
+                                <label for="inputMenuName" class="form-label mb-0">Menu</label>
+                                <input type="text" name="{{ menudrinksform.menuname.name }}" placeholder="Menu Name"
+                                  class="form-control" id="inputMenuName" required>
+                              </div>
+    
+                              <div class="col-6">
+                                <label for="inputPrice" class="form-label mb-0">Price</label>
+                                <input type="number" step="0.01" name="{{ menudrinksform.menuprice.name }}" placeholder="Price"
+                                  class="form-control" id="inputPrice" required>
+                              </div>
+                            </div>
+                           
+                            <div class="row">
+                              <h6 class="text-center">Options</h6>
+                            </div>
+                            <div class="row">
+                              <div class="col-12 justify-content-center">
+                                <label name="{{ menudrinksform.hotAndCold.id_for_label }}">Mode</label>
+                              
+                                  {{ menudrinksform.hotAndCold }} 
+                            
+                              
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <h6 class="text-center">Ingredients</h6>
+                            </div>
+                           
+                            <div class="row">
+                              <div class="col-6">
+                                <label for="inputIngredientName1" class="form-label mb-0">Ingredients</label>
+                                <select name="{{ menudrinksform.ingredient1.name }}" id="inputIngredientName1"
+                                  class="form-select mb-1">
+                                  <option value="">-- Select an ingredient --</option>
+                                  {% for ing in stocks %}
+                                  {% if ing.stockcategory == 'INGR' %}
+                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                                  </option>
+                                  {% endif %}
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="col-6">
+                                <label for="inputIngredientName1" class="form-label mb-0">Quantity</label>
+                                <input type="number" name="quantityIng1" placeholder="Quantity Ing1" class="form-control"
+                                  id="inputquantityIng1">
+                              </div>
+                            </div>
+                           
+                            <div class="row">
+                              <div class="col-6">
+                                <!-- <label for="inputIngredientName2" class="form-label mb-0">Ingredient 2</label> -->
+                                <select name="{{ menudrinksform.ingredient2.name }}" id="inputIngredientName2"
+                                  class="form-select mb-1">
+                                  <option value="">-- Select an ingredient --</option>
+                                  {% for ing in stocks %}
+                                  {% if ing.stockcategory == 'INGR' %}
+                                  <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                                  </option>
+                                  {% endif %}
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="col-6">
+                                <!-- <label for="inputIngredientName1" class="form-label mb-0">Quantity</label> -->
+                                <input type="number" name="quantityIng2" placeholder="Quantity Ing2" class="form-control"
+                                  id="inputquantityIng2">
+                              </div>
+                            </div>
+                            
   
+                        <div class="row">
+                          <div class="col-6">
+                            <!-- <label for="inputIngredientName3" class="form-label">Ingredient 3</label> -->
+                            <select name="{{ menudrinksform.ingredient3.name }}" id="inputIngredientName3"
+                              class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                              {% if ing.stockcategory == 'INGR' %}
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-6">
+                            <input type="number" name="quantityIng3" placeholder="Quantity Ing3" class="form-control"
+                              id="inputquantityIng3">
+                          </div>
+                        </div>
+                            
+                        <div class="row">
+                          <div class="col-6">
+                            <!-- <label for="inputIngredientName4" class="form-label">Ingredient 4</label> -->
+                            <select name="{{ menudrinksform.ingredient4.name }}" id="inputIngredientName4"
+                              class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                              {% if ing.stockcategory == 'INGR' %}
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-6">
+                            <input type="number" name="quantityIng4" placeholder="Quantity Ing4" class="form-control"
+                              id="inputquantityIng4">
+                          </div>
+                        </div>
+                          
+                        <div class="row">
+                          <div class="col-6">
+                            <!-- <label for="inputIngredientName5" class="form-label">Ingredient 5</label> -->
+                            <select name="{{ menudrinksform.ingredient5.name }}" id="inputIngredientName5"
+                              class="form-select mb-1">
+                              <option value="">-- Select an ingredient --</option>
+                              {% for ing in stocks %}
+                              {% if ing.stockcategory == 'INGR' %}
+                              <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
+                              </option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-6">
+                            <input type="number" name="quantityIng5" placeholder="Quantity Ing5" class="form-control"
+                              id="inputquantityIng5">
+                          </div>
+                        </div>
+                           
+                        <div class="row mt-3">
+                          <h6 class="text-center">AddOns</h6>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-6">
+                            <label for="inputAddOns1" class="form-label mb-0">AddOns</label>
+                            <select name="{{ menudrinksform.addons1.name }}" id="inputAddOns1" class="form-select mb-1">
+                              <option value="">-- Select an add on --</option>
+                              {% for ao in stocks %}
+                              {% if ao.stockcategory == "AO" %}
+                              <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                              {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                          <div class="col-3">
+                            <label for="inputAddOns1" class="form-label mb-0">Price</label>
+                            <input step="0.01" class="form-control" placeholder="Php 00.00" name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="number">
+                          </div>
+                          <div class="col-3">
+                            <label for="inputAddOns1" class="form-label mb-0">Quantity</label>
+                            <input type="number"  name="quantityAO1" placeholder="Quantity AO1" class="form-control"
+                              id="inputquantityAO1">
+                          </div>
+                        </div>
+  
+                           <div class="row">
                             <div class="col-6">
-                              <label>Categories</label>
-                              <select name="{{ menudrinksform.menucategory.name }}" id="inputState" class="form-select">
-                                {% for category in menuCategory %}
-                                <option value="{{ category.id }}">{{ category.name }}</option>
-                                {%endfor%}
-                              </select>
-                            </div>
-  
-                            <div class="col-12">
-                              <label for="inputMenuImage" class="form-label">Menu Image</label>
-                              <input type="file" name="{{ menudrinksform.menuimage.name }}" class="form-control"
-                                id="inputMenuImage" required>
-                            </div>
-  
-                            <div class="col-12">
-                              <label for="inputMenuName" class="form-label">Menu</label>
-                              <input type="text" name="{{ menudrinksform.menuname.name }}" placeholder="Menu Name"
-                                class="form-control" id="inputMenuName" required>
-                            </div>
-  
-                            <div class="col-12">
-                              <label for="inputPrice" class="form-label">Price</label>
-                              <input type="number" step="0.01" name="{{ menudrinksform.menuprice.name }}" placeholder="Price"
-                                class="form-control" id="inputPrice" required>
-                            </div>
-  
-                            <div class="col-6">
-                              <label name="{{ menudrinksform.hotAndCold.id_for_label }}">hot/cold</label>
-                              {{ menudrinksform.hotAndCold }}
-                            </div>
-  
-                            <div class="col-6">
-                              <label for="inputIngredientName1" class="form-label">Ingredient 1</label>
-                              <select name="{{ menudrinksform.ingredient1.name }}" id="inputIngredientName1"
-                                class="form-select mb-1">
-                                <option value="">-- Select an ingredient --</option>
-                                {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
-                                </option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityIng1" placeholder="Quantity Ing1" class="form-control"
-                                id="inputquantityIng1">
-                            </div>
-  
-                            <div class="col-6">
-                              <label for="inputIngredientName2" class="form-label">Ingredient 2</label>
-                              <select name="{{ menudrinksform.ingredient2.name }}" id="inputIngredientName2"
-                                class="form-select mb-1">
-                                <option value="">-- Select an ingredient --</option>
-                                {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
-                                </option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityIng2" placeholder="Quantity Ing2" class="form-control"
-                                id="inputquantityIng2">
-                            </div>
-  
-  
-                            <div class="col-6">
-                              <label for="inputIngredientName3" class="form-label">Ingredient 3</label>
-                              <select name="{{ menudrinksform.ingredient3.name }}" id="inputIngredientName3"
-                                class="form-select mb-1">
-                                <option value="">-- Select an ingredient --</option>
-                                {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
-                                </option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityIng3" placeholder="Quantity Ing3" class="form-control"
-                                id="inputquantityIng3">
-                            </div>
-  
-                            <div class="col-6">
-                              <label for="inputIngredientName4" class="form-label">Ingredient 4</label>
-                              <select name="{{ menudrinksform.ingredient4.name }}" id="inputIngredientName4"
-                                class="form-select mb-1">
-                                <option value="">-- Select an ingredient --</option>
-                                {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
-                                </option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityIng4" placeholder="Quantity Ing4" class="form-control"
-                                id="inputquantityIng4">
-                            </div>
-  
-                            <div class="col-6">
-                              <label for="inputIngredientName5" class="form-label">Ingredient 5</label>
-                              <select name="{{ menudrinksform.ingredient5.name }}" id="inputIngredientName5"
-                                class="form-select mb-1">
-                                <option value="">-- Select an ingredient --</option>
-                                {% for ing in stocks %}
-                                {% if ing.stockcategory == 'INGR' %}
-                                <option value="{{ ing.id }}" data-price="{{ ing.stockprice }}">{{ ing.stockname }}
-                                </option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                            </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityIng5" placeholder="Quantity Ing5" class="form-control"
-                                id="inputquantityIng5">
-                            </div>
-  
-  
-                            <div class="col-6">
-                              <label for="inputAddOns1" class="form-label">Add ons</label>
-                              <select name="{{ menudrinksform.addons1.name }}" id="inputAddOns1" class="form-select mb-1">
-                                <option value="">-- Select an add on --</option>
-                                {% for ao in stocks %}
-                                {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                              <input step="0.01" placeholder="Php 00.00" name="{{ menudrinksform.menuAOPrice1.name }}" id="menuAOPrice1" type="number">
-                            </div>
-                            <div class="col-3">
-                              <input type="number"  name="quantityAO1" placeholder="Quantity AO1" class="form-control"
-                                id="inputquantityAO1">
-                            </div>
-  
-                            <div class="col-6">
-                              <label for="inputAddOns2" class="form-label">Add ons</label>
+                              <!-- <label for="inputAddOns2" class="form-label">Add ons</label> -->
                               <select name="{{ menudrinksform.addons2.name }}" id="inputAddOns2" class="form-select mb-1">
                                 <option value="">-- Select an add on --</option>
                                 {% for ao in stocks %}
@@ -387,68 +425,86 @@
                                 {% endif %}
                                 {% endfor %}
                               </select>
-                              <input step="0.01" name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" placeholder="Php 00.00" type="number">
+                            </div>
+                            <div class="col-3">
+                              <input step="0.01" class="form-control" name="{{ menudrinksform.menuAOPrice2.name }}" id="menuAOPrice2" placeholder="Php 00.00" type="number">
                             </div>
                             <div class="col-3">
                               <input type="number" name="quantityAO2" placeholder="Quantity AO2" class="form-control"
                                 id="inputquantityAO2">
                             </div>
+                           </div>
+                            
+                            <div class="row">
+                              <div class="col-6">
+                                <!-- <label for="inputAddOns3" class="form-label">Add ons</label> -->
+                                <select name="{{ menudrinksform.addons3.name }}" id="inputAddOns3" class="form-select mb-1">
+                                  <option value="">-- Select an add on --</option>
+                                  {% for ao in stocks %}
+                                  {% if ao.stockcategory == "AO" %}
+                                  <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                                  {% endif %}
+                                  {% endfor %}
+                                </select>
+                              
+                              </div>
+                              <div class="col-3">
+                                <input step="0.01" class="form-control" name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" placeholder="Php 00.00" type="number">
+                              </div>
+                              <div class="col-3">
+                                <input type="number" name="quantityAO3" placeholder="Quantity AO3" class="form-control"
+                                  id="inputquantityAO3">
+                              </div>
+                            </div>
+                           
   
-                            <div class="col-6">
-                              <label for="inputAddOns3" class="form-label">Add ons</label>
-                              <select name="{{ menudrinksform.addons3.name }}" id="inputAddOns3" class="form-select mb-1">
-                                <option value="">-- Select an add on --</option>
-                                {% for ao in stocks %}
-                                {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                              <input step="0.01" name="{{ menudrinksform.menuAOPrice3.name }}" id="menuAOPrice3" placeholder="Php 00.00" type="number">
+                            <div class="row">
+                              <div class="col-6">
+                                <!-- <label for="inputAddOns4" class="form-label">Add ons</label> -->
+                                <select name="{{ menudrinksform.addons4.name }}" id="inputAddOns4" class="form-select mb-1">
+                                  <option value="">-- Select an add on --</option>
+                                  {% for ao in stocks %}
+                                  {% if ao.stockcategory == "AO" %}
+                                  <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                                  {% endif %}
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="col-3">
+                                <input step="0.01" class="form-control" name="{{ menudrinksform.menuAOPrice4.name }}" placeholder="Php 00.00" id="menuAOPrice4" type="number">
+                              </div>
+                              <div class="col-3">
+                                <input type="number" name="quantityAO4" placeholder="Quantity AO4" class="form-control"
+                                  id="inputquantityAO4">
+                              </div>  
                             </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityAO3" placeholder="Quantity AO3" class="form-control"
-                                id="inputquantityAO3">
+
+                            <div class="row">
+                              <div class="col-6">
+                                <!-- <label for="inputAddOns5" class="form-label">Add ons</label> -->
+                                <select name="{{ menudrinksform.addons5.name }}" id="inputAddOns5" class="form-select mb-1">
+                                  <option value="">-- Select an add on --</option>
+                                  {% for ao in stocks %}
+                                  {% if ao.stockcategory == "AO" %}
+                                  <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
+                                  {% endif %}
+                                  {% endfor %}
+                                </select>
+                               
+                              </div>
+                              <div class="col-3">
+                                <input  step="0.01" class="form-control" name="{{ menudrinksform.menuAOPrice5.name }}" placeholder="Php 00.00" id="menuAOPrice5" type="number">
+                              </div>
+                              <div class="col-3">
+                                <input type="number" name="quantityAO5" placeholder="Quantity AO5" class="form-control"
+                                  id="inputquantityAO5">
+                              </div>
                             </div>
+                            
   
-                            <div class="col-6">
-                              <label for="inputAddOns4" class="form-label">Add ons</label>
-                              <select name="{{ menudrinksform.addons4.name }}" id="inputAddOns4" class="form-select mb-1">
-                                <option value="">-- Select an add on --</option>
-                                {% for ao in stocks %}
-                                {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                              <input step="0.01" name="{{ menudrinksform.menuAOPrice4.name }}" placeholder="Php 00.00" id="menuAOPrice4" type="number">
-                            </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityAO4" placeholder="Quantity AO4" class="form-control"
-                                id="inputquantityAO4">
-                            </div>
-  
-                            <div class="col-6">
-                              <label for="inputAddOns5" class="form-label">Add ons</label>
-                              <select name="{{ menudrinksform.addons5.name }}" id="inputAddOns5" class="form-select mb-1">
-                                <option value="">-- Select an add on --</option>
-                                {% for ao in stocks %}
-                                {% if ao.stockcategory == "AO" %}
-                                <option value="{{ ao.id }}" data-price="{{ ao.stockprice }}">{{ ao.stockname }}</option>
-                                {% endif %}
-                                {% endfor %}
-                              </select>
-                              <input  step="0.01" name="{{ menudrinksform.menuAOPrice5.name }}" placeholder="Php 00.00" id="menuAOPrice5" type="number">
-                            </div>
-                            <div class="col-3">
-                              <input type="number" name="quantityAO5" placeholder="Quantity AO5" class="form-control"
-                                id="inputquantityAO5">
-                            </div>
-  
-  
-                            <div class="text-center d-grip gap-2">
-                              <button type="submit" class="btn px-4">Add</button>
-                              <button type="reset" class="btn px-4">Reset</button>
+                            <div class="text-center d-grip gap-2 mt-3">
+                              <button type="submit" class="btn" style="background-color: #FF862F !important; color: white;" >Add</button>
+                              <button type="reset" class="btn" style="background-color: #FF862F !important; color: white;">Reset</button>
                             </div>
                           </form><!-- Vertical Form -->
   
