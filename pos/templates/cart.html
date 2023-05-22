@@ -174,7 +174,7 @@
                         <h6>Order Method </h6>
                         <div class="d-flex px-2 justify-content-center">
                           <div>
-                            <input type="radio" class="btn-check d-flex" name="DineIn_Out" id="btn-check-4" autocomplete="off" value="IN" {% if buyitemforms.DineIn_Out.name == "IN" %}checked{% endif %}>
+                            <input type="radio" class="btn-check btn-primaryd-flex" name="DineIn_Out" id="btn-check-4" autocomplete="off" value="IN" {% if buyitemforms.DineIn_Out.name == "IN" %}checked{% endif %}>
                             <label class="btn" for="btn-check-4">Dine In</label>
                           </div>
                           <div>
@@ -203,11 +203,11 @@
                         
                         <div class="total-amount mt-4">
                             <div class="d-flex justify-content-between">
-                                <h6><strong>Total Amount</strong></h6>
-                                <input name="AllPayment" type="text" class="form-control bg-transparent border-0 fw-bold text-end" value="{{ total_price }}" readonly>&#8369                                    </div>
+                                <h6><strong>Total</strong></h6>
+                                <input name="AllPayment" type="text" class="form-control bg-transparent border-0 fw-bold text-end" value="{{ total_price }}" readonly>                                    </div>
                         </div>
                         <div class="text-center col-12 d-grid">
-                            <button type="submit" class="btn" style=" background-color: #FF862F !important;">Place Order</button> 
+                            <button type="submit" class="btn" style=" background-color: #FF862F !important; color: white;">Place Order</button> 
                         </div>
                     </form>
                 </div>
