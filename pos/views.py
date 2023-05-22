@@ -300,15 +300,27 @@ def reco(request):
     menuCategory = MenuCategory.objects.all()
     buyitem = buyItem.objects.all()
 
+    lowest_price = 99999999
+    highest_price = 0
+
+    for row in menuDrinks:
+        if row.menuprice1 < lowest_price:
+            lowest_price = row.menuprice1
+        if row.menuprice1 > highest_price:
+            highest_price = row.menuprice1
+
     context = {
         'buyitemform': buyitemform,
         'stocks': stocks,
         'menuDrinks': menuDrinks,
         'menuCategory': menuCategory,
         'buyitem': buyitem,
+        'lowest_price': lowest_price,
+        'highest_price': highest_price,
     }
   
     return render(request, 'recommendation.html', context)
+
 
 def buy_item_drinks1(request):
     if request.method == 'POST':
