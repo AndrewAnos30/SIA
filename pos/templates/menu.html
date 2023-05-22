@@ -19,7 +19,7 @@
       <div class="d-flex justify-content-between">
         <h5 class="categories">Categories</h5>
         <div class="btn-category">
-          <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+          <a class="btn btn-sm btn-success ms-auto" href="#" role="button" data-bs-toggle="modal"
             data-bs-target="#addcategorymodal">Add Category</a>
 
           <!-- Vertically centered Modal -->
@@ -34,8 +34,8 @@
                 <div class="modal-body">
                   <form action="{% url 'pos:add_menuCategory' %}" method="POST">
                     {% csrf_token %}
-                    <div class="col-12">
-                      <label for="addcategory">Choose category</label>
+                    <div class="col-12 mb-2">
+                      <label for="addcategory mb-2">Choose category</label>
                       <select name="{{ menucategoryform.categorytype.name }}" id="inputCategoryName"
                         class="form-select">
                         {% for row in menucategoryform.categorytype %}
@@ -44,11 +44,11 @@
                       </select>
                     </div>
                     <div class="col-12">
-                      <input name="{{ menucategoryform.name.name }}" type="text" class="form-control"
+                      <input name="{{ menucategoryform.name.name }}" type="text" class="form-control mb-2"
                         placeholder="Category Name" id="inputCategoryName">
                     </div>
                     <div class="text-center ms-auto">
-                      <button type="submit" class="btn btn-primary">Add</button>
+                      <button type="submit" class="btn" style="background-color: #FFB272 !important;">Add</button>
                       <button type="reset" class="btn btn-secondary">Reset</button>
                     </div>
                   </form><!-- Vertical Form -->
@@ -58,7 +58,7 @@
           </div><!-- End Vertically centered Modal-->
 
           <span>
-            <button class="btn btn-sm ms-2" type="button" data-bs-toggle="modal"
+            <button class="btn btn-sm btn-success ms-2" type="button" data-bs-toggle="modal"
               data-bs-target="#deletecategorymodal">Delete Category</button>
 
             <!-- Delete Category Modal -->
@@ -81,7 +81,7 @@
                         </select>
                       </div>
                       <div class="col-12 text-center mt-3">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn " style="background-color: #FFB272 !important;">Delete</button>
                       </div>
                     </form>
                   </div>
@@ -92,7 +92,7 @@
 
           <!-- Edit Category Modal -->
           <span>
-            <a class="btn btn-sm ms-auto" href="#" role="button" data-bs-toggle="modal"
+            <a class="btn btn-sm ms-auto btn-success" href="#" role="button" data-bs-toggle="modal"
               data-bs-target="#editcategorymodal">Edit Category</a>
             <div class="modal fade" id="editcategorymodal" tabindex="-1">
               <div class="modal-dialog modal-dialog-centered">
@@ -125,8 +125,8 @@
                         <label for="new_name">Rename</label>
                         <input type="text" name="new_name" placeholder="Category Name" class="form-control" required>
                       </div>
-                      <div class="col-12 text-center d-grip gap-2">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <div class="col-12 text-center d-grip gap-2 mt-2">
+                        <button type="submit" class="btn" style="background-color: #FFB272 !important;">Save Changes</button>
                         <button type="reset" class="btn btn-secondary">Reset</button>
                       </div>
                     </form>
@@ -838,6 +838,7 @@
     <!---->
     <h5>DRINKS</h5>
     <div class="menu-grid mt-2">
+
       <ul class="nav nav-pills">
         {% for categories in menuCategory %}
         {%if categories.categorytype == 'DRINKS'%}
@@ -865,7 +866,7 @@
             {% for data in categories.menudrinks_set.all %}
             <div class="col">
               <!-- Card with an image on top -->
-              <div class="card menu-item-card">
+              <div class="card">
                 <img src="{{data.menuimage.url}}" class="card-img-top">
                 <div class="card-body">
 
@@ -881,7 +882,7 @@
                     <div class="text-center d-grip gap-2">
                       <form method="POST" action="{% url 'pos:delete_menu' data.id %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-sm bg-danger">Delete</button>
+                        <button type="submit" class="btn btn-sm" style="background-color: #FFB272 !important;">Delete</button>
                       </form>
                     </div>
                   </div>
@@ -919,7 +920,7 @@
     {% for categories in menuCategory %}
     {%if categories.categorytype == 'FOOD'%}
     <!-- Coffeee or Category 1 pane -->
-    <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ categories.name|slugify }}">
+    <div class="tab-pane container{% if forloop.first %} {% endif %} fs-5" id="{{ categories.name|slugify }}">
       <div class="d-flex justify-content-between mb-2">
         <h5 class="categories">{{categories.name}}</h5>
       </div>
@@ -944,7 +945,7 @@
                 <div class="text-center d-grip gap-2">
                   <form method="POST" action="{% url 'pos:delete_menu' data.id %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-sm bg-danger">Delete</button>
+                    <button type="submit" class="btn btn-sm" style="background-color: #FFB272 !important;">Delete</button>
                   </form>
                 </div>
               </div>
