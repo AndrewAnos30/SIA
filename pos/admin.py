@@ -18,8 +18,9 @@ class MenuDrinksAdmin(admin.ModelAdmin):
 
 
 class BuyItemAdmin(admin.ModelAdmin):
-    list_display = ("buyOrBought","buySize","priceSize" , "buyQuantityMenu", "buyName", "buyPrice", "buyQuantityAO1", "buyQuantityAO2", "buyQuantityAO3", "buyQuantityAO4", "buyQuantityAO5", "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5", "buyAddOns1", "buyAddOns2", "buyAddOns3", "buyAddOns4", "buyAddOns5",
-                      "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5", "buyQuantityIng1", "buyQuantityIng2", "buyQuantityIng3", "buyQuantityIng4", "buyQuantityIng5", "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered", "DoneOrder")
+    list_display = ("buyOrBought","buySize","priceSize" , "buyQuantityMenu", "buyName", "buyPrice", "buyQuantityAO1", "buyQuantityAO2", "buyQuantityAO3", "buyQuantityAO4", "buyQuantityAO5","buyQuantityIng6", "buyQuantityIng7", "buyQuantityIng8", "buyQuantityIng9", "buyQuantityIng10", "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5", "buyAddOns1", "buyAddOns2", "buyAddOns3", "buyAddOns4", "buyAddOns5",
+                      "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5", "buyQuantityIng1", "buyQuantityIng2", "buyQuantityIng3", "buyQuantityIng4", "buyQuantityIng5", "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered", "DoneOrder",
+                       "buyingredient6", "buyingredient7", "buyingredient8", "buyingredient9", "buyingredient10" )
 
 admin.site.register(Stocks, StocksAdmin)
 admin.site.register(MenuCategory,MenucategoryAdmin)

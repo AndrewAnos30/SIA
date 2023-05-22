@@ -222,7 +222,7 @@ def buy_item_drinks(request):
     if request.method == 'POST':
         form = BuyItemForms(request.POST, request.FILES)
         if form.is_valid():
-            print("puta")
+         
             form.save()
             return HttpResponseRedirect(reverse("pos:home"))
         else:
