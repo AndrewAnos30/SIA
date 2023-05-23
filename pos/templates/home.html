@@ -1,6 +1,4 @@
-home.html
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +43,7 @@ home.html
 
   <!-- main js -->
   <script src="{% static 'js/main.js' %}"></script>
-  <title>BevRecs-Menu</title>
+  <title>Menu</title>
 </head>
 
 <body>
@@ -53,7 +51,7 @@ home.html
   <header class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
-        <img class="logo" src="/static/img/logo-with-name.png" alt="logo">
+        <img class="logo" src="/static/img/intelliserve.png" alt="logo">
 
       </a>
     </div>
@@ -77,10 +75,10 @@ home.html
 
         <!-- cart-->
         <li class="nav-item d-block m-auto px-4">
-          <a type="button" class="cart-btn" href="{% url 'pos:cart'%}">
-            Cart(0)
-          </a>
-        </li>
+          <a type="button" class="cart-btn text-decoration-none bg-success p-2 mb-3" style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
+            Cart
+        </a>
+      </li>
         <!-- cart end-->
       </ul>
     </nav>
@@ -110,12 +108,12 @@ home.html
   <main id="main" class="main">
     <section class="section menu rounded">
       <!-- Nav for categories -->
-      <div class="row mb-2 mx-1 rounded bg-white category-tab-div">
+      <div class="row mb-2 mx-1 rounded category-tab-div">
         <div class="col-12 py-2 category-tab">
           <ul class="nav nav-pills">
             {% for category in menuCategory %}  
             {%if category.categorytype == 'DRINKS'%}
-            <li class="nav-item">
+            <li class="nav-item bg-white rounded mx-2">
               <a class="nav-link" data-bs-toggle="pill" href="#{{ category.name|slugify }}">
                 <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
                 <span>{{ category.name }}</span>
@@ -139,7 +137,7 @@ home.html
           </div>
 
           <!-- menu items div display each category -->
-          <div class="tab-content bg-white rounded">
+          <div class="tab-content rounded">
             <div class="tab-pane container active py-2" id="{{ category.name }}">
               <div class="row g-1">
                 {% for row in menuDrinks %}
@@ -394,10 +392,10 @@ home.html
                             <div class="ingredient_list mt-2">
                               <h6 class="sizetxt fw-light">Ingredients</h6>
                               <div class="d-flex">
-                                <div>
+                                <!-- <div>
                                   <p class="ingredient_name px-3">NAME</p>
                                   <p class="ingredient_quantity px-2">MEASUREMENTS</p>
-                                </div>
+                                </div> -->
                                 <div>
                                   {% if row.ingredient1 %}
                                   <input type="text" name="{{ buyitemform.buyingredient1.name }}"
@@ -468,7 +466,7 @@ home.html
         {% endfor %}
       </div>
       <br>
-      <div class="row mb-2 mx-1 rounded bg-white category-tab-div">
+      <div class="row mb-2 mx-1 rounded category-tab-div">
         <div class="col-12 py-2 category-tab">
           <ul class="nav nav-pills">
             {% for category in menuCategory %}  
@@ -495,17 +493,18 @@ home.html
           </div>
 
           <!-- menu items div display each category -->
-          <div class="tab-content bg-white rounded">
+          <div class="tab-content rounded">
             <div class="tab-pane container active py-2" id="{{ category.name }}">
               <div class="row g-1">
                 {% for row in menuDrinks %}
 
                 {% if row.menucategory == category %}
-                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                   <div class="card">
-                    <img src="{{ row.menuimage.url }}" class="card-img-top" alt="...">
+                    <img src="{{ row.menuimage.url }}" class="card-img-top img-thumbnail" alt="..." style="height:200px; width:100%; object-fit: cover;">
                     <div class="card-body">
-                      <h5 class="card-title fs-6 text-nowrap">{{ row.menuname }}</h5>
+                      <h5 class="card-title fs-6 p-0 m-0 text-nowrap">{{ row.menuname }}</h5>
                       <div class="d-flex">
                         <p class="card-text">PHP <strong>{{ row.menuprice1 }}</strong></p>
                       </div>

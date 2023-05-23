@@ -40,14 +40,14 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/virtual-select.min.js' %}"></script>
   
-    <title>BevRecs-Menu</title>
+    <title>Menu</title>
   </head>
 <body >
      <!-- ===========HEADER============== -->
   <header class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
-        <img class="logo" src="/static/img/logo-with-name.png" alt="logo">
+        <img class="logo" src="/static/img/intelliserve.png" alt="logo">
       
       </a>
     </div>
@@ -71,8 +71,8 @@
 
            <!-- cart-->
            <li class="nav-item d-block m-auto px-4">
-              <a type="button" class="cart-btn" href="{% url 'pos:cart' %}">
-                Cart(0)
+              <a type="button" class="cart-btn text-decoration-none bg-success p-2 mb-3" style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
+                Cart
             </a>
           </li>
            <!-- cart end-->
@@ -103,7 +103,7 @@
         <section class="section menu rounded">
           <div class="container d-flex flex-column ">
             <div class="position-relative">
-              <img src="img/home.png" alt="Home" class="header-image">
+              <img src="{%static 'img/home.png' %}" alt="Home" class="header-image" style="height: 550px; width: 100%;">
               <button id="openChatModal" class="sample position-absolute top-50 start-50 translate-middle" style="margin-top: 100px; background-color: lightsalmon; font-size: larger; height: 80px; font-weight: bolder;">CHAT NOW!</button>
             </section>
               </div>
@@ -127,22 +127,29 @@
       </main>
       
 
-      <div class="tab-content bg-white rounded">
+      <div class="tab-content rounded">
         <div class="tab-content mt-4" style="margin-left: 350px;">
           <div class="row g-1">
             {% for row in menuDrinks|dictsort:'menuprice1' %}
             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
               <div class="card">
-                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="...">
+                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
                 <div class="card-body">
-                  <a class="card-title fs-6 text-nowrap" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
+                  <div class="row">
+                    <div class="col-12">
+                      <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
+                    </div>
+                    <div class="col-12">
+                      
                   <!-- off-canvas display menu Info -->
                   <div class="btn-group" role="group" aria-label="Rating" style="width: 5px;">
-                    <button type="button" class="btn btn-outline-primary">&#9734;</button>
-                    <button type="button" class="btn btn-outline-primary">&#9734;</button>
-                    <button type="button" class="btn btn-outline-primary">&#9734;</button>
-                    <button type="button" class="btn btn-outline-primary">&#9734;</button>
-                    <button type="button" class="btn btn-outline-primary">&#9734;</button>
+                    <button type="button" class="btn btn-outline-success">&#9734;</button>
+                    <button type="button" class="btn btn-outline-success">&#9734;</button>
+                    <button type="button" class="btn btn-outline-success">&#9734;</button>
+                    <button type="button" class="btn btn-outline-success">&#9734;</button>
+                    <button type="button" class="btn btn-outline-success">&#9734;</button>
+                  </div>
+                    </div>
                   </div>
                   <div class="offcanvas offcanvas-end" tabindex="-1" id="menuinformation-{{ row.id }}"
                     aria-labelledby="menuinformation-{{ row.id }}">
@@ -167,7 +174,7 @@
                       </div>
                   
                 <br>
-                      <div class="container" style="margin-left: 440px;">
+                      <!-- <div class="container" style="margin-left: 440px;">
                         <h3>Customer Ratings</h3>
                         <div class="card">
                           <div class="card-body d-flex justify-content-between">
@@ -245,7 +252,7 @@
                             <p class="card-text">The product arrived in perfect condition. Very satisfied.</p>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </section>
                 </main>
@@ -439,4 +446,4 @@ document.getElementById('highest-price').innerText = highestPrice;
      </script>
   </body>
   
-  </html>
+  </html> 

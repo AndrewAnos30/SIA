@@ -41,23 +41,15 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/virtual-select.min.js' %}"></script>
 
-    <title>BevRecs-Menu</title>
+    <title>Cart</title>
 </head>
 
 <body>
     <!-- ===========HEADER============== -->
     <header class="header fixed-top d-flex align-items-center">
-
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <img src="assets/img/logo.png" alt="">
-              <span class="d-none d-lg-block">NiceAdmin</span>
-            </a>
-            <i class="bi bi-list toggle-sidebar-btn"></i>
-          </div><!-- End Logo -->
         <div class="d-flex align-items-center justify-content-between">
             <a href="/templates/user order/index.html" class="logo d-flex align-items-center px-2">
-                <img class="logo" src="/static/img/logo-with-name.png" alt="logo">
+                <img class="logo" src="/static/img/intelliserve.png" alt="logo">
 
             </a>
         </div>
@@ -81,9 +73,9 @@
 
                 <!-- cart-->
                 <li class="nav-item d-block m-auto px-4">
-                    <a type="button" class="cart-btn" href="{% url 'pos:cart'%}">
-                        Cart(0)
-                    </a>
+                    <a type="button" class="cart-btn text-decoration-none bg-success p-2 mb-3" style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
+                      Cart
+                  </a>
                 </li>
                 <!-- cart end-->
             </ul>
@@ -313,16 +305,11 @@
                                   <div class="total-amount mt-4">
                                     <div class="d-flex justify-content-between">
                                       <h5><strong>Total Amount</strong></h5>
-                                      <input name="AllPayment" type="text" class="form-control bg-transparent border-0 fw-bold text-end" value="{{ total_price }}" readonly>&#8369;
+                                      <input name="AllPayment" type="text" class="form-control bg-transparent border-0 fw-bold text-end" value="{{ total_price }}" readonly>
                                     </div>
                                   </div>
-                                  
-                                
-
-
-                               
                                 <div class="text-center col-12 d-grid">
-                                    <button type="submit" class="btn place-order-btn">Place Order</button> 
+                                    <button type="submit" class="btn place-order-btn btn-success">Place Order</button> 
                                 </div>
                             </form>
                         </div>

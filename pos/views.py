@@ -429,24 +429,27 @@ def receipt(request, orderNumber):
     # Loop through the order items and retrieve the necessary fields
     for item in order_items:
         item_data = {
-            'buy_name': item.buyName,
-            'buy_price': item.buyPrice,
-            'buy_quantity': item.buyQuantityMenu,
-            'addons': [],
-        }
+        'buy_name': item.buyName,
+        'buy_price': item.buyPrice,
+        'buy_quantity': item.buyQuantityMenu,
+        'addons': [],
+    }
 
-        # Retrieve addon details
-        for i in range(1, 6):
-            addon_name = getattr(item, f'buyAddOns{i}', None)
-            addon_price = getattr(item, f'menuAOPrice{i}', None)
-            if addon_name and addon_price:
-                item_data['addons'].append({'addon': addon_name, 'price': addon_price})
+    # Retrieve addon details
+    for i in range(1, 6):
+        addon_name = getattr(item, f'buyAddOns{i}', None)
+        addon_price = getattr(item, f'menuAOPrice{i}', None)
+        if addon_name is not None and addon_price is not None:
+            item_data['addons'].append({'addon': addon_name, 'price': addon_price})
 
-        receipt_data['items'].append(item_data)
+    receipt_data['items'].append(item_data)
+
+    if item.buyPrice is not None and item.buyQuantityMenu is not None:
         receipt_data['total_price'] += item.buyPrice * item.buyQuantityMenu
 
-    # Calculate the change amount
+# Calculate the change amount
     receipt_data['change_amount'] = receipt_data['tendered_payment'] - receipt_data['total_price']
 
     return render(request, 'receipt.html', {'receipt_data': receipt_data})
+
 

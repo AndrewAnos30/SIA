@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}BevRecs | Orders {% endblock%}
+{% block title %}Orders {% endblock%}
 
 
 {% block content %}
@@ -22,9 +22,6 @@
             <div class="card-body">
               <h5 class="card-title text-center">Transactions</h5>
 
-              <div class="p-2">
-                <h6 class="page-title-cart">Your Orders</h6>
-              </div>
               {% for cart in buyitem %}
               {% if cart.buyOrBought and not cart.DoneOrder %}
                 <div class="row">
