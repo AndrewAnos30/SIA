@@ -22,6 +22,7 @@ class BuyItemAdmin(admin.ModelAdmin):
                       "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5", "buyQuantityIng1", "buyQuantityIng2", "buyQuantityIng3", "buyQuantityIng4", "buyQuantityIng5", "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered", "DoneOrder",
                        "buyingredient6", "buyingredient7", "buyingredient8", "buyingredient9", "buyingredient10" )
 
+
 admin.site.register(Stocks, StocksAdmin)
 admin.site.register(MenuCategory,MenucategoryAdmin)
 admin.site.register(MenuDrinks, MenuDrinksAdmin)

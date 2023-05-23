@@ -1,5 +1,5 @@
 from django import forms
-
+from django.contrib.auth.models import User
 # Mga database
 from .models import Stocks, STOCK_CATEGORY, STOCK_QUANTITY
 from .models import MenuCategory, MenuDrinks, TYPES_MENU
@@ -103,4 +103,7 @@ class BuyItemForms(forms.ModelForm):
             'payment_method': forms.RadioSelect(choices=(('cash', 'Cash'),('gcash', 'GCash'))),
             'DineIn_Out': forms.RadioSelect(choices=(('IN', 'Dine In'),('OUT', 'Dine Out'))),
         }
+
+
+
 

@@ -192,7 +192,9 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'pos:order' %}">
           <i class='bx bx-cart-alt'></i><span>Orders</span>
-          <span class="badge badge-number ms-auto bg-danger">1</span>
+          {% with cart_items=cart.buyItem.all %}
+          <span class="badge badge-number ms-auto bg-danger">{{ cart_items|length }}</span>
+        {% endwith %}
         </a>
       </li><!-- Order Nav -->
 

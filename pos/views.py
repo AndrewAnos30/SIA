@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .models import Stocks, STOCK_CATEGORY, STOCK_QUANTITY
-from .models import MenuCategory, MenuDrinks, TYPES_MENU
+from .models import MenuCategory, MenuDrinks, TYPES_MENU, total_AO
 from .models import buyItem
 from pos import views
 from .forms import IngridientsForm, AddOnsForm, UtensilsForm
@@ -17,14 +17,6 @@ from django.http import JsonResponse
 def index(request):
   
     return render(request, 'index.html')
-
-def login (request):
-  
-    return render(request, 'login.html')
-
-def register (request):
-  
-    return render(request, 'register.html')
 
 
 #inventory start
@@ -254,7 +246,6 @@ def sales(request):
     today = datetime.now().date()
     start_of_week = today - timedelta(days=today.weekday())  # Get the start date of the current week
     end_of_week = start_of_week + timedelta(days=6)  # Get the end date of the current week
-
     buyitem = buyItem.objects.filter(dateordered__date__range=[start_of_week, end_of_week])
     
     context = {
@@ -364,6 +355,11 @@ def cart(request):
   
     return render(request, 'cart.html',context)
 
+def delete_menu_from_cart(request, cart_item_id):
+    cart_item = buyItem.objects.get(id=cart_item_id)
+    cart_item.delete()
+    return redirect('pos:cart')
+
 
 def update_values(request):
     if request.method == 'POST':
@@ -378,29 +374,28 @@ def update_values(request):
 
         # Get only the buyItem objects with buyOrBought=False
         buy_items = buyItem.objects.filter(buyOrBought=False)
-      
+
         # Get the current date and time
         current_datetime = datetime.now()
 
         for item in buy_items:
-            # Update the fields for each buyItem object
-            item.payment_method = payment_method
-            item.DineIn_Out = dine_in_out
-            item.tenderedPayment = tendered_payment
-            item.AllPayment = AllPayment
             if not item.buyOrBought:
+                # Update the fields for each buyItem object
+                item.payment_method = payment_method
+                item.DineIn_Out = dine_in_out
+                item.tenderedPayment = tendered_payment
+                item.AllPayment = AllPayment
                 item.orderNumber = order_number
                 item.buyOrBought = True  # Set buyOrBought to True
                 item.dateordered = current_datetime  # Store the current date and time
-            # Save the changes for each buyItem object
-            item.save()
+                # Save the changes for each buyItem object
+                item.save()
 
         # Redirect to a success page or do any further processing
         return redirect("pos:home")
 
     # Render the form
     return render(request, "home.html")
-
 
 
 #cart end
@@ -415,4 +410,43 @@ def calculate_total_price(buyitem):
     rounded_total = round(total, 2)
     return rounded_total
 
+
+
+def receipt(request, orderNumber):
+    # Retrieve the necessary data based on the order number
+    order_items = buyItem.objects.filter(orderNumber=orderNumber)
+
+    # Prepare the receipt data
+    receipt_data = {
+        'order_number': orderNumber,
+        'order_date': order_items.first().dateordered,  # Retrieve the date directly
+        'items': [],
+        'total_price': 0,
+        'tendered_payment': order_items.first().tenderedPayment,
+        'change_amount': 0,
+    }
+
+    # Loop through the order items and retrieve the necessary fields
+    for item in order_items:
+        item_data = {
+            'buy_name': item.buyName,
+            'buy_price': item.buyPrice,
+            'buy_quantity': item.buyQuantityMenu,
+            'addons': [],
+        }
+
+        # Retrieve addon details
+        for i in range(1, 6):
+            addon_name = getattr(item, f'buyAddOns{i}', None)
+            addon_price = getattr(item, f'menuAOPrice{i}', None)
+            if addon_name and addon_price:
+                item_data['addons'].append({'addon': addon_name, 'price': addon_price})
+
+        receipt_data['items'].append(item_data)
+        receipt_data['total_price'] += item.buyPrice * item.buyQuantityMenu
+
+    # Calculate the change amount
+    receipt_data['change_amount'] = receipt_data['tendered_payment'] - receipt_data['total_price']
+
+    return render(request, 'receipt.html', {'receipt_data': receipt_data})
 

@@ -29,8 +29,8 @@
                   </li>
 
                   <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                  <li><a class="dropdown-item" href="#">This week</a></li>
+                  <li><a class="dropdown-item" href="#">This month</a></li>
                 </ul>
               </div>
 
@@ -44,45 +44,130 @@
                       <th scope="col">Date</th>
                       <th scope="col">Beverage</th>
                       <th scope="col">Quantity</th>
-                      <th scope="col">Size</th>
                       <th scope="col">Price</th>
                       <th scope="col">Addons</th>
                       <th scope="col">Addons Total</th>
                       <th scope="col">Payment Method</th>
                       <th scope="col">Total</th>
-
+                     
                     </tr>
                   </thead>
                  
                   <tbody>
-                    {% for sale in buyitem %}
-                    {% if sale.buyOrBought == True %}
-                    {% if sale.DoneOrder == True%}
-                    <tr>
-                        <td>{{ sale.orderNumber }}</td>
-                        <td>{{ sale.dateordered.date }}</td>
-                        <td><a href="#" class="text-primary fw-bold">{{ sale.buyName }}</a></td>
-                        <td>{{ sale.buyQuantityMenu }}</td>
-                        <td>{{ sale.buySize }}</td>
-                        <td>{{ sale.buyPrice }}</td>
-                        <td>
-                            {% if sale.buyAddOns1 %}{{ sale.buyAddOns1 }}<br>{% endif %}
-                            {% if sale.buyAddOns2 %}{{ sale.buyAddOns2 }}<br>{% endif %}
-                            {% if sale.buyAddOns3 %}{{ sale.buyAddOns3 }}<br>{% endif %}
-                            {% if sale.buyAddOns4 %}{{ sale.buyAddOns4 }}<br>{% endif %}
-                            {% if sale.buyAddOns5 %}{{ sale.buyAddOns5 }}<br>{% endif %}
-                            {% if not sale.buyAddOns1 and not sale.buyAddOns2 and not sale.buyAddOns3 and not sale.buyAddOns4 and not sale.buyAddOns5 %}
+                    {% regroup buyitem|dictsort:'orderNumber' by orderNumber as grouped_items %}
+                    {% for group in grouped_items %}
+                      {% if group.list.0.buyOrBought and group.list.0.DoneOrder %}
+                        {% for sale in group.list %}
+                          <tr>
+                            {% if forloop.first %}
+                            <td>{{ group.list.0.orderNumber }}</td>
+                            <td id="date_{{ group.list.0.orderNumber }}">{{ group.list.0.dateordered.date }}</td>
+                            <td>
+                              <a href="{% url 'pos:receipt' orderNumber=group.list.0.orderNumber %}" class="text-primary fw-bold">{{ group.list.0.buyName }}</a>
+                            </td>
+                            <td>{{ sale.buyQuantityMenu }}</td>
+                            
+                            <td>{{ sale.buyPrice }}</td>
+                            <td>
+                              {% if sale.buyAddOns1 %}{{ sale.buyAddOns1 }}<br>{% endif %}
+                              {% if sale.buyAddOns2 %}{{ sale.buyAddOns2 }}<br>{% endif %}
+                              {% if sale.buyAddOns3 %}{{ sale.buyAddOns3 }}<br>{% endif %}
+                              {% if sale.buyAddOns4 %}{{ sale.buyAddOns4 }}<br>{% endif %}
+                              {% if sale.buyAddOns5 %}{{ sale.buyAddOns5 }}<br>{% endif %}
+                              {% if not sale.buyAddOns1 and not sale.buyAddOns2 and not sale.buyAddOns3 and not sale.buyAddOns4 and not sale.buyAddOns5 %}
                                 None
+                              {% endif %}
+                            </td>
+                            <td>
+                              {% if sale.menuAOPrice1 %}{{ sale.menuAOPrice1 }}<br>{% endif %}
+                              {% if sale.menuAOPrice2 %}{{ sale.menuAOPrice2 }}<br>{% endif %}
+                              {% if sale.menuAOPrice3 %}{{ sale.menuAOPrice3 }}<br>{% endif %}
+                              {% if sale.menuAOPrice4 %}{{ sale.menuAOPrice4 }}<br>{% endif %}
+                              {% if sale.menuAOPrice5 %}{{ sale.menuAOPrice5 }}<br>{% endif %}
+                              {% if not sale.menuAOPrice1 and not sale.menuAOPrice2 and not sale.menuAOPrice3 and not sale.menuAOPrice4 and not sale.menuAOPrice5 %}
+                                0.00
+                              {% endif %}
+                            </td>
+                            <td>{{ sale.payment_method }}</td>
+                            <td>{{ sale.AllPayment }}</td>
+                           
+                            {% else %}
+                              <td></td>
+                              <td></td>
+                              <td>{{ sale.buyName }}</td>
+                              <td>{{ sale.buyQuantityMenu }}</td>
+                              <td>{{ sale.buyPrice }}</td>
+                              <td>
+                                {% if sale.buyAddOns1 %}{{ sale.buyAddOns1 }}<br>{% endif %}
+                                {% if sale.buyAddOns2 %}{{ sale.buyAddOns2 }}<br>{% endif %}
+                                {% if sale.buyAddOns3 %}{{ sale.buyAddOns3 }}<br>{% endif %}
+                                {% if sale.buyAddOns4 %}{{ sale.buyAddOns4 }}<br>{% endif %}
+                                {% if sale.buyAddOns5 %}{{ sale.buyAddOns5 }}<br>{% endif %}
+                                {% if not sale.buyAddOns1 and not sale.buyAddOns2 and not sale.buyAddOns3 and not sale.buyAddOns4 and not sale.buyAddOns5 %}
+                                  None
+                                {% endif %}
+                              </td>
+                              <td>
+                                {% if sale.menuAOPrice1 %}{{ sale.menuAOPrice1 }}<br>{% endif %}
+                                {% if sale.menuAOPrice2 %}{{ sale.menuAOPrice2 }}<br>{% endif %}
+                                {% if sale.menuAOPrice3 %}{{ sale.menuAOPrice3 }}<br>{% endif %}
+                                {% if sale.menuAOPrice4 %}{{ sale.menuAOPrice4 }}<br>{% endif %}
+                                {% if sale.menuAOPrice5 %}{{ sale.menuAOPrice5 }}<br>{% endif %}
+                                {% if not sale.menuAOPrice1 and not sale.menuAOPrice2 and not sale.menuAOPrice3 and not sale.menuAOPrice4 and not sale.menuAOPrice5 %}
+                                  0.00
+                                {% endif %}
+                              </td>
+                              <td></td>
+                              <td></td>
+                              
                             {% endif %}
-                        </td>
-                        <td><br>{{ sale.total_AO }}</td>
-                        <td>{{ sale.payment_method }}</td>
-                        <td>{{ sale.AllPayment }}</td>
-                    </tr>
-                    {%endif%}
-                    {%endif%}
+                          </tr>
+                        {% endfor %}
+                      {% endif %}
                     {% endfor %}
-                </tbody>
+                  </tbody>
+                  
+                  <div class="offcanvas offcanvas-end" tabindex="-1" id="receiptOffcanvas">
+                    <div class="offcanvas-header">
+                      <h5 class="offcanvas-title">Receipt</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body" id="receiptBody">
+                      <!-- Receipt data will be dynamically populated here -->
+                    </div>
+                  </div>
+                  
+                  <script>
+                    function populateReceiptData(orderNumber) {
+                        var receiptData = ""; // Variable to store the receipt data
+            
+                        // Retrieve the receipt data for the given orderNumber
+                        // Concatenate the necessary HTML markup to the receiptData variable
+            
+                        // Example: Concatenating receipt data for demonstration purposes
+                        receiptData += "<h1>Receipt for Order No. " + orderNumber + "</h1>";
+                        receiptData += "<p>Order Date: " + document.getElementById('date_' + orderNumber).innerText + "</p>";
+                        receiptData += "<p>Buy Name: " + document.querySelector('a[data-order-number="' + orderNumber + '"]').innerText + "</p>";
+            
+                        // Retrieve addon details
+                        var addonData = "";
+                        var addonCount = parseInt(document.querySelector('a[data-order-number="' + orderNumber + '"]').parentElement.parentElement.cells[3].innerText);
+                        for (var i = 1; i <= addonCount; i++) {
+                            var addon = document.querySelector('a[data-order-number="' + orderNumber + '"]').parentElement.parentElement.cells[4 + i].innerHTML;
+                            var addonPrice = document.querySelector('a[data-order-number="' + orderNumber + '"]').parentElement.parentElement.cells[9 + i].innerHTML;
+                            addonData += "<p>Addon " + i + ": " + addon + "</p>";
+                            addonData += "<p>Addon Price " + i + ": " + addonPrice + "</p>";
+                        }
+                        receiptData += addonData;
+            
+                        // Add more receipt data as needed
+            
+                        // Update the receipt body with the generated data
+                        document.getElementById("receiptBody").innerHTML = receiptData;
+                    }
+                </script>
+                  
+                  
                 
                 
                 </table>
@@ -96,4 +181,8 @@
       </div>
       </div>
     </section>
+   
+    
+    
+
     {% endblock content %}

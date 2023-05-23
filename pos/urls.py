@@ -32,4 +32,6 @@ urlpatterns = [
     path('buy_item_drinks1/', views.buy_item_drinks1, name='buy_item_drinks1'),
     path('update_values', views.update_values, name='update_values'),
     path('update_done_order/<int:pk>/', views.update_done_order, name='update_done_order'),
+    path('receipt/<int:orderNumber>/', views.receipt, name='receipt'),
+    path('cart/delete/<int:cart_item_id>/', views.delete_menu_from_cart, name='delete_menu_from_cart'),
    ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
