@@ -215,53 +215,33 @@
                       <br>
                       <div>
                         <h6>Does the drink contains Milk?</h6>
-                        <label>
-                          <input type="radio" name="milk" value="true">
-                          Yes
+                        <label name="{{menudrinksform.question1.id_for_label}}">
                         </label>
-                        <label>
-                          <input type="radio" name="milk" value="false">
-                          No
-                        </label>
+                        {{ menudrinksform.question1 }}
                       </div>
                       <br>
 
                       <div>
                         <h6>Does the drink have a high sugar level?</h6>
-                        <label>
-                          <input type="radio" name="sugar" value="true">
-                          Yes
+                        <label name="{{menudrinksform.question2.id_for_label}}">
                         </label>
-                        <label>
-                          <input type="radio" name="sugar" value="false">
-                          No
-                        </label>
+                        {{ menudrinksform.question2 }}
                       </div>
                       <br>
 
                       <div>
                         <h6>Does the drink have a high Caffeine level?</h6>
-                        <label>
-                          <input type="radio" name="coffee" value="true">
-                          Yes
+                        <label name="{{menudrinksform.question3.id_for_label}}">
                         </label>
-                        <label>
-                          <input type="radio" name="coffee" value="false">
-                          No
-                        </label>
+                        {{ menudrinksform.question3 }}
                       </div>
                       <br>
 
                       <div>
                         <h6>Does the drink consist Peanut?</h6>
-                        <label>
-                          <input type="radio" name="peanut" value="true">
-                          Yes
+                        <label name="{{menudrinksform.question4.id_for_label}}">
                         </label>
-                        <label>
-                          <input type="radio" name="peanut" value="false">
-                          No
-                        </label>
+                        {{ menudrinksform.question4 }}
                       </div>
                       <br>
 

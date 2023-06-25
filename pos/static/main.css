@@ -482,7 +482,10 @@ button,
 [type=reset],
 [type=submit] {
   -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
 }
+
 button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
@@ -537,9 +540,10 @@ legend + * {
   height: auto;
 }
 
-[type=search] {
+[type="search"] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
+  appearance: textfield;
 }
 
 /* rtl:raw:
@@ -561,7 +565,10 @@ legend + * {
 ::file-selector-button {
   font: inherit;
   -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
 }
+
 
 output {
   display: inline-block;

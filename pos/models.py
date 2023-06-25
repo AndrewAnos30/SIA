@@ -107,7 +107,11 @@ class MenuDrinks (models.Model):
     quantityAO3 = models.PositiveIntegerField(null=True, blank=True)
     quantityAO4 = models.PositiveIntegerField(null=True, blank=True)
     quantityAO5 = models.PositiveIntegerField(null=True, blank=True)
-    
+    question1 = models.BooleanField (default= False)
+    question2 = models.BooleanField (default= False)
+    question3 = models.BooleanField (default= False)
+    question4 = models.BooleanField (default= False)
+
     def __str__(self):
         return f"{self.menuname} ({self.menucategory.name})"
 

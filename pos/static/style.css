@@ -1203,3 +1203,43 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+
+
+  .circle-with-i {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    text-align: center;
+    line-height: 30px;
+    margin-right: 10px;
+  }
+
+  .circle-with-i i {
+    color: blue; /* Replace with your desired icon color */
+  }
+
+  .circle-with-i .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .circle-with-i:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }

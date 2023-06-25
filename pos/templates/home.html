@@ -147,8 +147,24 @@
                   <div class="card">
                     <img src="{{ row.menuimage.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
+                      <div class="circle-with-i">
+                        <i class="fas fa-info-circle"></i>
+          {% if row.question1 %}
+          <span class="tooltip">1. High sugar content. Consuming excessive sugar can contribute to health issues like weight gain and increased risk of diabetes. Choose low-sugar options when possible.</span>
+          {% endif %}
+          {% if row.question2 %}
+          <span class="tooltip">2. Tooltip text for question 2</span>
+          {% endif %}
+          {% if row.question3 %}
+          <span class="tooltip">3. Tooltip text for question 3</span>
+          {% endif %}
+          {% if row.question4 %}
+          <span class="tooltip">4. Tooltip text for question 4</span>
+          {% endif %}
+                                       </div>
                       <h5 class="card-title fs-6 text-nowrap">{{ row.menuname }}</h5>
-                      <div class="d-flex">
+                    
+                        <div class="d-flex">
                         <p class="card-text">PHP <strong>{{ row.menuprice1 }}</strong></p>
                       </div>
                       <a class="btn add-to-cart btn-primary btn-sm mt-2" data-bs-toggle="offcanvas"
@@ -500,18 +516,25 @@
 
                 {% if row.menucategory == category %}
 
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                  <div class="card">
-                    <img src="{{ row.menuimage.url }}" class="card-img-top img-thumbnail" alt="..." style="height:200px; width:100%; object-fit: cover;">
-                    <div class="card-body">
-                      <h5 class="card-title fs-6 p-0 m-0 text-nowrap">{{ row.menuname }}</h5>
-                      <div class="d-flex">
-                        <p class="card-text">PHP <strong>{{ row.menuprice1 }}</strong></p>
-                      </div>
-                      <a class="btn add-to-cart btn-primary btn-sm mt-2" data-bs-toggle="offcanvas"
-                        href="#menuinformation-{{ row.id }}" role="button" aria-controls="menuinformation-{{ row.id }}">
-                        Add to Cart
-                      </a>
+
+<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+  <div class="card">
+    <img src="{{ row.menuimage.url }}" class="card-img-top img-thumbnail" alt="..." style="height:200px; width:100%; object-fit: cover;">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <div class="circle-with-i">
+          <i class="fas fa-info-circle"></i> <!-- Replace with your desired icon class -->
+          <span class="tooltip">Tooltip text</span> <!-- Replace "Tooltip text" with your desired tooltip content -->
+        </div>
+        <h5 class="card-title fs-6 p-0 m-0 text-nowrap">{{ row.menuname }}</h5>
+      </div>
+      <div class="d-flex">
+        <p class="card-text">PHP <strong>{{ row.menuprice1 }}</strong></p>
+      </div>
+      <a class="btn add-to-cart btn-primary btn-sm mt-2" data-bs-toggle="offcanvas"
+        href="#menuinformation-{{ row.id }}" role="button" aria-controls="menuinformation-{{ row.id }}">
+        Add to Cart
+      </a>
 
                       <!-- off-canvas display menu Info -->
                       <div class="offcanvas offcanvas-end" tabindex="-1" id="menuinformation-{{ row.id }}"
@@ -888,8 +911,56 @@
     });
     </script>
 
-  
+                <!-- Add the following CSS and JS links to your HTML file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+  .circle-with-i {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    text-align: center;
+    line-height: 30px;
+    margin-right: 10px;
+  }
+
+  .circle-with-i i {
+    color: blue; /* Replace with your desired icon color */
+  }
+
+  .circle-with-i .tooltip {
+    visibility: hidden;
+    width: 250px;
+    background-color: white; /* Change the background color to white */
+    color: #333;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px; /* Adjust the font size to make it smaller */
+  }
+
+  .circle-with-i:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    background-color: white; /* Change the background color to white on hover */
+  }
+</style>
+
+
 
 </body>
+
 
 </html>
