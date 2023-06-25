@@ -492,41 +492,26 @@
                   <br>
 
                   <div>
-                    <h6 class="text-center">Does the Food contains Gluten, Dairy, or Soy?</h6>
-                    <label>
-                      <input type="radio" name="allergen" value="true">
-                      Yes
+                    <h6>Does the Food contains Gluten, Dairy, or Soy?</h6>
+                    <label name="{{menudrinksform.q1.id_for_label}}">
                     </label>
-                    <label>
-                      <input type="radio" name="allergen" value="false">
-                      No
-                    </label>
+                    {{ menudrinksform.q1 }}
                   </div>
                   <br>
 
                   <div>
                     <h6>Does the food have a high calory level?</h6>
-                    <label>
-                      <input type="radio" name="sugar" value="true">
-                      Yes
+                    <label name="{{menudrinksform.q2.id_for_label}}">
                     </label>
-                    <label>
-                      <input type="radio" name="sugar" value="false">
-                      No
-                    </label>
+                    {{ menudrinksform.q2 }}
                   </div>
                   <br>
 
                   <div>
                     <h6>Will the food be eaten raw?</h6>
-                    <label>
-                      <input type="radio" name="coffee" value="true">
-                      Yes
+                    <label name="{{menudrinksform.q3.id_for_label}}">
                     </label>
-                    <label>
-                      <input type="radio" name="coffee" value="false">
-                      No
-                    </label>
+                    {{ menudrinksform.q3 }}
                   </div>
                   <br>
 

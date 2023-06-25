@@ -524,18 +524,16 @@
       <div class="d-flex align-items-center">
         <div class="circle-with-i">
           <i class="fas fa-info-circle"></i>
-          {% if row.question1 %}
-          <span class="tooltip">1. High sugar content. Consuming excessive sugar can contribute to health issues like weight gain and increased risk of diabetes. Choose low-sugar options when possible.</span>
+          {% if row.q1 %}
+          <span class="tooltip">1. Tooltip text for question 1</span>
           {% endif %}
-          {% if row.question2 %}
+          {% if row.q2 %}
           <span class="tooltip">2. Tooltip text for question 2</span>
           {% endif %}
-          {% if row.question3 %}
+          {% if row.q3 %}
           <span class="tooltip">3. Tooltip text for question 3</span>
           {% endif %}
-          {% if row.question4 %}
-          <span class="tooltip">4. Tooltip text for question 4</span>
-          {% endif %}
+        
                                        </div>
                      
         <h5 class="card-title fs-6 p-0 m-0 text-nowrap">{{ row.menuname }}</h5>
