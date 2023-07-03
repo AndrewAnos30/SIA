@@ -242,6 +242,7 @@
                     <div class="modal-body justify-content-center">
                       <!-- add menu Form -->
                       <form action="{% url 'pos:add_utensils' %}" method="POST">
+                        {% csrf_token %}
 
 
                         <div class="row">

@@ -22,8 +22,8 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <!-- css -->
-  <link rel="stylesheet" href="{% static 'main.css' %}">
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'pos.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
   <!--Jquery  -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -48,47 +48,46 @@
 
 <body>
   <!-- ===========HEADER============== -->
-  <header class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
+  <!-- <header class="header fixed-top d-flex align-items-center"> -->
+    <!-- <div class="d-flex align-items-center justify-content-between">
       <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
         <img class="logo" src="/static/img/intelliserve.png" alt="logo">
 
       </a>
-    </div>
+    </div> -->
     <!-- Search Bar -->
-    <div class="search-bar m-auto">
+    <!-- <div class="search-bar m-auto">
       <form class="search-form d-flex align-items-center">
         <input type="text" name="query" id="searchInput" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="fa fa-search"></i></button>
       </form>
-    </div>
+    </div> -->
 
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center mt-3 list-unstyled">
+    <!-- <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center mt-3 list-unstyled"> -->
         <!-- Search Icon when the screen is small-->
-        <li class="nav-item d-block d-lg-none">
+        <!-- <li class="nav-item d-block d-lg-none">
           <a class="nav-link nav-icon search-bar-toggle" href="#">
             <i class="fa fa-search"></i>
           </a>
-        </li>
+        </li> -->
         <!-- Search Icon when the screen is small end-->
 
         <!-- cart-->
-        <li class="nav-item d-block m-auto px-4">
-          <a type="button" class="cart-btn text-decoration-none bg-success p-2 mb-3" style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
-            Cart
-        </a>
-      </li>
         <!-- cart end-->
-      </ul>
-    </nav>
+      <!-- </ul>
+    </nav> -->
     <!-- End Search Bar -->
-  </header>
+  <!-- </header> -->
   <!-- ===========end of HEADER============== -->
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar" data-bs-hidden="false">
     <ul class="sidebar-nav" id="sidebar-nav">
-
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="{% url 'pos:reco' %}" style="font-size: 24px;">
+        <strong>Intelli<span style="color: #FF6000;">Serve</span></strong>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'pos:reco' %}">
           <i class='bx bxs-cog'></i><span>Recommend</span>
@@ -108,763 +107,447 @@
   <main id="main" class="main">
     <section class="section menu rounded">
       <!-- Nav for categories -->
+      <div class="row mb-2 mt-4 mx-1">
+        <div class="col-6">
+          <div class="container my-auto">
+            <h4 style="font-weight: bold;">Choose Category</h4>
+          </div>
+        </div>
+
+        <div class="col-5">
+          <div class="search-bar m-auto">
+            <form class="search-form d-flex align-items-center">
+              <input type="text" name="query" id="searchInput" placeholder="Search menu..." title="Enter search keyword">
+              <button type="submit" title="Search"><i class="fa fa-search"></i></button>
+            </form>
+          </div> 
+        </div>
+   
+        <div class="col-1">
+          <a type="button" class="cart-btn text-decoration-none p-2 " style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
+            <i class='bx bx-cart fs-3' style="color: #FF6000;"></i>
+        </a>
+        </div> 
+      
+      </div>
+
       <div class="row mb-2 mx-1 rounded category-tab-div">
         <div class="col-12 py-2 category-tab">
           <ul class="nav nav-pills">
-            {% for category in menuCategory %}  
-            {%if category.categorytype == 'DRINKS'%}
-            <li class="nav-item bg-white rounded mx-2">
-              <a class="nav-link" data-bs-toggle="pill" href="#{{ category.name|slugify }}">
-                <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
-                <span>{{ category.name }}</span>
-              </a>
-            </li>
-            {%endif%}
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-      
-      
 
-      <div class="tab-content mt-4">
-        {% for category in menuCategory %}
-        {%if category.categorytype == 'DRINKS'%}
-        <!-- Coffee or Category 1 pane -->
-        <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ category.name|slugify }}">
-          <div class="d-flex justify-content-between mb-2">
-            <h5 class="categories">{{ category.name }}</h5>
-          </div>
-
-          <!-- menu items div display each category -->
-          <div class="tab-content rounded">
-            <div class="tab-pane container active py-2" id="{{ category.name }}">
-              <div class="row g-1">
-                {% for row in menuDrinks %}
-
-                {% if row.menucategory == category %}
-                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                  <div class="card">
-                    <img src="{{ row.menuimage.url }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <div class="circle-with-i">
-                        <i class="fas fa-info-circle"></i>
-          {% if row.question1 %}
-          <span class="tooltip">1. High sugar content. Consuming excessive sugar can contribute to health issues like weight gain and increased risk of diabetes. Choose low-sugar options when possible.</span>
-          {% endif %}
-          {% if row.question2 %}
-          <span class="tooltip">2. Tooltip text for question 2</span>
-          {% endif %}
-          {% if row.question3 %}
-          <span class="tooltip">3. Tooltip text for question 3</span>
-          {% endif %}
-          {% if row.question4 %}
-          <span class="tooltip">4. Tooltip text for question 4</span>
-          {% endif %}
-                                       </div>
-                      <h5 class="card-title fs-6 text-nowrap">{{ row.menuname }}</h5>
-                    
-                        <div class="d-flex">
-                        <p class="card-text">PHP <strong>{{ row.menuprice1 }}</strong></p>
-                      </div>
-                      <a class="btn add-to-cart btn-primary btn-sm mt-2" data-bs-toggle="offcanvas"
-                        href="#menuinformation-{{ row.id }}" role="button" aria-controls="menuinformation-{{ row.id }}">
-                        Add to Cart
-                      </a>
-
-                      <!-- off-canvas display menu Info -->
-                      <div class="offcanvas offcanvas-end" tabindex="-1" id="menuinformation-{{ row.id }}"
-                        aria-labelledby="menuinformation-{{ row.id }}">
-                        <div class="offcanvas-header">
-                          <button type="button" class="btn btn-primary ">
-                            <a type="button" class="cart-btn text-decoration-none text-white"
-                              href="{% url 'pos:cart'%}">
-                              Cart(0)
-                            </a>
-                          </button>
-                          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                        </div>
-                        <div class="form-container" style="height: 600px; overflow-y: auto;">
-
-                          <form id="itemForm" action="{% url 'pos:buyitemdrinks' %}" method="post"
-                            enctype="multipart/form-data">
-                            {% csrf_token %}
-
-                            <div class="imageholder justify-content-center">
-                              <img class="img-thumbnail" name="{{ buyitemform.butImage.name }}"
-                                src="{{ row.menuimage.url }}" alt="menupic">
-                            </div>
-
-                            <div class="menu_name_price">
-                              <div class="d-flex justify-content-between">
-                                <input type="text" name="{{ buyitemform.buyName.html_name }}" value="{{ row.menuname }}"
-                                  readonly class="menu_name"
-                                  style="border: none; background-color: transparent; outline: none; cursor: default;">
-                              </div>
-                            </div>
-                            <div>
-                              <div>
-                                <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Small"
-                                  style="border: none; background-color: transparent; outline: none; cursor: default;"
-                                  onclick="selectRadiosInDiv(this);">
-                                SMALL
-                                <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
-                                  value="{{ row.menuprice1 }}" class="price" style="display: none;"
-                                  onchange="updatePriceSizeValue(this);">
-                                {{ row.menuprice1 }}
-
-                              </div>
-
-                              <div>
-                                <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Medium"
-                                  style="border: none; background-color: transparent; outline: none; cursor: default;"
-                                  onclick="selectRadiosInDiv(this);">
-                                MEDIUM
-                                <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
-                                  value="{{ row.menuprice2 }}" class="price" style="display: none;"
-                                  onchange="updatePriceSizeValue(this);">
-                                {{ row.menuprice2 }}
-
-                              </div>
-
-                              <div>
-
-                                <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Large"
-                                  style="border: none; background-color: transparent; outline: none; cursor: default;"
-                                  onclick="selectRadiosInDiv(this);">
-                                LARGE
-                                <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
-                                  value="{{ row.menuprice3 }}" class="price" style="display: none;"
-                                  onchange="updatePriceSizeValue(this);">
-                                {{ row.menuprice3 }}
-
-                              </div>
-                            </div>
-
-
-
-
-
-
-                            <div class="addons-option-div">
-                              <div class="d-block add-on-option mt-2">
-                                <h6 class="sizetxt fw-light">Add Ons</h6>
-                                <div class="d-block">
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label class="form-check-label fw-bold">NAME</label>
-                                    </div>
-                                    <p class="ingredient_quantity">MEASUREMENTS</p>
-                                    <div>
-                                      <h6 class="priceAddOns">PRICE</h6>
-                                    </div>
-                                  </div>
-                                  {% if row.addons1 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check1">{{ row.addons1 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns1.html_name }}"
-                                        type="checkbox" id="check1" value="{{ row.addons1 }}"
-                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check2">{{ row.quantityAO1 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO1.html_name }}" type="checkbox" id="check2"
-                                        value="{{ row.quantityAO1 }}"
-                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check3">{{ row.menuAOPrice1 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice1.html_name }}" type="checkbox" id="check3"
-                                        value="{{ row.menuAOPrice1 }}"
-                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons2 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check4">{{ row.addons2 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns2.html_name }}"
-                                        type="checkbox" id="check4" value="{{ row.addons2 }}"
-                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check5">{{ row.quantityAO2 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO2.html_name }}" type="checkbox" id="check5"
-                                        value="{{ row.quantityAO2 }}"
-                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check6">{{ row.menuAOPrice2 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice2.html_name }}" type="checkbox" id="check6"
-                                        value="{{ row.menuAOPrice2 }}"
-                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons3 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check7">{{ row.addons3 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns3.html_name }}"
-                                        type="checkbox" id="check7" value="{{ row.addons3 }}"
-                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check8">{{ row.quantityAO3 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO3.html_name }}" type="checkbox" id="check8"
-                                        value="{{ row.quantityAO3 }}"
-                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check9">{{ row.menuAOPrice3 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice3.html_name }}" type="checkbox" id="check9"
-                                        value="{{ row.menuAOPrice3 }}"
-                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons4 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check10">{{ row.addons4 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns4.html_name }}"
-                                        type="checkbox" id="check10" value="{{ row.addons4 }}"
-                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check11">{{ row.quantityAO4 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO4.html_name }}" type="checkbox" id="check11"
-                                        value="{{ row.quantityAO4 }}"
-                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check12">{{ row.menuAOPrice4 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice4.html_name }}" type="checkbox" id="check12"
-                                        value="{{ row.menuAOPrice4 }}"
-                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons5 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check13">{{ row.addons5 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns5.html_name }}"
-                                        type="checkbox" id="check13" value="{{ row.addons5 }}"
-                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check14">{{ row.quantityAO5 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO5.html_name }}" type="checkbox" id="check14"
-                                        value="{{ row.quantityAO5 }}"
-                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check15">{{ row.menuAOPrice5 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice5.html_name }}" type="checkbox" id="check15"
-                                        value="{{ row.menuAOPrice5 }}"
-                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                </div>
-                              </div>
-                            </div>
-
-
-
-                            <div class="row justify-content-center">
-                              <div class="col-12">
-                                <h6 class="sizetxt fw-light">Quantity</h6>
-                                <div class="input-group">
-                                  <button class="btn btn-secondary" type="button" id="decrementBtn">-</button>
-                                  <input name="{{ buyitemform.buyQuantityMenu.name }}" type="number"
-                                    class="form-control" id="numberInput" value="1">
-                                  <button class="btn btn-secondary" type="button" id="incrementBtn">+</button>
-                                </div>
-                              </div>
-                            </div>
-
-
-
-                            <div class="ingredient_list mt-2">
-                              <h6 class="sizetxt fw-light">Ingredients</h6>
-                              <div class="d-flex">
-                                <!-- <div>
-                                  <p class="ingredient_name px-3">NAME</p>
-                                  <p class="ingredient_quantity px-2">MEASUREMENTS</p>
-                                </div> -->
-                                <div>
-                                  {% if row.ingredient1 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient1.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient1}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng1 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng1.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng1}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient2 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient2.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient2}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng2 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng2.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng2}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient3 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient3.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient3}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng3 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng3.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng3}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient4 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient4.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient4}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng4 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng4.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng4}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient5 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient5.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient5}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng5 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng5.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng5}}" readonly>
-                                  {% endif %}
-                                </div>
-                              </div>
-                              <div class="text-center col-12 d-grid mt-2">
-                                <button type="submit" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
-                              </div>
-                            </div>
-
-
-
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-        {%endif%}
-        {% endfor %}
-      </div>
-      <br>
-      <div class="row mb-2 mx-1 rounded category-tab-div">
-        <div class="col-12 py-2 category-tab">
-          <ul class="nav nav-pills">
-            {% for category in menuCategory %}  
-            {%if category.categorytype == 'FOOD'%}
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="pill" href="#{{ category.name|slugify }}">
-                <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
-                <span>{{ category.name }}</span>
-              </a>
-            </li>
-            {%endif%}
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-
-      <div class="tab-content mt-4">
-        {% for category in menuCategory %}
-        {%if category.categorytype == 'FOOD'%}
-        <!-- Coffee or Category 1 pane -->
-        <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ category.name|slugify }}">
-          <div class="d-flex justify-content-between mb-2">
-            <h5 class="categories">{{ category.name }}</h5>
-          </div>
-
-          <!-- menu items div display each category -->
-          <div class="tab-content rounded">
-            <div class="tab-pane container active py-2" id="{{ category.name }}">
-              <div class="row g-1">
-                {% for row in menuDrinks %}
-
-                {% if row.menucategory == category %}
-
-
-<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-  <div class="card">
-    <img src="{{ row.menuimage.url }}" class="card-img-top img-thumbnail" alt="..." style="height:200px; width:100%; object-fit: cover;">
-    <div class="card-body">
-      <div class="d-flex align-items-center">
-        <div class="circle-with-i">
-          <i class="fas fa-info-circle"></i>
-          {% if row.q1 %}
-          <span class="tooltip">1. Tooltip text for question 1</span>
-          {% endif %}
-          {% if row.q2 %}
-          <span class="tooltip">2. Tooltip text for question 2</span>
-          {% endif %}
-          {% if row.q3 %}
-          <span class="tooltip">3. Tooltip text for question 3</span>
-          {% endif %}
+            <!-- para sana sa lahat, like ito ung default didisplay niya lahat ng menu -->
         
-                                       </div>
-                     
-        <h5 class="card-title fs-6 p-0 m-0 text-nowrap">{{ row.menuname }}</h5>
+            <li class="nav-item mx-2">
+              <a class="nav-link active" data-bs-toggle="pill" href="#{{ category.name|slugify }}">
+                All
+              </a>
+            </li>
+            {% for category in menuCategory %}  
+            <li class="nav-item  mx-2">
+              <a class="nav-link" data-bs-toggle="pill" href="#{{ category.name|slugify }}">
+                {{ category.name }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      <div class="d-flex">
-        <p class="card-text">PHP <strong>{{ row.menuprice1 }}</strong></p>
+      
+      <div class="container my-auto mx-3 mt-3 mb-0">
+        <h4 style="font-weight: bold;">Select Menu</h4>
       </div>
-      <a class="btn add-to-cart btn-primary btn-sm mt-2" data-bs-toggle="offcanvas"
-        href="#menuinformation-{{ row.id }}" role="button" aria-controls="menuinformation-{{ row.id }}">
-        Add to Cart
-      </a>
 
-                      <!-- off-canvas display menu Info -->
-                      <div class="offcanvas offcanvas-end" tabindex="-1" id="menuinformation-{{ row.id }}"
-                        aria-labelledby="menuinformation-{{ row.id }}">
-                        <div class="offcanvas-header">
-                          <button type="button" class="btn btn-primary ">
-                            <a type="button" class="cart-btn text-decoration-none text-white"
-                              href="{% url 'pos:cart'%}">
-                              Cart(0)
-                            </a>
-                          </button>
-                          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                        </div>
-                        <div class="form-container" style="height: 600px; overflow-y: auto;">
+      <div class="tab-content">
 
-                          <form id="itemForm" action="{% url 'pos:buyitemdrinks' %}" method="post"
-                            enctype="multipart/form-data">
-                            {% csrf_token %}
+        {% for category in menuCategory %}
+       
+        <!-- Coffee or Category 1 pane -->
+        <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ category.name|slugify }}">
+          <!-- menu items div display each category -->
+          <div class="tab-content rounded">
+            <div class="tab-pane container active py-2" id="{{ category.name }}">
+              <div class="row row-cols-5 g-2">
+                {% for row in menuDrinks %}
+                {% if row.menucategory == category %}
+                <div class="col card-menu">
 
-                            <div class="imageholder justify-content-center">
-                              <img class="img-thumbnail" name="{{ buyitemform.butImage.name }}"
-                                src="{{ row.menuimage.url }}" alt="menupic">
-                            </div>
-
-                            <div class="menu_name_price">
-                              <div class="d-flex justify-content-between">
-                                <input type="text" name="{{ buyitemform.buyName.html_name }}" value="{{ row.menuname }}"
-                                  readonly class="menu_name"
-                                  style="border: none; background-color: transparent; outline: none; cursor: default;">
-                              </div>
-                            </div>
-                            <div>
-                              <div>
-                           
-                                <input type="text" name="{{ buyitemform.buyPrice.html_name }}"
-                                 value=" {{ row.menuprice1 }}">
-
-                              </div>
-
-                            </div>
-
-                            <div class="addons-option-div">
-                              <div class="d-block add-on-option mt-2">
-                                <h6 class="sizetxt fw-light">Add Ons</h6>
-                                <div class="d-block">
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label class="form-check-label fw-bold">NAME</label>
-                                    </div>
-                                    <p class="ingredient_quantity">MEASUREMENTS</p>
-                                    <div>
-                                      <h6 class="priceAddOns">PRICE</h6>
-                                    </div>
-                                  </div>
-                                  {% if row.addons1 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check1">{{ row.addons1 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns1.html_name }}"
-                                        type="checkbox" id="check1" value="{{ row.addons1 }}"
-                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check2">{{ row.quantityAO1 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO1.html_name }}" type="checkbox" id="check2"
-                                        value="{{ row.quantityAO1 }}"
-                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check3">{{ row.menuAOPrice1 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice1.html_name }}" type="checkbox" id="check3"
-                                        value="{{ row.menuAOPrice1 }}"
-                                        onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons2 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check4">{{ row.addons2 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns2.html_name }}"
-                                        type="checkbox" id="check4" value="{{ row.addons2 }}"
-                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check5">{{ row.quantityAO2 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO2.html_name }}" type="checkbox" id="check5"
-                                        value="{{ row.quantityAO2 }}"
-                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check6">{{ row.menuAOPrice2 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice2.html_name }}" type="checkbox" id="check6"
-                                        value="{{ row.menuAOPrice2 }}"
-                                        onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons3 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check7">{{ row.addons3 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns3.html_name }}"
-                                        type="checkbox" id="check7" value="{{ row.addons3 }}"
-                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check8">{{ row.quantityAO3 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO3.html_name }}" type="checkbox" id="check8"
-                                        value="{{ row.quantityAO3 }}"
-                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check9">{{ row.menuAOPrice3 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice3.html_name }}" type="checkbox" id="check9"
-                                        value="{{ row.menuAOPrice3 }}"
-                                        onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons4 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check10">{{ row.addons4 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns4.html_name }}"
-                                        type="checkbox" id="check10" value="{{ row.addons4 }}"
-                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check11">{{ row.quantityAO4 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO4.html_name }}" type="checkbox" id="check11"
-                                        value="{{ row.quantityAO4 }}"
-                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check12">{{ row.menuAOPrice4 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice4.html_name }}" type="checkbox" id="check12"
-                                        value="{{ row.menuAOPrice4 }}"
-                                        onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                  {% if row.addons5 %}
-                                  <div class="form-check d-flex justify-content-between">
-                                    <div>
-                                      <label for="check13">{{ row.addons5 }}</label>
-                                      <input class="form-check-input" name="{{ buyitemform.buyAddOns5.html_name }}"
-                                        type="checkbox" id="check13" value="{{ row.addons5 }}"
-                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check14">{{ row.quantityAO5 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.buyQuantityAO5.html_name }}" type="checkbox" id="check14"
-                                        value="{{ row.quantityAO5 }}"
-                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
-                                    </div>
-                                    <div>
-                                      <label for="check15">{{ row.menuAOPrice5 }}</label>
-                                      <input style="display: none;" class="form-check-input"
-                                        name="{{ buyitemform.menuAOPrice5.html_name }}" type="checkbox" id="check15"
-                                        value="{{ row.menuAOPrice5 }}"
-                                        onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
-                                    </div>
-                                  </div>
-                                  {% endif %}
-
-                                </div>
-                              </div>
-                            </div>
-
-
-
-                            <div class="row justify-content-center">
-                              <div class="col-12">
-                                <h6 class="sizetxt fw-light">Quantity</h6>
-                                <div class="input-group">
-                                  <button class="btn btn-secondary" type="button" id="decrementBtn">-</button>
-                                  <input name="{{ buyitemform.buyQuantityMenu.name }}" type="number"
-                                    class="form-control" id="numberInput" value="1">
-                                  <button class="btn btn-secondary" type="button" id="incrementBtn">+</button>
-                                </div>
-                              </div>
-                            </div>
-
-
-
-                            <div class="ingredient_list mt-2">
-                              <h6 class="sizetxt fw-light">Ingredients</h6>
-                              <div class="d-flex">
-                                <div>
-                                  <p class="ingredient_name px-3">NAME</p>
-                                  <p class="ingredient_quantity px-2">MEASUREMENTS</p>
-                                </div>
-                                <div>
-                                  {% if row.ingredient1 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient1.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient1}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng1 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng1.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng1}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient2 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient2.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient2}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng2 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng2.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng2}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient3 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient3.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient3}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng3 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng3.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng3}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient4 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient4.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient4}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng4 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng4.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng4}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient5 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient5.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient5}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng5 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng5.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng5}}" readonly>
-                                  {% endif %}
-                                  {% if row.ingredient6 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient6.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient6}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng6 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng6.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng6}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient7 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient7.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient7}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng7 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng7.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng7}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient8 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient8.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient8}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng8 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng8.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng8}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient9 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient9.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient9}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng9 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng9.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng9}}" readonly>
-                                  {% endif %}
-
-                                  {% if row.ingredient10 %}
-                                  <input type="text" name="{{ buyitemform.buyingredient10.name }}"
-                                    class="ingredient_name px-3" value="{{row.ingredient10}}" readonly>
-                                  {% endif %}
-                                  {% if row.quantityIng10 %}
-                                  <input type="text" name="{{ buyitemform.buyQuantityIng10.name }}"
-                                    class="ingredient_quantity px-2" value="{{row.quantityIng10}}" readonly>
-                                  {% endif %}
-                                </div>
-                              </div>
-                              <div class="text-center col-12 d-grid mt-2">
-                                <button type="submit" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
-                              </div>
-                            </div>
-
-
-
-                          </form>
-                        </div>
+                  <a data-bs-toggle="offcanvas" href="#menuinformation-{{ row.id }}" role="button" aria-controls="menuinformation-{{ row.id }}">
+                  <div class="card rounded">
+                    <div class="circle-with-i">
+                      <i class="fas fa-info-circle" ></i>
+                          {% if row.question1 %}
+                          <span class="tooltip">1. High sugar content. Consuming excessive sugar can contribute to health issues like weight gain and increased risk of diabetes. Choose low-sugar options when possible.</span>
+                          {% endif %}
+                          {% if row.question2 %}
+                          <span class="tooltip">2. Tooltip text for question 2</span>
+                          {% endif %}
+                          {% if row.question3 %}
+                          <span class="tooltip">3. Tooltip text for question 3</span>
+                          {% endif %}
+                          {% if row.question4 %}
+                          <span class="tooltip">4. Tooltip text for question 4</span>
+                          {% endif %}
                       </div>
+                    <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..."  style="height: 150px; width:100%; object-fit:cover; ">
+                    <div class="card-body mx-1 p-0" >
+                      <h5 class="card-title fs-6 text-nowrap p-2 pb-0 mb-0 ">{{ row.menuname }}</h5>
+                        <div class="d-flex">
+                        <p class="card-text m-0 p-2 fs-6" style="color: #FF6000;"> <strong>&#8369; {{ row.menuprice1 }}</strong></p>
+                      </div>
+
+                     
                     </div>
                   </div>
+
+                </a>
+                
                 </div>
+                 <!-- off-canvas display menu Info -->
+                 <div class="offcanvas offcanvas-end" tabindex="-1" id="menuinformation-{{ row.id }}"
+                 aria-labelledby="menuinformation-{{ row.id }}">
+                 <div class="offcanvas-header">
+                   <!-- <button type="button" class="btn btn-primary ">
+                     <a type="button" class="cart-btn text-decoration-none text-white"
+                       href="{% url 'pos:cart'%}">
+                       Cart(0)
+                     </a>
+                   </button> -->
+                   <h5 class="offcanvas-title">Menu Information</h5>
+                   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                     aria-label="Close"></button>
+                 </div>
+                 <div class="form-container">
+                   <form id="itemForm" action="{% url 'pos:buyitemdrinks' %}" method="post"
+                     enctype="multipart/form-data">
+                     {% csrf_token %}
+
+                        <div class="row">
+
+                          <div class="col-4">
+                            <div class="imageholder justify-content-center">
+                              <img name="{{ buyitemform.butImage.name }}"
+                                src="{{ row.menuimage.url }}" alt="menupic">
+                            </div>
+                          </div>
+
+                          <div class="col-6">
+                            <div class="menu_name_price">
+                              <div class="row">
+                                <div class="d-flex justify-content-between">
+                                  <input type="text" name="{{ buyitemform.buyName.html_name }}" value="{{ row.menuname }}"
+                                    readonly class="menu_name"
+                                    style="border: none; background-color: transparent; outline: none; cursor: default;">
+                                </div>
+                              </div>
+
+                              <div class="row mt-3">
+                                <div>
+                                  <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
+                                  value="{{ row.menuprice1 }}" class="price1" style="display: none;" 
+                                  onchange="updatePriceSizeValue(this);">
+
+                                <h5 style="font-weight: bold;">&#8369; {{ row.menuprice1 }}</h5>
+                                </div>
+                               
+                              </div>
+
+                              <div class="row mt-2">
+                                <div class="d-flex">
+                                  <div>
+                                    <label class="custom-radio">
+                                    <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Small"
+                                      style="border: none; background-color: transparent; outline: none; cursor: default;"
+                                      onclick="selectRadiosInDiv(this);">
+                                      <span class="radio-btn-style">Small</span>
+                                    <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
+                                      value="{{ row.menuprice1 }}" class="price" style="display: none;"
+                                      onchange="updatePriceSizeValue(this);">
+                                    </label>
+                                      <h5 style="display: none;">&#8369; {{ row.menuprice1 }}</h5>
+                                  </div>
+           
+                                  <div>
+                                    <label class="custom-radio">
+                                    <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Medium"
+                                      onclick="selectRadiosInDiv(this);">
+                                      <span class="radio-btn-style">Medium</span>
+                                    <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
+                                      value="{{ row.menuprice2 }}" class="price" style="display: none;"
+                                      onchange="updatePriceSizeValue(this);">
+                                    </label>
+                                    <h5 style="display: none;">&#8369; {{ row.menuprice2 }}</h5>
+                                  </div>
+           
+                                  <!-- <div>
+                                    <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Large"
+                                      style="border: none; background-color: transparent; outline: none; cursor: default;"
+                                      onclick="selectRadiosInDiv(this);">
+                                      <span class="radio-btn-style">Large</span>
+                                    <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
+                                      value="{{ row.menuprice3 }}" class="price" style="display: none;"
+                                      onchange="updatePriceSizeValue(this);">
+                                  
+                                    <h5 style="display: none;">&#8369;  {{ row.menuprice3 }}</h5>
+           
+                                  </div> -->
+
+                                  <div>
+                                    <label class="custom-radio">
+                                      <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Large"
+                                        onclick="selectRadiosInDiv(this);">
+                                      <span class="radio-btn-style">Large</span>
+                                      <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
+                                        value="{{ row.menuprice3 }}" class="price" style="display: none;"
+                                        onchange="updatePriceSizeValue(this);">
+                                    </label>
+                                    <h5 style="display: none;">&#8369; {{ row.menuprice3 }}</h5>
+                                  </div>
+
+                                  
+                                </div>
+                              </div>
+
+                              <div class="row justify-content-start mt-3">
+                                <div class="col-6">
+                                  <div class="input-group">
+                                    <button class="btn rounded-circle" type="button" id="decrementBtn">-</button>
+                                    <input name="{{ buyitemform.buyQuantityMenu.name }}" type="number" class="form-control short-width text-center" id="numberInput" value="1">
+                                    <button class="btn rounded-circle" type="button" id="incrementBtn">+</button>
+                                  </div>
+                                </div>
+                              </div>
+         
+                             
+                            </div>
+                          </div>
+
+                        </div>
+                     
+
+                
+                   
+                     <div class="addons-option-div">
+                       <div class="d-block add-on-option mt-4">
+                         <h6 class="sizetxt fw-light">Add Ons</h6>
+                         <div class="d-block">
+                           <!-- <div class="form-check d-flex justify-content-between">
+                             <div>
+                               <label class="form-check-label">NAME</label>
+                             </div>
+                             <p class="ingredient_quantity">MEASUREMENTS</p>
+                             <div>
+                               <h6 class="priceAddOns">PRICE</h6>
+                             </div>
+                           </div> -->
+                           {% if row.addons1 %}
+                           <div class="form-check d-flex justify-content-between">
+                             <div class="col">
+                               <label for="check1">{{ row.addons1 }}</label>
+                               <input class="form-check-input" name="{{ buyitemform.buyAddOns1.html_name }}"
+                                 type="checkbox" id="check1" value="{{ row.addons1 }}"
+                                 onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
+                             </div>
+
+                             <div  style="display: none;">
+                               <label for="check2">{{ row.quantityAO1 }}</label>
+                               <input style="display: none;" class="form-check-input fs-6"
+                                 name="{{ buyitemform.buyQuantityAO1.html_name }}" type="checkbox" id="check2"
+                                 value="{{ row.quantityAO1 }}"
+                                 onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
+                             </div>
+                             
+                             <div class="col text-center">
+                               <label for="check3">+ {{ row.menuAOPrice1 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.menuAOPrice1.html_name }}" type="checkbox" id="check3"
+                                 value="{{ row.menuAOPrice1 }}"
+                                 onclick="selectAllCheckboxes('check1', 'check2', 'check3', this)">
+                             </div>
+                           </div>
+                           {% endif %}
+
+                           {% if row.addons2 %}
+                           <div class="form-check d-flex justify-content-between">
+                             <div class="col">
+                               <label for="check4">{{ row.addons2 }}</label>
+                               <input class="form-check-input" name="{{ buyitemform.buyAddOns2.html_name }}"
+                                 type="checkbox" id="check4" value="{{ row.addons2 }}"
+                                 onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
+                             </div>
+                             <div  style="display: none;">
+                               <label for="check5">{{ row.quantityAO2 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.buyQuantityAO2.html_name }}" type="checkbox" id="check5"
+                                 value="{{ row.quantityAO2 }}"
+                                 onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
+                             </div>
+                             <div class="col text-center">
+                               <label for="check6">+ {{ row.menuAOPrice2 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.menuAOPrice2.html_name }}" type="checkbox" id="check6"
+                                 value="{{ row.menuAOPrice2 }}"
+                                 onclick="selectAllCheckboxes('check4', 'check5', 'check6', this)">
+                             </div>
+                           </div>
+                           {% endif %}
+
+                           {% if row.addons3 %}
+                           <div class="form-check d-flex justify-content-between">
+                             <div class="col">
+                               <label for="check7">{{ row.addons3 }}</label>
+                               <input class="form-check-input" name="{{ buyitemform.buyAddOns3.html_name }}"
+                                 type="checkbox" id="check7" value="{{ row.addons3 }}"
+                                 onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
+                             </div>
+                             <div  style="display: none;">
+                               <label for="check8">{{ row.quantityAO3 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.buyQuantityAO3.html_name }}" type="checkbox" id="check8"
+                                 value="{{ row.quantityAO3 }}"
+                                 onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
+                             </div>
+                             <div class="col text-center">
+                               <label for="check9">+ {{ row.menuAOPrice3 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.menuAOPrice3.html_name }}" type="checkbox" id="check9"
+                                 value="{{ row.menuAOPrice3 }}"
+                                 onclick="selectAllCheckboxes('check7', 'check8', 'check9', this)">
+                             </div>
+                           </div>
+                           {% endif %}
+
+                           {% if row.addons4 %}
+                           <div class="form-check d-flex justify-content-between">
+                             <div class="col">
+                               <label for="check10">{{ row.addons4 }}</label>
+                               <input class="form-check-input" name="{{ buyitemform.buyAddOns4.html_name }}"
+                                 type="checkbox" id="check10" value="{{ row.addons4 }}"
+                                 onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
+                             </div>
+                             <div  style="display: none;">
+                               <label for="check11">{{ row.quantityAO4 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.buyQuantityAO4.html_name }}" type="checkbox" id="check11"
+                                 value="{{ row.quantityAO4 }}"
+                                 onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
+                             </div>
+                             <div class="col text-center">
+                               <label for="check12">+ {{ row.menuAOPrice4 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.menuAOPrice4.html_name }}" type="checkbox" id="check12"
+                                 value="{{ row.menuAOPrice4 }}"
+                                 onclick="selectAllCheckboxes('check10', 'check11', 'check12', this)">
+                             </div>
+                           </div>
+                           {% endif %}
+
+                           {% if row.addons5 %}
+                           <div class="form-check d-flex justify-content-between">
+                             <div class="col">
+                               <label for="check13">{{ row.addons5 }}</label>
+                               <input class="form-check-input" name="{{ buyitemform.buyAddOns5.html_name }}"
+                                 type="checkbox" id="check13" value="{{ row.addons5 }}"
+                                 onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
+                             </div>
+                             <div  style="display: none;">
+                               <label for="check14">{{ row.quantityAO5 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.buyQuantityAO5.html_name }}" type="checkbox" id="check14"
+                                 value="{{ row.quantityAO5 }}"
+                                 onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
+                             </div>
+                             <div class="col text-center" >
+                               <label for="check15">+ {{ row.menuAOPrice5 }}</label>
+                               <input style="display: none;" class="form-check-input"
+                                 name="{{ buyitemform.menuAOPrice5.html_name }}" type="checkbox" id="check15"
+                                 value="{{ row.menuAOPrice5 }}"
+                                 onclick="selectAllCheckboxes('check13', 'check14', 'check15', this)">
+                             </div>
+                           </div>
+                           {% endif %}
+
+                         </div>
+                       </div>
+                     </div>
+
+
+
+                     <!-- <div class="ingredient_list mt-2">
+                       <h6 class="sizetxt fw-light">Ingredients</h6>
+                       <div class="d-flex">
+                         <div>
+                           {% if row.ingredient1 %}
+                           <input type="text" name="{{ buyitemform.buyingredient1.name }}"
+                             class="ingredient_name px-3" value="{{row.ingredient1}}" readonly>
+                           {% endif %}
+                           {% if row.quantityIng1 %}
+                           <input type="text" name="{{ buyitemform.buyQuantityIng1.name }}"
+                             class="ingredient_quantity px-2" value="{{row.quantityIng1}}" readonly>
+                           {% endif %}
+
+                           {% if row.ingredient2 %}
+                           <input type="text" name="{{ buyitemform.buyingredient2.name }}"
+                             class="ingredient_name px-3" value="{{row.ingredient2}}" readonly>
+                           {% endif %}
+                           {% if row.quantityIng2 %}
+                           <input type="text" name="{{ buyitemform.buyQuantityIng2.name }}"
+                             class="ingredient_quantity px-2" value="{{row.quantityIng2}}" readonly>
+                           {% endif %}
+
+                           {% if row.ingredient3 %}
+                           <input type="text" name="{{ buyitemform.buyingredient3.name }}"
+                             class="ingredient_name px-3" value="{{row.ingredient3}}" readonly>
+                           {% endif %}
+                           {% if row.quantityIng3 %}
+                           <input type="text" name="{{ buyitemform.buyQuantityIng3.name }}"
+                             class="ingredient_quantity px-2" value="{{row.quantityIng3}}" readonly>
+                           {% endif %}
+
+                           {% if row.ingredient4 %}
+                           <input type="text" name="{{ buyitemform.buyingredient4.name }}"
+                             class="ingredient_name px-3" value="{{row.ingredient4}}" readonly>
+                           {% endif %}
+                           {% if row.quantityIng4 %}
+                           <input type="text" name="{{ buyitemform.buyQuantityIng4.name }}"
+                             class="ingredient_quantity px-2" value="{{row.quantityIng4}}" readonly>
+                           {% endif %}
+
+                           {% if row.ingredient5 %}
+                           <input type="text" name="{{ buyitemform.buyingredient5.name }}"
+                             class="ingredient_name px-3" value="{{row.ingredient5}}" readonly>
+                           {% endif %}
+                           {% if row.quantityIng5 %}
+                           <input type="text" name="{{ buyitemform.buyQuantityIng5.name }}"
+                             class="ingredient_quantity px-2" value="{{row.quantityIng5}}" readonly>
+                           {% endif %}
+                         </div>
+                       </div>
+                       <div class="text-center col-12 d-grid mt-2">
+                         <button type="submit" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
+                       </div>
+                     </div> -->
+
+                     <div class="add-to-cart col-12 d-grid mt-4">
+                      <button type="submit" class="btn add-to-cart-btn"style="
+                      color: white;
+                      background: #FF6000;
+                      border: aliceblue;
+                      border-radius: 30px">
+                        Add to Cart</button>
+                    </div>
+                   </form>
+                 </div>
+               </div>
                 {% endif %}
                 {% endfor %}
               </div>
             </div>
           </div>
         </div>
-        {%endif%}
+       
         {% endfor %}
       </div>
+    
     </section>
   </main>
 
@@ -921,32 +604,62 @@
     });
     </script>
 
+    <script>
+                    // Get references to the elements
+              const decrementBtn = document.getElementById('decrementBtn');
+              const incrementBtn = document.getElementById('incrementBtn');
+              const numberInput = document.getElementById('numberInput');
+
+              // Add event listeners for the buttons
+              decrementBtn.addEventListener('click', () => {
+                updateInputValue(-1);
+              });
+
+              incrementBtn.addEventListener('click', () => {
+                updateInputValue(1);
+              });
+
+              // Function to update the input value
+              function updateInputValue(step) {
+                let currentValue = parseInt(numberInput.value);
+                if (!isNaN(currentValue)) {
+                  currentValue += step;
+                  if (currentValue < 1) {
+                    currentValue = 1; // Avoid negative or zero values
+                  }
+                  numberInput.value = currentValue;
+                }
+              }
+
+        </script>
+
                 <!-- Add the following CSS and JS links to your HTML file -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.4/umd/popper.min.js"></script>
 
 <style>
   .circle-with-i {
-    position: relative;
-    display: inline-block;
+    position: absolute;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
     text-align: center;
     line-height: 30px;
-    margin-right: 10px;
+    right: 5px;
+    top: 5px;
   }
 
   .circle-with-i i {
-    color: blue; /* Replace with your desired icon color */
+    color: rgb(255, 255, 255); /* Replace with your desired icon color */
   }
 
   .circle-with-i .tooltip {
     visibility: hidden;
     width: 250px;
-    background-color: white; /* Change the background color to white */
+    background-color: rgba(255, 255, 255, 0); /* Change the background color to white */
     color: #333;
     text-align: center;
     border-radius: 6px;
@@ -958,7 +671,7 @@
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
-    font-size: 12px; /* Adjust the font size to make it smaller */
+    font-size: 14px; /* Adjust the font size to make it smaller */
   }
 
   .circle-with-i:hover .tooltip {

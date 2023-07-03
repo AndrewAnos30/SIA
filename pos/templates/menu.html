@@ -836,7 +836,7 @@
           <!-- list of menu -->
           <div class="row row-cols-4 gy-2">
             {% for data in categories.menudrinks_set.all %}
-            <div class="col">
+            <div class="col card-menu">
               <!-- Card with an image on top -->
               <div class="card">
                 <img src="{{data.menuimage.url}}" class="card-img-top" alt="..." style="height: 150px; width:100%; object-fit:cover; ">
@@ -845,7 +845,7 @@
                   <h5 class="card-title">{{data.menuname}}</h5>
                   <div class="d-flex">
 
-                    <p class="card-text">&#8369 {{data.menuprice1}}</p>
+                    <p class="card-text">&#8369; {{data.menuprice1}}</p>
                   </div>
 
                   <div class="text-center d-grip gap-2">
@@ -902,7 +902,7 @@
         <div class="col">
           <!-- Card with an image on top -->
           <div class="card menu-item-card">
-            <img src="{{data.menuimage.url}}" class="card-img-top">
+            <img src="{{data.menuimage.url}}" class="card-img-top"  style="height: 150px; width:100%; object-fit:cover; ">
             <div class="card-body">
 
               <h5 class="card-title">{{data.menuname}}</h5>

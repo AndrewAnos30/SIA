@@ -21,8 +21,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   
     <!-- css -->
-    <link rel="stylesheet" href="{% static 'main.css' %}">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'pos.css' %}">
   
     <!--Datatables Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
@@ -44,46 +43,50 @@
   </head>
 <body >
      <!-- ===========HEADER============== -->
-  <header class="header fixed-top d-flex align-items-center">
+  <!-- <header class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
         <img class="logo" src="/static/img/intelliserve.png" alt="logo">
       
       </a>
-    </div>
+    </div> -->
      <!-- Search Bar -->
-    <div class="search-bar m-auto">
+    <!-- <div class="search-bar m-auto">
       <form class="search-form d-flex align-items-center">
         <input type="text" name="query" id="searchInput "placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="fa fa-search"></i></button>
       </form>
-    </div>
-
+    </div> -->
+<!-- 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center mt-3 list-unstyled">
-          <!-- Search Icon when the screen is small-->
+       
           <li class="nav-item d-block d-lg-none">
             <a class="nav-link nav-icon search-bar-toggle" href="#">
               <i class="fa fa-search"></i>
             </a>
           </li>
-          <!-- Search Icon when the screen is small end-->
-
-           <!-- cart-->
+      
            <li class="nav-item d-block m-auto px-4">
               <a type="button" class="cart-btn text-decoration-none bg-success p-2 mb-3" style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
                 Cart
             </a>
           </li>
-           <!-- cart end-->
+        
         </ul>
       </nav>
-    <!-- End Search Bar -->
-</header>
+    
+</header> -->
  <!-- ===========end of HEADER============== -->
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar" data-bs-hidden="false">
         <ul class="sidebar-nav" id="sidebar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link collapsed " href="{% url 'pos:reco' %}" style="font-size: 24px;">
+            <strong>Intelli<span style="color: #FF6000;">Serve</span></strong>
+            </a>
+          </li>
 
         <li class="nav-item">
             <a class="nav-link "  href="{% url 'pos:reco'%}">
@@ -103,23 +106,30 @@
         <section class="section menu rounded">
           <div class="container d-flex flex-column ">
             <div class="position-relative">
-              <img src="{%static 'img/home.png' %}" alt="Home" class="header-image" style="height: 550px; width: 100%;">
-              <button id="openChatModal" class="sample position-absolute top-50 start-50 translate-middle" style="margin-top: 100px; background-color: lightsalmon; font-size: larger; height: 80px; font-weight: bolder;">CHAT NOW!</button>
+              <div class="row">
+                <div class="col">
+                  
+                </div>
+              </div>
+              <img src="{%static 'img/home.png' %}" alt="Home" class="header-image" style="height: 550px; width: 100%; object-fit: cover;">
+            
+              <button id="openChatModal" class="sample position-absolute top-50 start-50 translate-middle" style="margin-top: 100px; background-color: #FF6000; font-size: larger; height: 80px; padding-left: 20px;  padding-right: 20px; border-radius: 10px; border: none; color: #fefefe; font-weight: bolder;">CHAT NOW!</button>
             </section>
               </div>
             </div>
           </div>
+          
           <!-- Rest of your code... -->
       
           <!-- Chat Modal -->
-          <div id="chatModal" class="modal" style="margin-left: 200px;">
+          <div id="chatModal" class="modal" tabindex="-1" role="dialog">
             <div class="modal-content">
               <span class="close">&times;</span>
-              <h2>ASK TO AI ABOUT STORE</h2>
+              <h2>Ask AI for Recommendation</h2>
               <div id="chatMessages"></div>
               <form id="chatForm">
                 <input type="text" id="messageInput" placeholder="Type your message..." />
-                <button type="submit">Send</button>
+                <button type="submit"><i class='bx bx-send fs-3' style="color: #FF6000;"></i></button>
               </form>
             </div>
           </div>
@@ -128,10 +138,10 @@
       
 
       <div class="tab-content rounded">
-        <div class="tab-content mt-4" style="margin-left: 350px;">
-          <div class="row g-1">
+        <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
+          <div class="row row-cols-5 g-2">
             {% for row in menuDrinks|dictsort:'menuprice1' %}
-            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <div class="col"> 
               <div class="card">
                 <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
                 <div class="card-body">
@@ -297,7 +307,8 @@
                       margin: 10% auto;
                       padding: 20px;
                       border: 1px solid #888;
-                      width: 80%;
+                     
+                      width: 90%;
                       max-width: 600px;
                     }
 
@@ -325,26 +336,34 @@
                       margin-bottom: 10px;
                       border: 1px solid #ccc;
                       padding: 10px;
+                      border-radius: 10px;
                     }
 
                     #chatForm {
                       display: flex;
+
                     }
 
                     #messageInput {
                       flex-grow: 1;
                       margin-right: 10px;
+                      padding: 10px;
+                      border-radius: 10px;
+                      border: 1px solid #FF6000;
                     }
 
                     #chatForm button {
+                      border: none;
+                      background-color: none;
                       padding: 6px 12px;
+                      border-radius: 10px;
                     }
                     
                     </style>
                     
     <footer id="footer" class="footer">
       <div class="copyright">
-        &copy; Copyright <strong><span>BevRecs 2020</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>BevRecs 2023</span></strong>. All Rights Reserved
       </div>
     </footer>
     <!-- End Footer -->

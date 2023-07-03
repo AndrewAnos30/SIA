@@ -22,8 +22,8 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- css -->
-    <link rel="stylesheet" href="{% static 'main.css' %}">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'pos.css' %}">
+   
 
     <!--Datatables Library-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
@@ -46,47 +46,15 @@
 
 <body>
     <!-- ===========HEADER============== -->
-    <header class="header fixed-top d-flex align-items-center">
-        <div class="d-flex align-items-center justify-content-between">
-            <a href="/templates/user order/index.html" class="logo d-flex align-items-center px-2">
-                <img class="logo" src="/static/img/intelliserve.png" alt="logo">
-
-            </a>
-        </div>
-        <!-- Search Bar -->
-        <div class="search-bar m-auto">
-            <form class="search-form d-flex align-items-center">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-                <button type="submit" title="Search"><i class="fa fa-search"></i></button>
-            </form>
-        </div>
-
-        <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center mt-3 list-unstyled">
-                <!-- Search Icon when the screen is small-->
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle" href="#">
-                        <i class="fa fa-search"></i>
-                    </a>
-                </li>
-                <!-- Search Icon when the screen is small end-->
-
-                <!-- cart-->
-                <li class="nav-item d-block m-auto px-4">
-                    <a type="button" class="cart-btn text-decoration-none bg-success p-2 mb-3" style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
-                      Cart
-                  </a>
-                </li>
-                <!-- cart end-->
-            </ul>
-        </nav>
-        <!-- End Search Bar -->
-    </header>
-    <!-- ===========end of HEADER============== -->
+   
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar" data-bs-hidden="false">
         <ul class="sidebar-nav" id="sidebar-nav">
-
+            <li class="nav-item">
+                <a class="nav-link collapsed " href="{% url 'pos:reco' %}" style="font-size: 24px;">
+                <strong>Intelli<span style="color: #FF6000;">Serve</span></strong>
+                </a>
+              </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{% url 'pos:reco' %}">
                     <i class='bx bxs-cog'></i><span>Recommend</span>
@@ -105,12 +73,13 @@
     <main id="main" class="main">
         <section class="section cart-section">
             <div class="p-2">
-                <h6 class="page-title-cart">Your Orders</h6>
+                <h4 style="font-weight: bold;">Your Orders</h4>
             </div>
+            <div class="row">
             {% for cart in buyitem %}
             {% if cart.buyOrBought == False %}
          
-            <div class="row">
+                
 
                 <div class="col-8">
                    
@@ -233,7 +202,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                    </div>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -254,8 +223,10 @@
                 </div>
                 {%endif%}
                 {%endfor%}
-                <div class="col-4">
 
+
+
+                <div class="col-4">
                     <div class="card">
                         <div class="card-body">
                             <form  action="{% url 'pos:update_values' %}" method="post"
@@ -276,16 +247,16 @@
                             
                                 
                             <h6>Payment Method:</h6>
-<div class="d-flex px-2 justify-content-center">
-  <div>
-    <input type="radio" class="btn-check d-flex" name="payment_method" id="btn-check-5" autocomplete="off" value="cash" {% if buyitemforms.payment_method.name == "cash" %}checked{% endif %} required>
-    <label class="btn" for="btn-check-5">Cash</label>
-  </div>
-  <div>
-    <input type="radio" class="btn-check d-flex" name="payment_method" id="btn-check-6" autocomplete="off" value="gcash" {% if buyitemforms.payment_method.name == "gcash" %}checked{% endif %} required>
-    <label class="btn" for="btn-check-6">GCash</label>
-  </div>
-</div>
+                                <div class="d-flex px-2 justify-content-center">
+                                <div>
+                                    <input type="radio" class="btn-check d-flex" name="payment_method" id="btn-check-5" autocomplete="off" value="cash" {% if buyitemforms.payment_method.name == "cash" %}checked{% endif %} required>
+                                    <label class="btn" for="btn-check-5">Cash</label>
+                                </div>
+                                <div>
+                                    <input type="radio" class="btn-check d-flex" name="payment_method" id="btn-check-6" autocomplete="off" value="gcash" {% if buyitemforms.payment_method.name == "gcash" %}checked{% endif %} required>
+                                    <label class="btn" for="btn-check-6">GCash</label>
+                                </div>
+                                </div>
 
 <div id="gcash-image" style="display: none;">
   <img src="{% static 'img/qr code.png' %}" alt="GCash Image" style="max-width: 100%; height: auto;">
@@ -315,8 +286,9 @@
                         </div>
                     </div>
                 </div>
-             
                 
+           
+ 
            
             <!-- list of menus in the cart  -->
 
