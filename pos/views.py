@@ -366,29 +366,23 @@ def update_values(request):
         # Get the form data from the request
         payment_method = request.POST.get('payment_method')
         dine_in_out = request.POST.get('DineIn_Out')
-        tendered_payment = request.POST.get('tenderedPayment')
         AllPayment = float(request.POST.get('AllPayment'))
 
         # Generate a unique order number
         order_number = str(random.randint(1, 99999)).zfill(5)
 
         # Get only the buyItem objects with buyOrBought=False
-        buy_items = buyItem.objects.filter(buyOrBought=False)
-
-        # Get the current date and time
-        current_datetime = datetime.now()
+        buy_items = buyItem.objects.filter(transaction =False)
 
         for item in buy_items:
-            if not item.buyOrBought:
+            if not item.transaction:
                 # Update the fields for each buyItem object
                 item.payment_method = payment_method
                 item.DineIn_Out = dine_in_out
-                item.tenderedPayment = tendered_payment
                 item.AllPayment = AllPayment
                 item.orderNumber = order_number
-                item.buyOrBought = True  # Set buyOrBought to True
-                item.dateordered = current_datetime  # Store the current date and time
-                # Save the changes for each buyItem object
+                item.transaction = True
+                
                 item.save()
 
         # Redirect to a success page or do any further processing
@@ -399,16 +393,52 @@ def update_values(request):
 
 
 #cart end
+def cashier(request):
+    buyitemform = BuyItemForms() 
+    buyitem = buyItem.objects.all()
+ 
+    
+
+    context = {
+        'buyitemform': buyitemform,
+        'buyitem': buyitem,
+       
+
+    }
+    return render(request, 'cashier.html', context)
+    
+def update_cashier(request):
+    if request.method == 'POST':
+       
+        tendered_payment = request.POST.get('tenderedPayment')
+
+
+        # Get only the buyItem objects with buyOrBought=False
+        buy_items = buyItem.objects.filter(buyOrBought=False)
+
+        for item in buy_items:
+            if not item.buyOrBought:
+                item.buyOrBought = True  # Set buyOrBought to True
+                # Save the changes for each buyItem object
+                item.save()        
+                return redirect("pos:cashier")
+
+    return redirect("pos:cashier")
+
+
+ 
 
 
 #computation
 def calculate_total_price(buyitem):
     total = 0
     for item in buyitem:
-        if not item.buyOrBought and item.total_price:
+        if not item.transaction and item.total_price:
             total += item.total_price
     rounded_total = round(total, 2)
     return rounded_total
+
+
 
 
 
@@ -419,7 +449,7 @@ def receipt(request, orderNumber):
     # Prepare the receipt data
     receipt_data = {
         'order_number': orderNumber,
-        'order_date': order_items.first().dateordered,  # Retrieve the date directly
+        'order_date': order_items.first().dateordered,
         'items': [],
         'total_price': 0,
         'tendered_payment': order_items.first().tenderedPayment,
@@ -429,27 +459,25 @@ def receipt(request, orderNumber):
     # Loop through the order items and retrieve the necessary fields
     for item in order_items:
         item_data = {
-        'buy_name': item.buyName,
-        'buy_price': item.buyPrice,
-        'buy_quantity': item.buyQuantityMenu,
-        'addons': [],
-    }
+            'buy_name': item.buyName,
+            'buy_price': item.buyPrice,
+            'buy_quantity': item.buyQuantityMenu,
+            'addons': [],
+        }
 
-    # Retrieve addon details
-    for i in range(1, 6):
-        addon_name = getattr(item, f'buyAddOns{i}', None)
-        addon_price = getattr(item, f'menuAOPrice{i}', None)
-        if addon_name is not None and addon_price is not None:
-            item_data['addons'].append({'addon': addon_name, 'price': addon_price})
+        # Retrieve addon details
+        for i in range(1, 6):
+            addon_name = getattr(item, f'buyAddOns{i}', None)
+            addon_price = getattr(item, f'menuAOPrice{i}', None)
+            if addon_name is not None and addon_price is not None:
+                item_data['addons'].append({'addon': addon_name, 'price': addon_price})
 
-    receipt_data['items'].append(item_data)
+        receipt_data['items'].append(item_data)
 
-    if item.buyPrice is not None and item.buyQuantityMenu is not None:
-        receipt_data['total_price'] += item.buyPrice * item.buyQuantityMenu
+        if item.buyPrice is not None and item.buyQuantityMenu is not None:
+            receipt_data['total_price'] += item.buyPrice * item.buyQuantityMenu
 
-# Calculate the change amount
+    # Calculate the change amount
     receipt_data['change_amount'] = receipt_data['tendered_payment'] - receipt_data['total_price']
 
     return render(request, 'receipt.html', {'receipt_data': receipt_data})
-
-

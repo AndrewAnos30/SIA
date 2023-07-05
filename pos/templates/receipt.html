@@ -100,22 +100,24 @@
         <p>Items:</p>
         <ul>
             {% for item in receipt_data.items %}
+            {% if item.order_number == receipt_data.order_number %}
             <li>
-                {{ item.buy_name }} - &#8369 {{ item.buy_price }} - Quantity: {{ item.buy_quantity }}
+                {{ item.buy_name }} - &#8369;{{ item.buy_price }} - Quantity: {{ item.buy_quantity }}
                 {% if item.addons %}
                 <ul>
                     {% for addon in item.addons %}
-                    <li>{{ addon.addon }} - &#8369 {{ addon.price }}</li>
+                    <li>{{ addon.addon }} - &#8369;{{ addon.price }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
             </li>
+            {% endif %}
             {% endfor %}
         </ul>
 
-        <p>Total Price: &#8369 {{ receipt_data.total_price }}</p>
-        <p>Tendered Payment: &#8369  {{ receipt_data.tendered_payment }}</p>
-        <p>Change: &#8369 {{ receipt_data.change_amount }}</p>
+        <p>Total Price: &#8369;{{ receipt_data.total_price }}</p>
+        <p>Tendered Payment: &#8369;{{ receipt_data.tendered_payment }}</p>
+        <p>Change: &#8369;{{ receipt_data.change_amount }}</p>
 
         <div class="contact-info">
             <p>Email: info@abcstore.com</p>

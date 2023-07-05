@@ -1,6 +1,4 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -9,7 +7,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Open Sans", sans-serif;
   background-color: #EDF1F4 !important;
 }
 
@@ -1206,4 +1204,4 @@ h6 {
   color: #012970;
 }
 
- 
+

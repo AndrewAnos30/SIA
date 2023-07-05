@@ -93,7 +93,7 @@ class BuyItemForms(forms.ModelForm):
     class Meta:
         model = buyItem
         fields = [
-            "buyOrBought", "buySize", "buyQuantityMenu", "buyName", "buyPrice",
+            "transaction", "buyOrBought", "buySize", "buyQuantityMenu", "buyName", "buyPrice",
             "buyAddOns1", "buyAddOns2", "buyAddOns3", "buyAddOns4", "buyAddOns5",
             "buyQuantityAO1", "buyQuantityAO2", "buyQuantityAO3", "buyQuantityAO4", "buyQuantityAO5",
             "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5",

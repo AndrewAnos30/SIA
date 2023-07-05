@@ -830,9 +830,7 @@
         {%if categories.categorytype == 'DRINKS'%}
         <!-- Coffeee or Category 1 pane -->
         <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5" id="{{ categories.name|slugify }}">
-          <div class="d-flex justify-content-between mb-2">
-            <h5 class="categories">{{categories.name}}</h5>
-          </div>
+          
           <!-- list of menu -->
           <div class="row row-cols-4 gy-2">
             {% for data in categories.menudrinks_set.all %}

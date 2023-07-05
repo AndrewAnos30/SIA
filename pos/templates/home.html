@@ -218,7 +218,7 @@
                  </div>
                  <div class="form-container">
                    <form id="itemForm" action="{% url 'pos:buyitemdrinks' %}" method="post"
-                     enctype="multipart/form-data">
+                     enctype="multipart/form-data" onsubmit="return submitForm();">
                      {% csrf_token %}
 
                         <div class="row">
@@ -240,72 +240,52 @@
                                 </div>
                               </div>
 
-                              <div class="row mt-3">
-                                <div>
+                          
+
+                                                      <!-- ... previous code ... -->
+
+                          <div class="row mt-2">
+                            <div class="d-flex">
+                              {% if row.menuprice1 is not None %}
+                              <div>
+                                <label class="custom-radio">
+                                  <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Small" onclick="selectRadiosInDiv(this);"checked>
                                   <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
-                                  value="{{ row.menuprice1 }}" class="price1" style="display: none;" 
-                                  onchange="updatePriceSizeValue(this);">
-
-                                <h5 style="font-weight: bold;">&#8369; {{ row.menuprice1 }}</h5>
-                                </div>
-                               
+                                        value="{{ row.menuprice1 }}" class="price" style="display: none;"
+                                        onchange="updatePriceSizeValue(this);"checked>
+                                  <span class="radio-btn-style">₱{{ row.menuprice1|floatformat:2 }}</span>
+                                </label>
                               </div>
+                              {% endif %}
+                            
+                              {% if row.menuprice2 is not None %}
+                              <div>
+                                <label class="custom-radio">
+                                  <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Medium" onclick="selectRadiosInDiv(this);">
+                                  <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
+                                        value="{{ row.menuprice2 }}" class="price" style="display: none;"
+                                        onchange="updatePriceSizeValue(this);">
+                                  <span class="radio-btn-style">₱{{ row.menuprice2|floatformat:2 }}</span>
+                                </label>
+                              </div>
+                              {% endif %}
 
-                              <div class="row mt-2">
-                                <div class="d-flex">
-                                  <div>
-                                    <label class="custom-radio">
-                                    <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Small"
-                                      style="border: none; background-color: transparent; outline: none; cursor: default;"
-                                      onclick="selectRadiosInDiv(this);">
-                                      <span class="radio-btn-style">Small</span>
-                                    <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
-                                      value="{{ row.menuprice1 }}" class="price" style="display: none;"
-                                      onchange="updatePriceSizeValue(this);">
-                                    </label>
-                                      <h5 style="display: none;">&#8369; {{ row.menuprice1 }}</h5>
-                                  </div>
-           
-                                  <div>
-                                    <label class="custom-radio">
-                                    <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Medium"
-                                      onclick="selectRadiosInDiv(this);">
-                                      <span class="radio-btn-style">Medium</span>
-                                    <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
-                                      value="{{ row.menuprice2 }}" class="price" style="display: none;"
-                                      onchange="updatePriceSizeValue(this);">
-                                    </label>
-                                    <h5 style="display: none;">&#8369; {{ row.menuprice2 }}</h5>
-                                  </div>
-           
-                                  <!-- <div>
-                                    <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Large"
-                                      style="border: none; background-color: transparent; outline: none; cursor: default;"
-                                      onclick="selectRadiosInDiv(this);">
-                                      <span class="radio-btn-style">Large</span>
-                                    <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
-                                      value="{{ row.menuprice3 }}" class="price" style="display: none;"
-                                      onchange="updatePriceSizeValue(this);">
-                                  
-                                    <h5 style="display: none;">&#8369;  {{ row.menuprice3 }}</h5>
-           
-                                  </div> -->
-
-                                  <div>
-                                    <label class="custom-radio">
-                                      <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Large"
-                                        onclick="selectRadiosInDiv(this);">
-                                      <span class="radio-btn-style">Large</span>
-                                      <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
+                              {% if row.menuprice3 is not None %}
+                              <div>
+                                <label class="custom-radio">
+                                  <input type="radio" name="{{ buyitemform.buySize.html_name }}" value="Large" onclick="selectRadiosInDiv(this);">
+                                  <input type="radio" name="{{ buyitemform.buyPrice.html_name }}"
                                         value="{{ row.menuprice3 }}" class="price" style="display: none;"
                                         onchange="updatePriceSizeValue(this);">
-                                    </label>
-                                    <h5 style="display: none;">&#8369; {{ row.menuprice3 }}</h5>
-                                  </div>
-
-                                  
-                                </div>
+                                  <span class="radio-btn-style">₱{{ row.menuprice3|floatformat:2 }}</span>
+                                </label>
                               </div>
+                              {% endif %}
+                            </div>
+                          </div>
+
+                          <!-- ... remaining code ... -->
+
 
                               <div class="row justify-content-start mt-3">
                                 <div class="col-6">

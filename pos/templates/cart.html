@@ -77,7 +77,7 @@
             </div>
             <div class="row">
             {% for cart in buyitem %}
-            {% if cart.buyOrBought == False %}
+            {% if cart.transaction == False %}
          
                 
 
@@ -266,22 +266,21 @@
                             
                                 
                                 
-                                <div class="total-amount mt-4">
-                                    <div class="d-flex justify-content-between">
-                                      <h5><strong>Tendered Payment</strong></h5>
-                                      <input id="tendered-payment" name="tenderedPayment" step="0.01" type="number" class="form-control text-end ms-auto" inputmode="numeric" pattern="[0-9]*">
-                                    </div>
-                                  </div>
-                                  
+                          
+                             
+                                <div>
                                   <div class="total-amount mt-4">
                                     <div class="d-flex justify-content-between">
                                       <h5><strong>Total Amount</strong></h5>
                                       <input name="AllPayment" type="text" class="form-control bg-transparent border-0 fw-bold text-end" value="{{ total_price }}" readonly>
                                     </div>
                                   </div>
-                                <div class="text-center col-12 d-grid">
-                                    <button type="submit" class="btn place-order-btn btn-success">Place Order</button> 
-                                </div>
+                                
+                                  <div class="text-center col-12 d-grid">
+                                      
+                                              <button type="submit" class="btn place-order-btn btn-success">Place Order</button>
+                                             
+                              
                             </form>
                         </div>
                     </div>
@@ -298,28 +297,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  
 </body>
-<script>
-    // Retrieve the input elements for tendered payment and total amount
-const tenderedPayment = document.getElementById('tendered-payment');
-const totalAmount = document.querySelector('[name="AllPayment"]');
 
-// Add an event listener to the tendered payment input
-tenderedPayment.addEventListener('change', () => {
-  // Convert input values to numbers
-  const tenderedPaymentNumber = parseFloat(tenderedPayment.value);
-  const totalAmountNumber = parseFloat(totalAmount.value);
-  
-  // Check if the tendered payment is lower than the total amount
-  if (tenderedPaymentNumber < totalAmountNumber) {
-    // Display an error message or take appropriate action
-    alert('Tendered payment should be higher than the total amount.');
-    
-    // Reset the tendered payment input value
-    tenderedPayment.value = '';
-  }
-});
-
-</script>
 <script>
 // Retrieve the Cash and GCash radio buttons and the GCash image div
 const cashRadioButton = document.getElementById('btn-check-5');

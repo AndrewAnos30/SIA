@@ -172,6 +172,7 @@ class buyItem(models.Model):
     buyQuantityIng8 = models.PositiveIntegerField (null=True, blank=True)
     buyQuantityIng9 = models.PositiveIntegerField (null=True, blank=True)
     buyQuantityIng10 = models.PositiveIntegerField (null=True, blank=True)
+    transaction = models.BooleanField(default=False)
     buyOrBought = models.BooleanField(default=False)
     DoneOrder = models.BooleanField(default=False)
     payment_method = models.CharField(max_length=255, choices=PAYMENT_CHOICES, null=True, blank=True)
@@ -208,4 +209,6 @@ def total_AO(self):
         return round(total_AO, 2)
     
     return round(menuAOPrice1 + menuAOPrice2 + menuAOPrice3 + menuAOPrice4 + menuAOPrice5, 2)
+
+
 
