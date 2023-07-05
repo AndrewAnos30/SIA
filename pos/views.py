@@ -406,27 +406,29 @@ def cashier(request):
 
     }
     return render(request, 'cashier.html', context)
-    
+
 def update_cashier(request):
     if request.method == 'POST':
-       
-        tendered_payment = request.POST.get('tenderedPayment')
+        tendered_payment = float(request.POST.get('tendered_payment'))
 
-
-        # Get only the buyItem objects with buyOrBought=False
         buy_items = buyItem.objects.filter(buyOrBought=False)
 
         for item in buy_items:
-            if not item.buyOrBought:
-                item.buyOrBought = True  # Set buyOrBought to True
-                # Save the changes for each buyItem object
-                item.save()        
-                return redirect("pos:cashier")
+            item.buyOrBought = True  # Set buyOrBought to True
+            item.tenderedPayment = tendered_payment  # Update the tendered payment
+            item.dateordered = datetime.now()  # Set the current date and time
+            item.save()
+
+        # Process the tendered payment here
+        total_amount = sum(item.buyPrice for item in buy_items)
+        change = tendered_payment - total_amount
+
+        # Update the tendered payment, change, and dateordered in the database or perform other actions as needed
+
+        return redirect("pos:cashier")
 
     return redirect("pos:cashier")
 
-
- 
 
 
 #computation
