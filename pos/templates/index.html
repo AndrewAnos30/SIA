@@ -2,6 +2,7 @@
 {% block title %} Dashboard {% endblock%}
 
 {% block content %}
+
 <div class="pagetitle">
   <h1>Dashboard</h1>
   <nav>
@@ -11,6 +12,8 @@
     </ol>
   </nav>
 </div><!-- End Page Title -->
+{%for data in buyitem%}
+
 <section class="section dashboard">
   <div class="row">
 
@@ -19,6 +22,7 @@
       <div class="row g-2">
 
         <!-- Sales Card -->
+        {%for set in menuDrinks%}
         <div class="col-xxl-4 col-md-4">
           <div class="card info-card sales-card">
 
@@ -43,18 +47,19 @@
                   <i class='bx bx-drink'></i>
                 </div>
                 <div class="ps-3">
-                  <h6>13</h6>
-                  <span class="text-success small pt-1 fw-bold">13</span> <span class="text-muted small pt-2 ps-1">categories</span>
+                  <h6>{{ menucategory.count }}</h6>
+                  <span class="text-success small pt-1 fw-bold">{{ menucategory.count }}</span> <span
+                    class="text-muted small pt-2 ps-1">categories</span>
                 </div>
               </div>
             </div>
 
           </div>
         </div><!-- End Sales Card -->
+        {%endfor%}
 
-
-         <!-- Sales Card -->
-         <div class="col-xxl-4 col-md-4">
+        <!-- Sales Card -->
+        <div class="col-xxl-4 col-md-4">
           <div class="card info-card sales-card">
 
             <div class="filter">
@@ -78,17 +83,17 @@
                   <i class='bx bx-cart-alt'></i>
                 </div>
                 <div class="ps-3">
-                  <h6>103</h6>
+                  <h6>{{ total_buy_names }}</h6>
                   <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
                 </div>
               </div>
-            </div>
+              
 
           </div>
         </div><!-- End Sales Card -->
 
-         <!-- Sales Card -->
-         <div class="col-xxl-4 col-md-4">
+        <!-- Sales Card -->
+        <div class="col-xxl-4 col-md-4">
           <div class="card info-card sales-card">
 
             <div class="filter">
@@ -111,94 +116,93 @@
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                   <i class='bx bx-money-withdraw'></i>
                 </div>
-                <div class="ps-3">
-                  <h6>7860</h6>
-                  <span class="text-success small pt-1 fw-bold">14%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                <div class="ps-3">₱{{ row.menuprice1|floatformat:2 }}
+                  <h6>₱{{ total_all_payment|floatformat:2 }}</h6>
+                  <span class="text-success small pt-1 fw-bold">14%</span> <span
+                    class="text-muted small pt-2 ps-1">increase</span>
                 </div>
               </div>
+
             </div>
-
-          </div>
-        </div><!-- End Sales Card -->
+          </div><!-- End Sales Card -->
 
 
-         <!-- Top Selling -->
-         <div class="col-12">
-          <div class="card top-selling overflow-auto">
+          <!-- Top Selling -->
+          <div class="col-12">
+            <div class="card top-selling overflow-auto">
 
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
 
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body pb-0">
+                <h5 class="card-title">Top Selling <span>| Today</span></h5>
+
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">Preview</th>
+                      <th scope="col">Beverage</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Sold</th>
+                      <th scope="col">Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
+                      <td><a href="#" class="text-primary fw-bold">Coffee Latte</a></td>
+                      <td>50</td>
+                      <td class="fw-bold">124</td>
+                      <td>5,828</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
+                      <td><a href="#" class="text-primary fw-bold">Matcha Frappe</a></td>
+                      <td>46</td>
+                      <td class="fw-bold">98</td>
+                      <td>4,508</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
+                      <td><a href="#" class="text-primary fw-bold">Americano</a></td>
+                      <td>59</td>
+                      <td class="fw-bold">74</td>
+                      <td>4,366</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
+                      <td><a href="#" class="text-primary fw-bold">Machiato</a></td>
+                      <td>32</td>
+                      <td class="fw-bold">63</td>
+                      <td>2,016</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
+                      <td><a href="#" class="text-primary fw-bold">Coffee Black</a></td>
+                      <td>79</td>
+                      <td class="fw-bold">41</td>
+                      <td>3,239</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
             </div>
+          </div><!-- End Top Selling -->
 
-            <div class="card-body pb-0">
-              <h5 class="card-title">Top Selling <span>| Today</span></h5>
-
-              <table class="table table-borderless">
-                <thead>
-                  <tr>
-                    <th scope="col">Preview</th>
-                    <th scope="col">Beverage</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Sold</th>
-                    <th scope="col">Revenue</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
-                    <td><a href="#" class="text-primary fw-bold">Coffee Latte</a></td>
-                    <td>50</td>
-                    <td class="fw-bold">124</td>
-                    <td>5,828</td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
-                    <td><a href="#" class="text-primary fw-bold">Matcha Frappe</a></td>
-                    <td>46</td>
-                    <td class="fw-bold">98</td>
-                    <td>4,508</td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
-                    <td><a href="#" class="text-primary fw-bold">Americano</a></td>
-                    <td>59</td>
-                    <td class="fw-bold">74</td>
-                    <td>4,366</td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
-                    <td><a href="#" class="text-primary fw-bold">Machiato</a></td>
-                    <td>32</td>
-                    <td class="fw-bold">63</td>
-                    <td>2,016</td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#"><img src="/src/img/logo.png" alt=""></a></th>
-                    <td><a href="#" class="text-primary fw-bold">Coffee Black</a></td>
-                    <td>79</td>
-                    <td class="fw-bold">41</td>
-                    <td>3,239</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </div><!-- End Top Selling -->
-
+        </div>
       </div>
     </div>
-    </div>
-  </section>
-
-    {%endblock content %}
- 
+</section>
+{%endfor%}
+{%endblock content %}

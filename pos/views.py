@@ -12,11 +12,25 @@ from .forms import BuyItemForms
 import logging, random, datetime
 from datetime import datetime, timedelta
 from django.http import JsonResponse
-
+from django.db.models import Sum
 
 def index(request):
   
-    return render(request, 'index.html')
+    total_all_payment = buyItem.objects.aggregate(total=Sum('AllPayment'))['total']
+    buyitem = buyItem.objects.all()
+    total_buy_names = buyItem.objects.values('buyName').distinct().count()
+    menuDrinks = MenuDrinks.objects.all()
+    menucategory = MenuCategory.objects.all()
+    
+    context = {
+        'total_all_payment': total_all_payment,
+        'buyitem': buyitem,
+        'total_buy_names': total_buy_names,
+        'menuDrinks' : menuDrinks,
+        'menucategory' : menucategory
+    }
+
+    return render(request, 'index.html', context)
 
 
 #inventory start
@@ -225,20 +239,6 @@ def buy_item_drinks(request):
 
 
 #home end
-
-def index(request):
-     
-    today = datetime.now().date()
-    start_of_week = today - timedelta(days=today.weekday())  # Get the start date of the current week
-    end_of_week = start_of_week + timedelta(days=6)  # Get the end date of the current week
-
-    buyitem = buyItem.objects.filter(dateordered__date__range=[start_of_week, end_of_week])
-    
-    context = {
-        'buyitem': buyitem,
-    }
-    
-    return render(request, 'index.html',context)
 
 
 def sales(request):
