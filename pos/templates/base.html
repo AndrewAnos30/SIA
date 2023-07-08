@@ -100,32 +100,27 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{% static 'img/profile.png'%}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">Manager</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Admin</h6>
-              <span>Admin</span>
+              <h6>Manager</h6>
+           
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class='bx bx-user'></i>
-                <span>My Profile</span>
-              </a>
-            </li>
-            <li>
               <hr class="dropdown-divider">
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'pos:login' %}">
                 <i class='bx bx-log-out-circle'></i>
                 <span>Sign Out</span>
               </a>
+              
             </li>
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
@@ -137,7 +132,7 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'pos:index'%}">
+        <a class="nav-link collapsed" href="{% url 'pos:index' %}">
           <i class='bx bxs-dashboard'></i><span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
@@ -148,16 +143,6 @@
           <i class='bx bxs-food-menu'></i></i><span>Menu</span>
         </a>
       </li><!-- End Menu Nav -->
-      <!-- End Menu Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'pos:order' %}">
-          <i class='bx bx-cart-alt'></i><span>Orders</span>
-          {% with cart_items=cart.buyItem.all %}
-          <span class="badge badge-number ms-auto bg-danger">{{ cart_items|length }}</span>
-        {% endwith %}
-        </a>
-      </li><!-- Order Nav -->
 
 
       <li class="nav-item">
@@ -172,19 +157,7 @@
         </a>
       </li>
 
-      <!-- POS Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#pos-nav" href="{% url 'pos:home' %}">
-          <i class='bx-bar-chart'></i></i><span>POS</span>
-        </a>
-      </li><!-- POS end-->
-    </ul>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#pos-nav" href="{% url 'pos:cashier' %}">
-        <i class='bx-bar-chart'></i></i><span>Cashier</span>
-      </a>
-    </li><!-- POS end-->
+  
   </ul>
   </aside><!-- End Sidebar-->
 

@@ -5,20 +5,20 @@ from django.urls import path,include
 from django.views.generic.base import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.contrib.auth.decorators import login_required
 app_name = 'pos'
 
 urlpatterns = [
-    
-    path('', views.index, name='index'),
+    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('index', login_required(views.index), name='index'),
     path('/inventory/', views.inventory, name='inventory'),
     path('/menu/', views.menu, name='menu'),
     path('order', views.order, name='order'),
     path('sales', views.sales, name='sales'),
-    path('home/', views.home, name='home'),
+    path('home/', login_required(views.home), name='home'),  
     path('reco/', views.reco, name='reco'),
     path('cart', views.cart, name='cart'),
-    path('cashier', views.cashier, name='cashier'),
+    path('cashier', login_required(views.cashier), name='cashier'),
     path('add_ingridients', views.addIngridients, name='add_ingridients'),
     path('add_addOns', views.addAddOns, name='add_addOns'),
     path('add_utensils', views.addUtensils, name='add_utensils'),

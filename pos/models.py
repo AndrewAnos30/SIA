@@ -1,6 +1,6 @@
 from django.db import models
 
-# STOCKS START
+
 STOCK_CATEGORY = (
     ("INGR", "Ingredients"),
     ("AO", "AddOns"),
@@ -18,8 +18,6 @@ STOCK_QUANTITY = (
 class Stocks(models.Model):
     stockname = models.CharField(max_length=50)
     stockcategory = models.CharField(choices=STOCK_CATEGORY, max_length=100)
-    stockquantity = models.PositiveIntegerField()
-    stockmeasurement = models.CharField(choices=STOCK_QUANTITY, max_length=100)
     stockdate_in = models.DateField()
     stockexpiration = models.DateField()
 
@@ -34,11 +32,6 @@ TYPES_MENU = (
     ("FOOD", "Food"),
 )
 
-HOT_AND_COLD_CHOICES = (
-        ('hot', 'Hot'),
-        ('cold', 'Cold'),
-        ('both', 'Hot and Cold'),
-    )
 
 class MenuCategory (models.Model):
     name = models.CharField(max_length=100)
@@ -91,22 +84,6 @@ class MenuDrinks (models.Model):
         Stocks, on_delete=models.CASCADE, related_name='addons4', null=True, blank=True)
     addons5 = models.ForeignKey(
         Stocks, on_delete=models.CASCADE, related_name='addons5', null=True, blank=True)
-    hotAndCold =models.CharField(max_length=15, choices=HOT_AND_COLD_CHOICES, null=True, blank=True )
-    quantityIng1 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng2 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng3 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng4 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng5 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng6 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng7 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng8 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng9 = models.PositiveIntegerField(null=True, blank=True)
-    quantityIng10 = models.PositiveIntegerField(null=True, blank=True)
-    quantityAO1 = models.PositiveIntegerField(null=True, blank=True)
-    quantityAO2 = models.PositiveIntegerField(null=True, blank=True)
-    quantityAO3 = models.PositiveIntegerField(null=True, blank=True)
-    quantityAO4 = models.PositiveIntegerField(null=True, blank=True)
-    quantityAO5 = models.PositiveIntegerField(null=True, blank=True)
     q1 = models.BooleanField (default= False)
     q2 = models.BooleanField (default= False)
     q3 = models.BooleanField (default= False)
@@ -142,11 +119,6 @@ class buyItem(models.Model):
     buyAddOns3 = models.CharField (max_length=255, null=True, blank=True)
     buyAddOns4 = models.CharField (max_length=255, null=True, blank=True)
     buyAddOns5 = models.CharField (max_length=255, null=True, blank=True)
-    buyQuantityAO1 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityAO2 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityAO3 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityAO4 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityAO5 = models.PositiveIntegerField (null=True, blank=True)
     menuAOPrice1 = models.FloatField(default=0,null=True, blank=True)
     menuAOPrice2 = models.FloatField(default=0,null=True, blank=True)
     menuAOPrice3 = models.FloatField(default=0,null=True, blank=True)
@@ -162,16 +134,6 @@ class buyItem(models.Model):
     buyingredient8 = models.CharField (max_length=255, null=True, blank=True)
     buyingredient9 = models.CharField (max_length=255, null=True, blank=True)
     buyingredient10 = models.CharField (max_length=255, null=True, blank=True)
-    buyQuantityIng1 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng2 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng3 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng4 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng5 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng6 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng7 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng8 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng9 = models.PositiveIntegerField (null=True, blank=True)
-    buyQuantityIng10 = models.PositiveIntegerField (null=True, blank=True)
     transaction = models.BooleanField(default=False)
     buyOrBought = models.BooleanField(default=False)
     DoneOrder = models.BooleanField(default=False)

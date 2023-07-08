@@ -10,15 +10,43 @@ from .forms import IngridientsForm, AddOnsForm, UtensilsForm
 from .forms import MenuCategoryForm, MenuDrinksForm
 from .forms import BuyItemForms
 import logging, random, datetime
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django.http import JsonResponse
 from django.db.models import Sum
+from django.db.models.functions import Coalesce, Cast
+from django.db.models import FloatField, IntegerField
+from django.db.models.expressions import Value
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            if user.username == 'user1':
+                return redirect('pos:index')
+            elif user.username == 'user2':
+                return redirect('pos:cashier')
+            elif user.username == 'user3':
+                return redirect('pos:home')
+        else:
+            return redirect('pos:login')
+    else:
+        return render(request, 'login.html')
+        
+@login_required
 def index(request):
-  
-    total_all_payment = buyItem.objects.aggregate(total=Sum('AllPayment'))['total']
-    buyitem = buyItem.objects.all()
-    total_buy_names = buyItem.objects.values('buyName').distinct().count()
+    today = date.today()
+
+    total_all_payment = buyItem.objects.filter(dateordered__date=today).aggregate(
+        total=Coalesce(Sum(Cast('AllPayment', output_field=FloatField())), Value(0), output_field=FloatField())
+    )['total']
+    buyitem = buyItem.objects.filter(dateordered__date=today)
+    total_buy_names = buyItem.objects.filter(dateordered__date=today).values('buyName').distinct().count()
     menuDrinks = MenuDrinks.objects.all()
     menucategory = MenuCategory.objects.all()
     
@@ -26,12 +54,10 @@ def index(request):
         'total_all_payment': total_all_payment,
         'buyitem': buyitem,
         'total_buy_names': total_buy_names,
-        'menuDrinks' : menuDrinks,
-        'menucategory' : menucategory
+        'menuDrinks': menuDrinks,
+        'menucategory': menucategory
     }
-
     return render(request, 'index.html', context)
-
 
 #inventory start
 def inventory(request):
@@ -207,6 +233,7 @@ def delete_menu(request, menu_id):
 #MENU END
 
 #HOME START
+@login_required
 def home(request):
     buyitemform = BuyItemForms()  # Instantiate the form
     stocks = Stocks.objects.first()
@@ -393,6 +420,7 @@ def update_values(request):
 
 
 #cart end
+@login_required
 def cashier(request):
     buyitemform = BuyItemForms() 
     buyitem = buyItem.objects.all()

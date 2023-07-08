@@ -101,13 +101,12 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="{% static 'img/profile.png'%}" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">Profile</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Cashier</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
                             <h6>Cashier</h6>
-
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -117,10 +116,11 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'pos:login' %}">
                                 <i class='bx bx-log-out-circle'></i>
                                 <span>Sign Out</span>
-                            </a>
+                              </a>
+                              
                         </li>
                     </ul><!-- End Profile Dropdown Items -->
                 </li><!-- End Profile Nav -->
@@ -129,17 +129,35 @@
     </header><!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+    
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{% url 'pos:order' %}">
+                    <i class='bx bx-cart-alt'></i><span>Orders</span>
+                    {% with cart_items=cart.buyItem.all %}
+                    <span class="badge badge-number ms-auto bg-danger">{{ cart_items|length }}</span>
+                    {% endwith %}
+                </a>
+            </li><!-- Order Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#pos-nav" href="{% url 'pos:cashier' %}">
+                <i class='bx-bar-chart'></i></i><span>Cashier</span>
+            </a>
+        </li><!-- POS end-->
+        </ul>
+    </aside><!-- End Sidebar-->
 
 
     <main id="main" class="main">
-        
         <div class="col-8">
             {% for cart in buyitem %}
             {% if not cart.buyOrBought %}
             <div class="d-block order-card">
                 <!-- Add code for the order card here -->
-        
+
                 <div class="card mb-3 m-1">
                     <div class="row g-1">
                         <div class="col-12">
@@ -153,42 +171,51 @@
                                             </td>
                                             <td class="col-2" style="vertical-align: middle;"></td>
                                             <td class="col-2 text-center total-price" style="vertical-align: middle;">
-                                                <form action="{% url 'pos:update_cashier' %}" method="post" enctype="multipart/form-data" onsubmit="return validatePayment()">
+                                                <form action="{% url 'pos:update_cashier' %}" method="post"
+                                                    enctype="multipart/form-data" onsubmit="return validatePayment()">
                                                     {% csrf_token %}
                                                     <div class="total-amount mt-4">
                                                         <div class="d-flex justify-content-between">
                                                             <strong>Tendered Payment</strong>
                                                             <label for="tendered-payment">Tendered Payment:</label>
-                                                            <input id="tendered-payment" name="tendered_payment" step="0.01" type="number" class="form-control text-end ms-auto" inputmode="numeric" pattern="[0-9]*" required>                                                                                                                  </div>
+                                                            <input id="tendered-payment" name="tendered_payment"
+                                                                step="0.01" type="number"
+                                                                class="form-control text-end ms-auto"
+                                                                inputmode="numeric" pattern="[0-9]*" required>
+                                                        </div>
                                                     </div>
                                                     <div class="total-amount mt-4">
                                                         <div class="d-flex justify-content-between">
-                                                            <strong>Total Amount: ₱{{ cart.AllPayment|floatformat:2 }}</strong>
-                                                            <input type="hidden" id="total-amount" value="{{ cart.AllPayment }}">
+                                                            <strong>Total Amount: ₱{{ cart.AllPayment|floatformat:2
+                                                                }}</strong>
+                                                            <input type="hidden" id="total-amount"
+                                                                value="{{ cart.AllPayment }}">
                                                         </div>
                                                     </div>
                                                     <div class="text-center col-12 d-grid">
-                                                        <button type="submit" class="btn place-order-btn btn-success">Process</button>
+                                                        <button type="submit"
+                                                            class="btn place-order-btn btn-success">Process</button>
                                                     </div>
                                                 </form>
-                                                
+
                                                 <script>
                                                     function validatePayment() {
                                                         var tenderedPayment = parseFloat(document.getElementById('tendered-payment').value);
                                                         var totalAmount = parseFloat(document.getElementById('total-amount').value);
-                                                
+
                                                         if (tenderedPayment < totalAmount) {
                                                             alert('Tendered payment should not be lower than the total amount.');
                                                             return false; // Prevent form submission
                                                         }
-                                                
+
                                                         return true; // Proceed with form submission
                                                     }
                                                 </script>
-                                                
+
                                             </td>
                                             <td class="col-1" style="vertical-align: middle;">
-                                                <button class="btn btn-sm delete-btn" data-bs-toggle="modal" data-bs-target="#deletemodal" data-menuid="{{ cart.id }}">
+                                                <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#deletemodal" data-menuid="{{ cart.id }}">
                                                     <i class='bx bx-trash'></i>
                                                 </button>
                                             </td>
@@ -203,7 +230,7 @@
             {% endif %}
             {% endfor %}
         </div>
-        
+
     </main>
 
     <!-- ======= Footer ======= -->
@@ -219,7 +246,7 @@
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
 
-   
+
     <script>
         // add an event listener to each select element
         document.querySelectorAll('select').forEach(select => {
