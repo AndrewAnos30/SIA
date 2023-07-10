@@ -136,11 +136,11 @@
         </section>
       </main>
       
-
+ <!-- lagyan title top seller -->
       <div class="tab-content rounded">
         <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
           <div class="row row-cols-5 g-2">
-            {% for row in menuDrinks|dictsort:'menuprice1' %}
+            {% for row in menuDrinks|dictsort:'menuprice1'|slice:":5" %}
             <div class="col"> 
               <div class="card">
                 <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
@@ -184,85 +184,7 @@
                       </div>
                   
                 <br>
-                      <!-- <div class="container" style="margin-left: 440px;">
-                        <h3>Customer Ratings</h3>
-                        <div class="card">
-                          <div class="card-body d-flex justify-content-between">
-                            <h5 class="card-title">John Doe</h5>
-                            <div class="rating">
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                            </div>
-                          </div>
-                          <div class="card-body">
-                            <p class="card-text">Great product! I highly recommend it.</p>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-body d-flex justify-content-between">
-                            <h5 class="card-title">Jane Smith</h5>
-                            <div class="rating">
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                            </div>
-                          </div>
-                            <div class="card-body">
-                            <p class="card-text">The quality is excellent. Will buy again.</p>
-                          </div>
-                        </div>
-                        <div class="card">
-                        <div class="card-body d-flex justify-content-between">
-                            <h5 class="card-title">Sarah Johnson</h5>
-                            <div class="rating">
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                              <span class="star"></span>
-                            </div>
-                          </div>
-                            <div class="card-body">
-                            <p class="card-text">Impressive product! It exceeded my expectations.</p>
-                          </div>
-                        </div>
-                      
-                        <div class="card">
-                          <div class="card-body d-flex justify-content-between">
-                            <h5 class="card-title">Michael Williams</h5>
-                            <div class="rating">
-                              <span class="star active"></span>
-                              <span class="star active"></span>
-                              <span class="star active"></span>
-                              <span class="star active"></span>
-                              <span class="star active"></span>
-                            </div>
-                          </div>
-                            <div class="card-body">
-                            <p class="card-text">Fast shipping and great customer service.</p>
-                          </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body d-flex justify-content-between">
-                            <h5 class="card-title">Emily Davis</h5>
-                          <div class="rating">
-                            <span class="star active"></span>
-                            <span class="star active"></span>
-                            <span class="star active"></span>
-                            <span class="star active"></span>
-                            <span class="star active"></span>
-                          </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">The product arrived in perfect condition. Very satisfied.</p>
-                          </div>
-                        </div>
-                      </div> -->
+                     
                     </div>
                   </section>
                 </main>

@@ -47,39 +47,7 @@
 </head>
 
 <body>
-  <!-- ===========HEADER============== -->
-  <!-- <header class="header fixed-top d-flex align-items-center"> -->
-    <!-- <div class="d-flex align-items-center justify-content-between">
-      <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
-        <img class="logo" src="/static/img/intelliserve.png" alt="logo">
 
-      </a>
-    </div> -->
-    <!-- Search Bar -->
-    <!-- <div class="search-bar m-auto">
-      <form class="search-form d-flex align-items-center">
-        <input type="text" name="query" id="searchInput" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="fa fa-search"></i></button>
-      </form>
-    </div> -->
-
-    <!-- <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center mt-3 list-unstyled"> -->
-        <!-- Search Icon when the screen is small-->
-        <!-- <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle" href="#">
-            <i class="fa fa-search"></i>
-          </a>
-        </li> -->
-        <!-- Search Icon when the screen is small end-->
-
-        <!-- cart-->
-        <!-- cart end-->
-      <!-- </ul>
-    </nav> -->
-    <!-- End Search Bar -->
-  <!-- </header> -->
-  <!-- ===========end of HEADER============== -->
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar" data-bs-hidden="false">
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -138,7 +106,7 @@
             <!-- para sana sa lahat, like ito ung default didisplay niya lahat ng menu -->
         
             <li class="nav-item mx-2">
-              <a class="nav-link active" data-bs-toggle="pill" href="#{{ category.name|slugify }}">
+              <a class="nav-link active" data-bs-toggle="pill" href="#{{ category.name|slugify }}" onclick="showAllMenus()">
                 All
               </a>
             </li>
@@ -287,15 +255,17 @@
                           <!-- ... remaining code ... -->
 
 
-                              <div class="row justify-content-start mt-3">
-                                <div class="col-6">
-                                  <div class="input-group">
-                                    <button class="btn rounded-circle" type="button" id="decrementBtn">-</button>
-                                    <input name="{{ buyitemform.buyQuantityMenu.name }}" type="number" class="form-control short-width text-center" id="numberInput" value="1">
-                                    <button class="btn rounded-circle" type="button" id="incrementBtn">+</button>
-                                  </div>
-                                </div>
+                          <div class="row justify-content-start mt-3">
+                            <div class="col-6">
+                              <div class="input-group">
+                                <button class="btn btn-secondary decrementButton" type="button">-</button>
+                                <input name="{{ buyitemform.buyQuantityMenu.name }}" type="number" class="form-control short-width text-center numberInput" value="1">
+                                <button class="btn btn-secondary incrementButton" type="button">+</button>
+                              
                               </div>
+                            </div>
+                          </div>
+                          
          
                              
                             </div>
@@ -310,15 +280,7 @@
                        <div class="d-block add-on-option mt-4">
                          <h6 class="sizetxt fw-light">Add Ons</h6>
                          <div class="d-block">
-                           <!-- <div class="form-check d-flex justify-content-between">
-                             <div>
-                               <label class="form-check-label">NAME</label>
-                             </div>
-                             <p class="ingredient_quantity">MEASUREMENTS</p>
-                             <div>
-                               <h6 class="priceAddOns">PRICE</h6>
-                             </div>
-                           </div> -->
+                        
                            {% if row.addons1 %}
                            <div class="form-check d-flex justify-content-between">
                              <div class="col">
@@ -450,63 +412,6 @@
                        </div>
                      </div>
 
-
-
-                     <!-- <div class="ingredient_list mt-2">
-                       <h6 class="sizetxt fw-light">Ingredients</h6>
-                       <div class="d-flex">
-                         <div>
-                           {% if row.ingredient1 %}
-                           <input type="text" name="{{ buyitemform.buyingredient1.name }}"
-                             class="ingredient_name px-3" value="{{row.ingredient1}}" readonly>
-                           {% endif %}
-                           {% if row.quantityIng1 %}
-                           <input type="text" name="{{ buyitemform.buyQuantityIng1.name }}"
-                             class="ingredient_quantity px-2" value="{{row.quantityIng1}}" readonly>
-                           {% endif %}
-
-                           {% if row.ingredient2 %}
-                           <input type="text" name="{{ buyitemform.buyingredient2.name }}"
-                             class="ingredient_name px-3" value="{{row.ingredient2}}" readonly>
-                           {% endif %}
-                           {% if row.quantityIng2 %}
-                           <input type="text" name="{{ buyitemform.buyQuantityIng2.name }}"
-                             class="ingredient_quantity px-2" value="{{row.quantityIng2}}" readonly>
-                           {% endif %}
-
-                           {% if row.ingredient3 %}
-                           <input type="text" name="{{ buyitemform.buyingredient3.name }}"
-                             class="ingredient_name px-3" value="{{row.ingredient3}}" readonly>
-                           {% endif %}
-                           {% if row.quantityIng3 %}
-                           <input type="text" name="{{ buyitemform.buyQuantityIng3.name }}"
-                             class="ingredient_quantity px-2" value="{{row.quantityIng3}}" readonly>
-                           {% endif %}
-
-                           {% if row.ingredient4 %}
-                           <input type="text" name="{{ buyitemform.buyingredient4.name }}"
-                             class="ingredient_name px-3" value="{{row.ingredient4}}" readonly>
-                           {% endif %}
-                           {% if row.quantityIng4 %}
-                           <input type="text" name="{{ buyitemform.buyQuantityIng4.name }}"
-                             class="ingredient_quantity px-2" value="{{row.quantityIng4}}" readonly>
-                           {% endif %}
-
-                           {% if row.ingredient5 %}
-                           <input type="text" name="{{ buyitemform.buyingredient5.name }}"
-                             class="ingredient_name px-3" value="{{row.ingredient5}}" readonly>
-                           {% endif %}
-                           {% if row.quantityIng5 %}
-                           <input type="text" name="{{ buyitemform.buyQuantityIng5.name }}"
-                             class="ingredient_quantity px-2" value="{{row.quantityIng5}}" readonly>
-                           {% endif %}
-                         </div>
-                       </div>
-                       <div class="text-center col-12 d-grid mt-2">
-                         <button type="submit" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
-                       </div>
-                     </div> -->
-
                      <div class="add-to-cart col-12 d-grid mt-4">
                       <button type="submit" class="btn add-to-cart-btn"style="
                       color: white;
@@ -584,34 +489,45 @@
     });
     </script>
 
-    <script>
-                    // Get references to the elements
-              const decrementBtn = document.getElementById('decrementBtn');
-              const incrementBtn = document.getElementById('incrementBtn');
-              const numberInput = document.getElementById('numberInput');
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Get all the increment and decrement buttons
+      var decrementButtons = document.getElementsByClassName("decrementButton");
+      var incrementButtons = document.getElementsByClassName("incrementButton");
 
-              // Add event listeners for the buttons
-              decrementBtn.addEventListener('click', () => {
-                updateInputValue(-1);
-              });
+      // Attach event listeners to each set of buttons
+      for (var i = 0; i < decrementButtons.length; i++) {
+        decrementButtons[i].addEventListener("click", decrementValue);
+      }
 
-              incrementBtn.addEventListener('click', () => {
-                updateInputValue(1);
-              });
+      for (var i = 0; i < incrementButtons.length; i++) {
+        incrementButtons[i].addEventListener("click", incrementValue);
+      }
 
-              // Function to update the input value
-              function updateInputValue(step) {
-                let currentValue = parseInt(numberInput.value);
-                if (!isNaN(currentValue)) {
-                  currentValue += step;
-                  if (currentValue < 1) {
-                    currentValue = 1; // Avoid negative or zero values
-                  }
-                  numberInput.value = currentValue;
-                }
-              }
+      // Decrement button click event
+      function decrementValue() {
+        var inputField = this.parentNode.querySelector(".numberInput");
+        if (inputField.value > 1) {
+          inputField.value = parseInt(inputField.value) - 1;
+        }
+      }
 
-        </script>
+      // Increment button click event
+      function incrementValue() {
+        var inputField = this.parentNode.querySelector(".numberInput");
+        inputField.value = parseInt(inputField.value) + 1;
+      }
+    });
+  </script>
+
+<script>
+  function showAllMenus() {
+    var menuTabs = document.querySelectorAll('.tab-pane');
+    for (var i = 0; i < menuTabs.length; i++) {
+      menuTabs[i].classList.add('active');
+    }
+  }
+</script>
 
                 <!-- Add the following CSS and JS links to your HTML file -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
