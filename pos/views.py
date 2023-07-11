@@ -18,6 +18,12 @@ from django.db.models import FloatField, IntegerField
 from django.db.models.expressions import Value
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from operator import attrgetter
+from django.shortcuts import render, get_object_or_404
+from django.db import models
+import datetime
+from django.db.models import Max
+
 
 
 def login(request):
@@ -314,9 +320,13 @@ def update_done_order(request, pk):
 def reco(request):
     buyitemform = BuyItemForms()  # Instantiate the form
     stocks = Stocks.objects.first()
-    menuDrinks = MenuDrinks.objects.all()
+    drinks = MenuDrinks.objects.filter(menucategory__categorytype='FOOD').order_by('-menuprice1')[:5]
+    menuDrinks = MenuDrinks.objects.filter(menucategory__categorytype='DRINKS').order_by('-menuprice1')[:5]
     menuCategory = MenuCategory.objects.all()
     buyitem = buyItem.objects.all()
+
+    current_date = datetime.date.today()
+    top_sale = buyItem.objects.filter(dateordered=current_date).values('buyName').annotate(count=models.Count('buyName')).order_by('-count').first()
 
     lowest_price = 99999999
     highest_price = 0
@@ -329,6 +339,7 @@ def reco(request):
 
     context = {
         'buyitemform': buyitemform,
+        'drinks': drinks,
         'stocks': stocks,
         'menuDrinks': menuDrinks,
         'menuCategory': menuCategory,
@@ -338,6 +349,7 @@ def reco(request):
     }
   
     return render(request, 'recommendation.html', context)
+
 
 
 def buy_item_drinks1(request):
@@ -399,7 +411,7 @@ def update_values(request):
         order_number = str(random.randint(1, 99999)).zfill(5)
 
         # Get only the buyItem objects with buyOrBought=False
-        buy_items = buyItem.objects.filter(transaction =False)
+        buy_items = buyItem.objects.filter(transaction=False)
 
         for item in buy_items:
             if not item.transaction:
@@ -409,15 +421,24 @@ def update_values(request):
                 item.AllPayment = AllPayment
                 item.orderNumber = order_number
                 item.transaction = True
-                
+
                 item.save()
 
-        # Redirect to a success page or do any further processing
-        return redirect("pos:home")
+        # Render the success page with the order number
+        context = {'order_number': order_number}
+        return render(request, 'success.html', context)
 
     # Render the form
     return render(request, "home.html")
 
+def success(request):
+    order_number = request.GET.get('order_number')  # Assuming you pass the order number as a query parameter
+
+    context = {
+        'order_number': order_number
+    }
+
+    return render(request, 'success.html', context)
 
 #cart end
 @login_required
@@ -448,7 +469,7 @@ def update_cashier(request):
             item.save()
 
         # Process the tendered payment here
-        total_amount = sum(item.buyPrice for item in buy_items)
+        total_amount = calculate_total_price(buy_items)
         change = tendered_payment - total_amount
 
         # Update the tendered payment, change, and dateordered in the database or perform other actions as needed

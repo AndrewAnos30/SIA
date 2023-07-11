@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt</title>
+    <style>
+        /* CSS styles for the receipt */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .receipt-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .receipt-details {
+            margin-bottom: 20px;
+        }
+        .receipt-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .receipt-details th,
+        .receipt-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .receipt-details th {
+            background-color: #f2f2f2;
+        }
+        .receipt-total {
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-header">
+        <h2>Receipt</h2>
+    </div>
+    <div class="receipt-number">
+        Receipt Number: {{ receipt_number }}
+    </div>
+    <div class="receipt-details">
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in buy_items %}
+                <tr>
+                    <td>{{ item.buyName }}</td>
+                    <td>{{ item.buyQuantityMenu }}</td>
+                    <td>&#8369; {{ item.buyPrice }}</td>
+                    <td>&#8369; {{ item.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="receipt-total">Total Amount:</td>
+                    <td class="receipt-total">&#8369; {{ total_amount }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,4 +1,8 @@
+
 {% load static %}
+{% load humanize %}
+{% load custom_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,42 +46,7 @@
     <title>Menu</title>
   </head>
 <body >
-     <!-- ===========HEADER============== -->
-  <!-- <header class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="/templates/index.html" class="logo d-flex align-items-center px-2">
-        <img class="logo" src="/static/img/intelliserve.png" alt="logo">
-      
-      </a>
-    </div> -->
-     <!-- Search Bar -->
-    <!-- <div class="search-bar m-auto">
-      <form class="search-form d-flex align-items-center">
-        <input type="text" name="query" id="searchInput "placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="fa fa-search"></i></button>
-      </form>
-    </div> -->
-<!-- 
-    <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center mt-3 list-unstyled">
-       
-          <li class="nav-item d-block d-lg-none">
-            <a class="nav-link nav-icon search-bar-toggle" href="#">
-              <i class="fa fa-search"></i>
-            </a>
-          </li>
-      
-           <li class="nav-item d-block m-auto px-4">
-              <a type="button" class="cart-btn text-decoration-none bg-success p-2 mb-3" style="padding-bottom:4px; border-radius: 10px; color: white;" href="{% url 'pos:cart' %}">
-                Cart
-            </a>
-          </li>
-        
-        </ul>
-      </nav>
-    
-</header> -->
- <!-- ===========end of HEADER============== -->
+   
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar" data-bs-hidden="false">
         <ul class="sidebar-nav" id="sidebar-nav">
@@ -136,11 +105,12 @@
         </section>
       </main>
       
- <!-- lagyan title top seller -->
+ <!-- FOODS -->
       <div class="tab-content rounded">
         <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
-          <div class="row row-cols-5 g-2">
-            {% for row in menuDrinks|dictsort:'menuprice1'|slice:":5" %}
+          <div class="row row-cols-5 g-2">          
+            {% for row in drinks %}
+            {% if row.menucategory.categorytype == 'FOOD' and forloop.counter0 < 5 %}
             <div class="col"> 
               <div class="card">
                 <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
@@ -150,44 +120,132 @@
                       <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
                     </div>
                     <div class="col-12">
-                      
-                  <!-- off-canvas display menu Info -->
-                  <div class="btn-group" role="group" aria-label="Rating" style="width: 5px;">
-                    <button type="button" class="btn btn-outline-success">&#9734;</button>
-                    <button type="button" class="btn btn-outline-success">&#9734;</button>
-                    <button type="button" class="btn btn-outline-success">&#9734;</button>
-                    <button type="button" class="btn btn-outline-success">&#9734;</button>
-                    <button type="button" class="btn btn-outline-success">&#9734;</button>
-                  </div>
+                      <div class="rating">
+                        <div class="star" data-rating="1"></div>
+                        <div class="star" data-rating="2"></div>
+                        <div class="star" data-rating="3"></div>
+                        <div class="star" data-rating="4"></div>
+                        <div class="star" data-rating="5"></div>
+                      </div>
                     </div>
                   </div>
-                  <div class="offcanvas offcanvas-end" tabindex="-1" id="menuinformation-{{ row.id }}"
-                    aria-labelledby="menuinformation-{{ row.id }}">
-                    <div class="offcanvas-header">
-                      <button type="button" class="btn btn-primary">
-                        <a type="button" class="cart-btn text-decoration-none text-white" href="{% url 'pos:cart' %}">
-                          Cart(0)
-                        </a>
-                      </button>
-                      <!-- Add any additional content for the off-canvas menu here -->
-                    </div>
-                  </div>
+                  <!-- rest of the card-body content -->
                 </div>
+                
               </div>
             </div>
+            {%endif%}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+<!--  DRINKS -->
+      <div class="tab-content rounded">
+        <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
+          <div class="row row-cols-5 g-2">          
+            {% for row in menuDrinks %}
+            {% if row.menucategory.categorytype == 'DRINKS' and forloop.counter0 < 5 %}
+            <div class="col"> 
+              <div class="card">
+                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
+                    </div>
+                    <div class="col-12">
+                      <div class="rating">
+                        <div class="star" data-rating="1"></div>
+                        <div class="star" data-rating="2"></div>
+                        <div class="star" data-rating="3"></div>
+                        <div class="star" data-rating="4"></div>
+                        <div class="star" data-rating="5"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- rest of the card-body content -->
+                </div>
+                
+              </div>
+            </div>
+            {%endif%}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+ 
+    <!--  top sales -->  
+      <div class="tab-content rounded">
+        <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
+          <div class="row row-cols-5 g-2">          
+            {% for buyName, count in buyItems|dictsortreversed:"value" %}
+            {% if forloop.counter0 < 5 %}
+              {% for row in menuDrinks %}
+                {% if row.menuname == buyName %}
+                  <div class="col"> 
+              <div class="card">
+                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
+                    </div>
+                    <div class="col-12">
+                      <div class="rating">
+                        <div class="star" data-rating="1"></div>
+                        <div class="star" data-rating="2"></div>
+                        <div class="star" data-rating="3"></div>
+                        <div class="star" data-rating="4"></div>
+                        <div class="star" data-rating="5"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- rest of the card-body content -->
+                </div>
+                
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content rounded">
+        <div class="tab-content mt-4 p-4" style="margin-left: 200px;">
+          <div class="row row-cols-5 g-2">
+            {% for item in buyitem %}
+            {% if item.DoneOrder == True %}
+                    <div class="col"> 
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-12">
+                              <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ item.buyName }}</a>
+                            </div>
+                            <div class="col-12">
+                              <div class="rating">
+                                <div class="star" data-rating="1"></div>
+                                <div class="star" data-rating="2"></div>
+                                <div class="star" data-rating="3"></div>
+                                <div class="star" data-rating="4"></div>
+                                <div class="star" data-rating="5"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- rest of the card-body content -->
+                        </div>
+                      </div>
+                    </div>
+              {%endif%}
             {% endfor %}
           </div>
         </div>
       </div>
       
-
-                      </div>
-                  
-                <br>
-                     
-                    </div>
-                  </section>
-                </main>
+ 
                       <style>
                 
                       .rating {
@@ -360,7 +418,7 @@ function processUserInput(userInput) {
 }
 
     </script>
-     </script>
+  
      <script>
       // Get the menu drinks data from the Django template context
 var menuDrinks = JSON.parse('{{ menuDrinks|safe }}');
