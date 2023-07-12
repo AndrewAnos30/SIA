@@ -1,38 +1,34 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from .models import Stocks, STOCK_CATEGORY, STOCK_QUANTITY
-from .models import MenuCategory, MenuDrinks, TYPES_MENU, total_AO
-from .models import buyItem
+from .models import MenuCategory, MenuDrinks, TYPES_MENU, total_AO, buyItem
 from pos import views
 from .forms import IngridientsForm, AddOnsForm, UtensilsForm
-from .forms import MenuCategoryForm, MenuDrinksForm
-from .forms import BuyItemForms
-import logging, random, datetime
-from datetime import datetime, timedelta, date
-from django.http import JsonResponse
+from .forms import MenuCategoryForm, MenuDrinksForm, BuyItemForms
+import logging
+import random
+from datetime import datetime, timedelta
 from django.db.models import Sum
 from django.db.models.functions import Coalesce, Cast
 from django.db.models import FloatField, IntegerField
 from django.db.models.expressions import Value
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from operator import attrgetter
-from django.shortcuts import render, get_object_or_404
-from django.db import models
-import datetime
 from django.db.models import Max
+from django.db import models
 
 
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
+            auth_login(request, user)  # Use the renamed auth_login function
             if user.username == 'user1':
                 return redirect('pos:index')
             elif user.username == 'user2':
@@ -46,7 +42,7 @@ def login(request):
         
 @login_required
 def index(request):
-    today = date.today()
+    today = datetime.today()
 
     total_all_payment = buyItem.objects.filter(dateordered__date=today).aggregate(
         total=Coalesce(Sum(Cast('AllPayment', output_field=FloatField())), Value(0), output_field=FloatField())
@@ -315,8 +311,6 @@ def update_done_order(request, pk):
     cart.save()
     return redirect('pos:order')  
 
-
-
 def reco(request):
     buyitemform = BuyItemForms()  # Instantiate the form
     stocks = Stocks.objects.first()
@@ -325,7 +319,7 @@ def reco(request):
     menuCategory = MenuCategory.objects.all()
     buyitem = buyItem.objects.all()
 
-    current_date = datetime.date.today()
+    current_date = datetime.today()
     top_sale = buyItem.objects.filter(dateordered=current_date).values('buyName').annotate(count=models.Count('buyName')).order_by('-count').first()
 
     lowest_price = 99999999
@@ -347,8 +341,10 @@ def reco(request):
         'lowest_price': lowest_price,
         'highest_price': highest_price,
     }
-  
+
     return render(request, 'recommendation.html', context)
+
+
 
 
 
@@ -488,7 +484,6 @@ def calculate_total_price(buyitem):
             total += item.total_price
     rounded_total = round(total, 2)
     return rounded_total
-
 
 
 
