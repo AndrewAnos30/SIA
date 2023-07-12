@@ -17,11 +17,51 @@
     <!-- Left side columns -->
     <div class="category col-lg-12 p-2">
       <div class="d-flex justify-content-between">
-        <h5 class="categories">Categories</h5>
-        <div class="btn-category">
-          <a class="btn btn-sm btn-success ms-auto" href="#" role="button" data-bs-toggle="modal"
-            data-bs-target="#addcategorymodal">Add Category</a>
+        <div class="row">
 
+          <div class="col-10">
+            <h5 class="categories">Categories</h5>
+          </div>
+
+          <div class="col-2">
+
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class='bx bx-cog' style="font-size: 24px; color: #FF6000;"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Category Settings</h6>
+                </li>
+    
+                <li>  <a class="btn btn-sm btn-success ms-auto" href="#" role="button" data-bs-toggle="modal"
+                  data-bs-target="#addcategorymodal">Add Category</a></li>
+    
+                <li> <a class="btn btn-sm btn-success ms-2" type="button" data-bs-toggle="modal"
+                  data-bs-target="#deletecategorymodal">Delete Category</a></li>
+    
+                <li>  <a class="btn btn-sm ms-auto btn-success" href="#" role="button" data-bs-toggle="modal"
+                  data-bs-target="#editcategorymodal">Edit Category</a></li>
+    
+                  <li class="dropdown-header text-start">
+                    <h6>Menu Settings</h6>
+                  </li>
+    
+                  <li><a class="btn btn-sm ms-auto btn-success" href="#" role="button" data-bs-toggle="modal"
+                    data-bs-target="#addDrinks">Add
+                    Drinks</a>
+                   </li>
+                   <li>
+                    <a class="btn btn-sm ms-auto btn-success" href="#" role="button" data-bs-toggle="modal"
+                    data-bs-target="#addFood">Add
+                    Food</a>
+                   </li>
+              </ul>
+            </div>    
+          </div>
+        </div>
+  
+
+        <div class="btn-category">
+       
           <!-- Vertically centered Modal -->
           <div class="modal fade" id="addcategorymodal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
@@ -58,9 +98,7 @@
           </div><!-- End Vertically centered Modal-->
 
           <span>
-            <button class="btn btn-sm btn-success ms-2" type="button" data-bs-toggle="modal"
-              data-bs-target="#deletecategorymodal">Delete Category</button>
-
+          
             <!-- Delete Category Modal -->
             <div class="modal fade" id="deletecategorymodal" tabindex="-1">
               <div class="modal-dialog modal-dialog-centered">
@@ -92,8 +130,7 @@
 
           <!-- Edit Category Modal -->
           <span>
-            <a class="btn btn-sm ms-auto btn-success" href="#" role="button" data-bs-toggle="modal"
-              data-bs-target="#editcategorymodal">Edit Category</a>
+           
             <div class="modal fade" id="editcategorymodal" tabindex="-1">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -145,17 +182,9 @@
 
     <div class="category col-lg-12 p-2">
       <div class="d-flex justify-content-between">
-        <h5 class="categories">Menu</h5>
         <div class="row">
           <div class="col-12 btn-category">
-            <!-- add menu button -->
-            <a class="btn btn-sm ms-auto btn-success" href="#" role="button" data-bs-toggle="modal"
-              data-bs-target="#addDrinks">Add
-              Drinks</a>
-            <a class="btn btn-sm ms-auto btn-success" href="#" role="button" data-bs-toggle="modal"
-              data-bs-target="#addFood">Add
-              Food</a>
-            <!-- add menu button -->
+        
             <!-- Add Menu Modal -->
             <div class="modal fade" id="addDrinks" tabindex="-1">
               <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -694,28 +723,24 @@
         </div>
       </div>
 
-
-      <!---->
-      <h5>DRINKS</h5>
       <div class="menu-grid mt-2">
-
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills mb-2">
           {% for categories in menuCategory %}
-          {%if categories.categorytype == 'DRINKS'%}
-          <li class="nav-item">
+          
+          <li class="nav-item mb-2 mx-2">
             <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name|slugify}}">
               <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
               <span>{{categories.name}}</span>
             </a>
           </li>
-          {%endif%}
+     
           {% endfor %}
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content mt-4">
           {% for categories in menuCategory %}
-          {%if categories.categorytype == 'DRINKS'%}
+         
           <!-- Coffeee or Category 1 pane -->
           <div class="tab-pane container{% if forloop.first %} active{% endif %} fs-5"
             id="{{ categories.name|slugify }}">
@@ -753,7 +778,7 @@
               {% endfor %}
             </div>
           </div>
-          {%endif%}
+     
           {% endfor %}
         </div>
       </div>
@@ -761,65 +786,5 @@
   </div>
 </section>
 
-<h5>FOODS</h5>
-<div class="menu-grid mt-2">
-  <ul class="nav nav-pills">
-    {% for categories in menuCategory %}
-    {%if categories.categorytype == 'FOOD'%}
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="pill" href="#{{categories.name|slugify}}">
-        <i class='bx bxs-coffee-alt justify-content-center p-1'></i>
-        <span>{{categories.name}}</span>
-      </a>
-    </li>
-    {%endif%}
-    {% endfor %}
-  </ul>
 
-  <!-- Tab panes -->
-  <div class="tab-content mt-4">
-    {% for categories in menuCategory %}
-    {%if categories.categorytype == 'FOOD'%}
-    <!-- Coffeee or Category 1 pane -->
-    <div class="tab-pane container{% if forloop.first %} {% endif %} fs-5" id="{{ categories.name|slugify }}">
-      <div class="d-flex justify-content-between mb-2">
-        <h5 class="categories">{{categories.name}}</h5>
-      </div>
-      <!-- list of menu -->
-      <div class="row row-cols-4 gy-2">
-        {% for data in categories.menudrinks_set.all %}
-        <div class="col">
-          <!-- Card with an image on top -->
-          <div class="card menu-item-card">
-            <img src="{{data.menuimage.url}}" class="card-img-top"
-              style="height: 150px; width:100%; object-fit:cover; ">
-            <div class="card-body">
-
-              <h5 class="card-title">{{data.menuname}}</h5>
-              <div class="d-flex">
-
-                <p class="card-text">&#8369 {{data.menuprice1}}</p>
-              </div>
-
-              <div class="text-center d-grip gap-2">
-
-
-                <div class="text-center d-grip gap-2">
-                  <form method="POST" action="{% url 'pos:delete_menu' data.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm"
-                      style="background-color: #FFB272 !important;">Delete</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Card with an image on top -->
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {%endif%}
-    {% endfor %}
-  </div>
-</div>
 {% endblock content %}

@@ -137,9 +137,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{% url 'pos:order' %}">
                     <i class='bx bx-cart-alt'></i><span>Orders</span>
-                    {% with cart_items=cart.buyItem.all %}
-                    <span class="badge badge-number ms-auto bg-danger">{{ cart_items|length }}</span>
-                    {% endwith %}
+                
                 </a>
             </li><!-- Order Nav -->
 
@@ -204,12 +202,36 @@
                                               </td>
                                             </tr>
                                             <tr>
-                                              <td class="td-text">{{ cart.buySize }}</td>
-                                              <td class="td-text">&#8369; 10.00</td>
+                                              {% if cart.buyAddOns1 %}
+                                                <td class="td-text">{{ cart.buyAddOns1 }}</td>
+                                                <td class="td-text">&#8369; {{ cart.menuAOPrice1 }}</td>
+                                              {% endif %}
                                             </tr>
                                             <tr>
-                                              <!-- Addons here -->
+                                              {% if cart.buyAddOns2 %}
+                                                <td class="td-text">{{ cart.buyAddOns2 }}</td>
+                                                <td class="td-text">&#8369; {{ cart.menuAOPrice2 }}</td>
+                                              {% endif %}
                                             </tr>
+                                            <tr>
+                                              {% if cart.buyAddOns3 %}
+                                                <td class="td-text">{{ cart.buyAddOns3 }}</td>
+                                                <td class="td-text">&#8369; {{ cart.menuAOPrice3 }}</td>
+                                              {% endif %}
+                                            </tr>
+                                            <tr>
+                                              {% if cart.buyAddOns4 %}
+                                                <td class="td-text">{{ cart.buyAddOns4 }}</td>
+                                                <td class="td-text">&#8369; {{ cart.menuAOPrice4 }}</td>
+                                              {% endif %}
+                                            </tr>
+                                            <tr>
+                                              {% if cart.buyAddOns5 %}
+                                                <td class="td-text">{{ cart.buyAddOns5 }}</td>
+                                                <td class="td-text">&#8369; {{ cart.menuAOPrice5 }}</td>
+                                              {% endif %}
+                                            </tr>
+                                            
                                           </tbody>
                                         </table>
                                       </td>

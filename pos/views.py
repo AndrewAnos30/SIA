@@ -19,7 +19,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from operator import attrgetter
 from django.db.models import Max
 from django.db import models
-
+from django.db.models import F, Sum
 
 
 def user_login(request):
@@ -62,6 +62,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 #inventory start
+@login_required
 def inventory(request):
     ingridientForm = IngridientsForm()
     my_data_ingredients = Stocks.objects.all()
@@ -146,7 +147,7 @@ def delete_stock(request):
     return render(request, 'delete_stock.html')
 
 #inventory end
-
+@login_required
 def menu(request):
     menucategoryform = MenuCategoryForm   
     menudrinksform = MenuDrinksForm
@@ -265,89 +266,6 @@ def buy_item_drinks(request):
 
     return HttpResponseRedirect(reverse("pos:home"))
 
-
-
-#home end
-
-
-def sales(request):
-   
-    today = datetime.now().date()
-    start_of_week = today - timedelta(days=today.weekday())  # Get the start date of the current week
-    end_of_week = start_of_week + timedelta(days=6)  # Get the end date of the current week
-    buyitem = buyItem.objects.filter(dateordered__date__range=[start_of_week, end_of_week])
-    
-    context = {
-        'buyitem': buyitem,
-    }
-    
-    return render(request, 'sales.html', context)
-
-
-def order(request):
-    buyitemform = BuyItemForms() 
-    stocks = Stocks.objects.first()
-    menuDrinks = MenuDrinks.objects.all()
-    menuCategory = MenuCategory.objects.all()
-    buyitem = buyItem.objects.all()
-    total_price = calculate_total_price(buyitem)
-    
-
-    context = {
-        'buyitemform': buyitemform,
-        'stocks': stocks,
-        'menuDrinks': menuDrinks,
-        'menuCategory': menuCategory,
-        'buyitem': buyitem,
-        'total_price': total_price
-
-    }
-  
-    return render(request, 'order.html', context)
-
-def update_done_order(request, pk):
-    cart = buyItem.objects.get(pk=pk)
-    cart.DoneOrder = True
-    cart.save()
-    return redirect('pos:order')  
-
-def reco(request):
-    buyitemform = BuyItemForms()  # Instantiate the form
-    stocks = Stocks.objects.first()
-    drinks = MenuDrinks.objects.filter(menucategory__categorytype='FOOD').order_by('-menuprice1')[:5]
-    menuDrinks = MenuDrinks.objects.filter(menucategory__categorytype='DRINKS').order_by('-menuprice1')[:5]
-    menuCategory = MenuCategory.objects.all()
-    buyitem = buyItem.objects.all()
-
-    current_date = datetime.today()
-    top_sale = buyItem.objects.filter(dateordered=current_date).values('buyName').annotate(count=models.Count('buyName')).order_by('-count').first()
-
-    lowest_price = 99999999
-    highest_price = 0
-
-    for row in menuDrinks:
-        if row.menuprice1 < lowest_price:
-            lowest_price = row.menuprice1
-        if row.menuprice1 > highest_price:
-            highest_price = row.menuprice1
-
-    context = {
-        'buyitemform': buyitemform,
-        'drinks': drinks,
-        'stocks': stocks,
-        'menuDrinks': menuDrinks,
-        'menuCategory': menuCategory,
-        'buyitem': buyitem,
-        'lowest_price': lowest_price,
-        'highest_price': highest_price,
-    }
-
-    return render(request, 'recommendation.html', context)
-
-
-
-
-
 def buy_item_drinks1(request):
     if request.method == 'POST':
         form = BuyItemForms(request.POST, request.FILES)
@@ -358,42 +276,6 @@ def buy_item_drinks1(request):
             print(form.errors)  # Check for any form errors in the console
 
     return HttpResponseRedirect(reverse("pos:reco"))
-
-
-
-
-
-
-
-#cart start
-#
-#
-def cart(request):
-    buyitemform = BuyItemForms() 
-    stocks = Stocks.objects.first()
-    menuDrinks = MenuDrinks.objects.all()
-    menuCategory = MenuCategory.objects.all()
-    buyitem = buyItem.objects.all()
-    total_price = calculate_total_price(buyitem)
-    
-
-    context = {
-        'buyitemform': buyitemform,
-        'stocks': stocks,
-        'menuDrinks': menuDrinks,
-        'menuCategory': menuCategory,
-        'buyitem': buyitem,
-        'total_price': total_price
-
-    }
-  
-  
-    return render(request, 'cart.html',context)
-
-def delete_menu_from_cart(request, cart_item_id):
-    cart_item = buyItem.objects.get(id=cart_item_id)
-    cart_item.delete()
-    return redirect('pos:cart')
 
 
 def update_values(request):
@@ -427,6 +309,115 @@ def update_values(request):
     # Render the form
     return render(request, "home.html")
 
+#home end
+
+@login_required
+def sales(request):
+   
+    today = datetime.now().date()
+    start_of_week = today - timedelta(days=today.weekday())  # Get the start date of the current week
+    end_of_week = start_of_week + timedelta(days=6)  # Get the end date of the current week
+    buyitem = buyItem.objects.filter(dateordered__date__range=[start_of_week, end_of_week])
+    
+    context = {
+        'buyitem': buyitem,
+    }
+    
+    return render(request, 'sales.html', context)
+
+@login_required
+def order(request):
+    buyitemform = BuyItemForms() 
+    stocks = Stocks.objects.first()
+    menuDrinks = MenuDrinks.objects.all()
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
+    total_price = calculate_total_price(buyitem)
+    
+
+    context = {
+        'buyitemform': buyitemform,
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
+        'total_price': total_price
+
+    }
+  
+    return render(request, 'order.html', context)
+
+def update_done_order(request, pk):
+    cart = buyItem.objects.get(pk=pk)
+    cart.DoneOrder = True
+    cart.save()
+    return redirect('pos:order')  
+
+@login_required
+def reco(request):
+    buyitemform = BuyItemForms()  # Instantiate the form
+    stocks = Stocks.objects.first()
+    drinks = MenuDrinks.objects.filter(menucategory__categorytype='FOOD').order_by('-menuprice1')[:5]
+    menuDrinks = MenuDrinks.objects.filter(menucategory__categorytype='DRINKS').order_by('-menuprice1')[:5]
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
+
+    current_date = datetime.today()
+    top_sale = buyItem.objects.filter(dateordered=current_date).values('buyName').annotate(count=models.Count('buyName')).order_by('-count').first()
+
+    lowest_price = 99999999
+    highest_price = 0
+
+    for row in menuDrinks:
+        if row.menuprice1 < lowest_price:
+            lowest_price = row.menuprice1
+        if row.menuprice1 > highest_price:
+            highest_price = row.menuprice1
+
+    context = {
+        'buyitemform': buyitemform,
+        'drinks': drinks,
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
+        'lowest_price': lowest_price,
+        'highest_price': highest_price,
+    }
+
+    return render(request, 'recommendation.html', context)
+
+#cart start
+#
+@login_required
+def cart(request):
+    buyitemform = BuyItemForms() 
+    stocks = Stocks.objects.first()
+    menuDrinks = MenuDrinks.objects.all()
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
+    total_price = calculate_total_price(buyitem)
+    
+
+    context = {
+        'buyitemform': buyitemform,
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
+        'total_price': total_price
+
+    }
+  
+  
+    return render(request, 'cart.html',context)
+
+def delete_menu_from_cart(request, cart_item_id):
+    cart_item = buyItem.objects.get(id=cart_item_id)
+    cart_item.delete()
+    return redirect('pos:cart')
+
+@login_required
 def success(request):
     order_number = request.GET.get('order_number')  # Assuming you pass the order number as a query parameter
 
@@ -441,14 +432,9 @@ def success(request):
 def cashier(request):
     buyitemform = BuyItemForms() 
     buyitem = buyItem.objects.all()
- 
-    
-
     context = {
         'buyitemform': buyitemform,
         'buyitem': buyitem,
-       
-
     }
     return render(request, 'cashier.html', context)
 
@@ -456,23 +442,37 @@ def update_cashier(request):
     if request.method == 'POST':
         tendered_payment = float(request.POST.get('tendered_payment'))
 
-        buy_items = buyItem.objects.filter(buyOrBought=False)
+        # Get the specific buyItem object using its ID
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(buyItem, id=item_id)
+
+        # Get other buyItem objects with the same order number
+        order_number = item.orderNumber
+        buy_items = buyItem.objects.filter(orderNumber=order_number)
+
+        # Calculate the total amount for all updated items
+        total_amount = buy_items.aggregate(total=Sum(F('buyPrice') + F('menuAOPrice1') + F('menuAOPrice2') + F('menuAOPrice3') + F('menuAOPrice4') + F('menuAOPrice5')))['total'] or 0.0
 
         for item in buy_items:
-            item.buyOrBought = True  # Set buyOrBought to True
-            item.tenderedPayment = tendered_payment  # Update the tendered payment
-            item.dateordered = datetime.now()  # Set the current date and time
+            item.buyOrBought = True
+            item.tenderedPayment = tendered_payment
+            item.dateordered = datetime.now()
             item.save()
 
-        # Process the tendered payment here
-        total_amount = calculate_total_price(buy_items)
         change = tendered_payment - total_amount
 
-        # Update the tendered payment, change, and dateordered in the database or perform other actions as needed
-
-        return redirect("pos:cashier")
+        # Render the receipt template with the updated items
+        context = {
+            'buy_items': buy_items,
+            'total_amount': total_amount,
+            'tendered_payment': tendered_payment,
+            'change': change,
+        }
+        return render(request, 'receipt_template.html', context)
 
     return redirect("pos:cashier")
+
+  
 
 
 
@@ -485,9 +485,22 @@ def calculate_total_price(buyitem):
     rounded_total = round(total, 2)
     return rounded_total
 
+@property
+def total_price(self):
+    if not self.buyOrBought:
+        buyPrice = float(self.buyPrice or 0.0)
+        menuAOPrice1 = float(self.menuAOPrice1 or 0.0)
+        menuAOPrice2 = float(self.menuAOPrice2 or 0.0)
+        menuAOPrice3 = float(self.menuAOPrice3 or 0.0)
+        menuAOPrice4 = float(self.menuAOPrice4 or 0.0)
+        menuAOPrice5 = float(self.menuAOPrice5 or 0.0)
+
+        return round((buyPrice + menuAOPrice1 + menuAOPrice2 + menuAOPrice3 + menuAOPrice4 + menuAOPrice5) * self.buyQuantityMenu, 2)
+
+    return None # Return 0.0 for already bought items or when the calculation cannot be performed
 
 
-
+@login_required
 def receipt(request, orderNumber):
     # Retrieve the necessary data based on the order number
     order_items = buyItem.objects.filter(orderNumber=orderNumber)
@@ -527,3 +540,81 @@ def receipt(request, orderNumber):
     receipt_data['change_amount'] = receipt_data['tendered_payment'] - receipt_data['total_price']
 
     return render(request, 'receipt.html', {'receipt_data': receipt_data})
+
+
+
+@login_required
+def Mcashier(request):
+    buyitemform = BuyItemForms() 
+    buyitem = buyItem.objects.all()
+    context = {
+        'buyitemform': buyitemform,
+        'buyitem': buyitem,
+    }
+    return render(request, 'MCashier.html', context)
+
+
+from django.shortcuts import get_object_or_404
+
+def Mupdate_cashier(request):
+    if request.method == 'POST':
+        tendered_payment = float(request.POST.get('tendered_payment'))
+
+        # Get the specific buyItem object using its ID
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(buyItem, id=item_id)
+
+        # Get other buyItem objects with the same order number
+        order_number = item.orderNumber
+        buy_items = buyItem.objects.filter(orderNumber=order_number)
+
+        # Calculate the total amount for all updated items
+        total_amount = buy_items.aggregate(total=Sum(F('buyPrice') + F('menuAOPrice1') + F('menuAOPrice2') + F('menuAOPrice3') + F('menuAOPrice4') + F('menuAOPrice5')))['total'] or 0.0
+
+        for item in buy_items:
+            item.buyOrBought = True
+            item.tenderedPayment = tendered_payment
+            item.dateordered = datetime.now()
+            item.save()
+
+        change = tendered_payment - total_amount
+
+        # Render the Mreceipt template with the updated items
+        context = {
+            'buy_items': buy_items,
+            'total_amount': total_amount,
+            'tendered_payment': tendered_payment,
+            'change': change,
+        }
+        return render(request, 'Mreceipt.html', context)
+
+    return redirect("pos:Mcashier")
+       
+@login_required
+def Morder(request):
+    buyitemform = BuyItemForms() 
+    stocks = Stocks.objects.first()
+    menuDrinks = MenuDrinks.objects.all()
+    menuCategory = MenuCategory.objects.all()
+    buyitem = buyItem.objects.all()
+    total_price = calculate_total_price(buyitem)
+    
+
+    context = {
+        'buyitemform': buyitemform,
+        'stocks': stocks,
+        'menuDrinks': menuDrinks,
+        'menuCategory': menuCategory,
+        'buyitem': buyitem,
+        'total_price': total_price
+
+    }
+  
+    return render(request, 'Morder.html', context)
+
+def Mupdate_done_order(request, pk):
+    cart = buyItem.objects.get(pk=pk)
+    cart.DoneOrder = True
+    cart.save()
+    return redirect('pos:Morder')  
+    

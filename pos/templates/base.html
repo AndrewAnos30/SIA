@@ -13,7 +13,7 @@
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
     rel="stylesheet">
   <!-- favcon -->
-  <link href="/static/img/logo.png" rel="icon">
+  <link href="/static/img/intelliserveFinal.png" rel="icon">
   <!-- font-awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -36,20 +36,20 @@
 </head>
 <body>
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
+  <header id="header" class="header bg-white fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center">
       <a href="#" class="logo d-flex align-items-center">
-        <img src="{% static 'img/intelliserve.png'%}" alt="">
+        <img src="{% static 'img/intelliserveFinal2.png'%}" alt="">
       </a>
       <i class='bx bx-menu toggle-sidebar-btn'></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bx bx-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div>End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -64,7 +64,7 @@
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bx bx-bell"></i>
-            <span class="badge bg-primary badge-number">1</span>
+            <span class="badge badge-number">1</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -157,7 +157,19 @@
         </a>
       </li>
 
-  
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#pos-nav" href="{% url 'pos:Mcashier' %}">
+            <i class='bx-bar-chart'></i></i><span>Cashier</span>
+        </a>
+    </li><!-- POS end-->
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'pos:Morder' %}">
+          <i class='bx bx-cart-alt'></i><span>Orders</span>
+       
+      </a>
+  </li><!-- Order Nav -->
+
   </ul>
   </aside><!-- End Sidebar-->
 

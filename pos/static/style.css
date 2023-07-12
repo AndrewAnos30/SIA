@@ -57,7 +57,7 @@ h6 {
   font-size: 24px;
   margin-bottom: 0;
   font-weight: 600;
-  color: #012970;
+  color: #454545;
 }
 
 /*--------------------------------------------------------------
@@ -70,11 +70,12 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background: #4154f1;
+  background: #ff6000;
   width: 40px;
   height: 40px;
   border-radius: 4px;
   transition: all 0.4s;
+  text-decoration: none;
 }
 
 .back-to-top i {
@@ -84,7 +85,7 @@ h6 {
 }
 
 .back-to-top:hover {
-  background: #6776f4;
+  background: #ffa559;
   color: #fff;
 }
 
@@ -229,7 +230,7 @@ h6 {
   padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 500;
-  color: #012970;
+  color: #454545;
   font-family: "Poppins", sans-serif;
 }
 
@@ -300,12 +301,12 @@ h6 {
 .breadcrumb {
   font-size: 14px;
   font-family: "Nunito", sans-serif;
-  color: #899bbd;
+  color: #454545 !important;
   font-weight: 600;
 }
 
 .breadcrumb a {
-  color: #899bbd;
+  color: #454545;
   transition: 0.3s;
   text-decoration: none;
 }
@@ -375,7 +376,7 @@ h6 {
   z-index: 997;
   height: 60px;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-  background-color: #FFB272;
+  background-color: #ffffff !important;
   padding-left: 20px;
   /* Toggle Sidebar Button */
   /* Search Bar */
@@ -383,9 +384,9 @@ h6 {
 
 .header .toggle-sidebar-btn {
   font-size: 32px;
-  padding-left: 10px;
+  padding-left: 0px;
   cursor: pointer;
-  color: #ffffff;
+  color: #000000;
 }
 
 .header .search-bar {
@@ -465,7 +466,7 @@ h6 {
 
 .header-nav .nav-icon {
   font-size: 28px;
-  color: #ffffff;
+  color: #000000;
   margin-right: 25px;
   position: relative;
 }
@@ -493,7 +494,9 @@ h6 {
   inset: -2px -5px auto auto;
   font-weight: normal;
   font-size: 12px;
+  color: #000000;
   padding: 3px 6px;
+  background-color: #FF6000;
 }
 
 .header-nav .notifications {
@@ -538,11 +541,22 @@ h6 {
   font-size: 18px;
   margin-bottom: 0;
   font-weight: 600;
-  color: #444444;
+  color: #000000;
+}
+.header-nav .nav-profile span {
+  font-size: 14px;
+  color: #000000 !important;
+}
+
+
+.header-nav .profile .dropdown-header span {
+  font-size: 24px;
+  color: #000000 !important;
 }
 
 .header-nav .profile .dropdown-header span {
-  font-size: 14px;
+  font-size: 24px;
+  color: #000000 !important;
 }
 
 .header-nav .profile .dropdown-item {
@@ -558,7 +572,7 @@ h6 {
 }
 
 .header-nav .profile .dropdown-item:hover {
-  background-color: #f6f9ff;
+  background-color: #000000;
 }
 
 /*--------------------------------------------------------------
@@ -569,7 +583,7 @@ h6 {
   top: 60px;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 200px;
   z-index: 996;
   transition: all 0.3s;
   padding: 20px;
@@ -582,7 +596,7 @@ h6 {
 
 @media (max-width: 1199px) {
   .sidebar {
-    left: -300px;
+    left: -200px;
   }
 }
 
@@ -600,7 +614,7 @@ h6 {
 
   #main,
   #footer {
-    margin-left: 300px;
+    margin-left: 200px;
   }
 }
 
@@ -674,12 +688,12 @@ h6 {
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #FF862F;
-  background:#FFD699;
+  color: #fff;
+  background:#FF6000;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #00BF63;
+  color: #ffff;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -776,7 +790,7 @@ h6 {
 
 .dashboard .info-card h6 {
   font-size: 28px;
-  color: #012970;
+  color: #ff6000;
   font-weight: 700;
   margin: 0;
   padding: 0;
@@ -792,8 +806,8 @@ h6 {
 }
 
 .dashboard .sales-card .card-icon {
-  color: #4154f1;
-  background: #f6f6fe;
+  color: #fff;
+  background: #ff6000;
 }
 
 .dashboard .revenue-card .card-icon {
@@ -929,6 +943,9 @@ h6 {
   max-width: 60px;
 }
 
+.top-selling-menu{
+  color: #454545;
+}
 /*--------------------------------------------------------------
 # Icons list page
 --------------------------------------------------------------*/
@@ -1204,4 +1221,29 @@ h6 {
   color: #012970;
 }
 
+
+
+.nav-pills .nav-item{
+    
+  border-radius: 20px !important;
+ 
+ }
+
+.nav-pills .nav-item{
+background-color: white;
+border: rgba(0, 0, 0, 0.2) 1px solid;
+}
+
+.nav-pills .nav-link{
+  color:#000000 !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.nav-pills .nav-item .nav-link.active {
+  color: white; /* Change the text color */
+  background-color: #FF6000; /* Change the background color */
+    
+  border-radius: 20px !important;
+}
 
