@@ -1,7 +1,8 @@
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Receipt</title>
     <style>
         body {
@@ -84,54 +85,50 @@
 <body>
     <div id="receiptBody">
         <div class="logo">
-            <img src="{% static 'img/intelliserve.png' %}" alt="Company Logo">
+            <img src="your-logo.png" alt="Logo">
         </div>
 
-        <h1>Receipt for Order No. {{ receipt_data.order_number }}</h1>
+        <h1>Receipt</h1>
+
         <div class="store-info">
-            <p>Store Name: ABC Store</p>
-            <p>Address: 123 Main Street, City, Country</p>
-            <p>Phone: +1 234-567-890</p>
+            <p>Your Store Name</p>
+            <p>123 Store Street, City</p>
+            <p>Phone: 123-456-7890</p>
         </div>
 
-        <p>Order Date: {{ receipt_data.order_date }}</p>
-        <p>Buy Name: {{ receipt_data.items.0.buy_name }}</p>
-
-        <p>Items:</p>
+        <h2>Items:</h2>
         <ul>
-            {% for item in receipt_data.items %}
-            {% if item.order_number == receipt_data.order_number %}
-            <li>
-                {{ item.buy_name }} - &#8369;{{ item.buy_price }} - Quantity: {{ item.buy_quantity }}
-                {% if item.addons %}
-                <ul>
-                    {% for addon in item.addons %}
-                    <li>{{ addon.addon }} - &#8369;{{ addon.price }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            {% endif %}
+            {% for item in buy_items %}
+                <li>
+                    <strong>{{ item.buyName }}</strong><br>
+                    Size: {{ item.buySize }}<br>
+                    Quantity: {{ item.buyQuantityMenu }}<br>
+                    Price: ₱{{ item.buyPrice }}<br>
+                    <!-- Add other item details here -->
+                </li>
             {% endfor %}
         </ul>
 
-        <p>Total Price: &#8369;{{ receipt_data.total_price }}</p>
-        <p>Tendered Payment: &#8369;{{ receipt_data.tendered_payment }}</p>
-        <p>Change: &#8369;{{ receipt_data.change_amount }}</p>
+        <h2>Total Amount: ₱ {{ total_amount }}</h2>
+        <h2>Tendered Payment: ₱ {{ tendered_payment }}</h2>
+        <h2>Change: ₱ {{ change }}</h2>
+
+        <!-- Add any additional receipt details or formatting as needed -->
+        <!-- ... -->
 
         <div class="contact-info">
-            <p>Email: info@abcstore.com</p>
-            <p>Website: www.abcstore.com</p>
+            <p>For inquiries, please contact:</p>
+            <p>Email: info@example.com</p>
+            <p>Website: www.example.com</p>
         </div>
 
         <div class="footer">
             <p>Thank you for your purchase!</p>
-            <p>Receipt generated on: {{ current_date }}</p>
         </div>
+
+        <button onclick="window.location.href='/Mcashier'">DONE</button>
+        <button class="print-button" onclick="window.print()">Print</button>
     </div>
 
-    <div style="text-align: center; margin-top: 20px;" class="print-button">
-        <button onclick="window.print()">Print Receipt</button>
-    </div>
 </body>
 </html>

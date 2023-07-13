@@ -1,32 +1,142 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Receipt</title>
-   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #receiptBody {
+            max-width: 600px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 150px;
+        }
+
+        .store-info {
+            margin-bottom: 20px;
+        }
+
+        .store-info p {
+            margin-bottom: 5px;
+        }
+
+        .contact-info {
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Hide print button when printing */
+        @media print {
+            .print-button,
+            #doneButton {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Receipt</h1>
+    <div id="receiptBody">
+        <div class="logo">
+            <img src="your-logo.png" alt="Logo">
+        </div>
 
-    <h2>Items:</h2>
-    <ul>
-        {% for item in buy_items %}
-            <li>
-                <strong>{{ item.buyName }}</strong><br>
-                Size: {{ item.buySize }}<br>
-                Quantity: {{ item.buyQuantityMenu }}<br>
-                Price: ₱{{ item.buyPrice }}<br>
-                <!-- Add other item details here -->
-            </li>
-        {% endfor %}
-    </ul>
+        <h1>Receipt</h1>
 
-    <h2>Total Amount: ₱ {{ total_amount }}</h2>
-    <h2>Tendered Payment: ₱ {{ tendered_payment }}</h2>
-    <h2>Change: ₱ {{ change }}</h2>
+        <div class="store-info">
+            <p>Your Store Name</p>
+            <p>123 Store Street, City</p>
+            <p>Phone: 123-456-7890</p>
+        </div>
 
-    <!-- Add any additional receipt details or formatting as needed -->
-    <!-- ... -->
-    <button onclick="window.location.href='/cashier'">DONE</button>
+        <h2>Items:</h2>
+        <ul>
+            {% for item in buy_items %}
+                <li>
+                    <strong>{{ item.buyName }}</strong><br>
+                    Size: {{ item.buySize }}<br>
+                    Quantity: {{ item.buyQuantityMenu }}<br>
+                    Price: ₱{{ item.buyPrice }}<br>
+                    <!-- Add other item details here -->
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Total Amount: ₱ {{ total_amount }}</h2>
+        <h2>Tendered Payment: ₱ {{ tendered_payment }}</h2>
+        <h2>Change: ₱ {{ change }}</h2>
+
+        <!-- Add any additional receipt details or formatting as needed -->
+        <!-- ... -->
+
+        <div class="contact-info">
+            <p>For inquiries, please contact:</p>
+            <p>Email: info@example.com</p>
+            <p>Website: www.example.com</p>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for your purchase!</p>
+        </div>
+
+        <div class="button-container">
+            <button id="doneButton" onclick="window.location.href='/cashier'">DONE</button>
+            <button class="print-button" onclick="window.print()">Print</button>
+        </div>
+    </div>
 
 </body>
 </html>

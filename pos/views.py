@@ -441,17 +441,22 @@ def cashier(request):
 def update_cashier(request):
     if request.method == 'POST':
         tendered_payment = float(request.POST.get('tendered_payment'))
-
-        # Get the specific buyItem object using its ID
         item_id = request.POST.get('item_id')
         item = get_object_or_404(buyItem, id=item_id)
-
-        # Get other buyItem objects with the same order number
         order_number = item.orderNumber
         buy_items = buyItem.objects.filter(orderNumber=order_number)
 
-        # Calculate the total amount for all updated items
-        total_amount = buy_items.aggregate(total=Sum(F('buyPrice') + F('menuAOPrice1') + F('menuAOPrice2') + F('menuAOPrice3') + F('menuAOPrice4') + F('menuAOPrice5')))['total'] or 0.0
+        # Calculate the total amount for all updated items, including quantity multiplication
+        total_amount = buy_items.aggregate(
+            total=Sum(
+                F('buyPrice') * F('buyQuantityMenu') +
+                F('menuAOPrice1') * F('buyQuantityMenu') +
+                F('menuAOPrice2') * F('buyQuantityMenu') +
+                F('menuAOPrice3') * F('buyQuantityMenu') +
+                F('menuAOPrice4') * F('buyQuantityMenu') +
+                F('menuAOPrice5') * F('buyQuantityMenu')
+            )
+        )['total'] or 0.0
 
         for item in buy_items:
             item.buyOrBought = True
@@ -461,7 +466,6 @@ def update_cashier(request):
 
         change = tendered_payment - total_amount
 
-        # Render the receipt template with the updated items
         context = {
             'buy_items': buy_items,
             'total_amount': total_amount,
@@ -556,20 +560,27 @@ def Mcashier(request):
 
 from django.shortcuts import get_object_or_404
 
+
+@login_required
 def Mupdate_cashier(request):
     if request.method == 'POST':
         tendered_payment = float(request.POST.get('tendered_payment'))
-
-        # Get the specific buyItem object using its ID
         item_id = request.POST.get('item_id')
         item = get_object_or_404(buyItem, id=item_id)
-
-        # Get other buyItem objects with the same order number
         order_number = item.orderNumber
         buy_items = buyItem.objects.filter(orderNumber=order_number)
 
-        # Calculate the total amount for all updated items
-        total_amount = buy_items.aggregate(total=Sum(F('buyPrice') + F('menuAOPrice1') + F('menuAOPrice2') + F('menuAOPrice3') + F('menuAOPrice4') + F('menuAOPrice5')))['total'] or 0.0
+        # Calculate the total amount for all updated items, including quantity multiplication
+        total_amount = buy_items.aggregate(
+            total=Sum(
+                F('buyPrice') * F('buyQuantityMenu') +
+                F('menuAOPrice1') * F('buyQuantityMenu') +
+                F('menuAOPrice2') * F('buyQuantityMenu') +
+                F('menuAOPrice3') * F('buyQuantityMenu') +
+                F('menuAOPrice4') * F('buyQuantityMenu') +
+                F('menuAOPrice5') * F('buyQuantityMenu')
+            )
+        )['total'] or 0.0
 
         for item in buy_items:
             item.buyOrBought = True
@@ -579,7 +590,6 @@ def Mupdate_cashier(request):
 
         change = tendered_payment - total_amount
 
-        # Render the Mreceipt template with the updated items
         context = {
             'buy_items': buy_items,
             'total_amount': total_amount,
@@ -589,7 +599,7 @@ def Mupdate_cashier(request):
         return render(request, 'Mreceipt.html', context)
 
     return redirect("pos:Mcashier")
-       
+
 @login_required
 def Morder(request):
     buyitemform = BuyItemForms() 
