@@ -81,9 +81,10 @@ class BuyItemForms(forms.ModelForm):
             "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5",
             "buyingredient6", "buyingredient7", "buyingredient8", "buyingredient9", "buyingredient10",
             "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered", "DoneOrder",
-            "priceSize"
+            "priceSize", "PWD_discount", "PWD_Id"
         ]
         widgets = {
             'payment_method': forms.RadioSelect(choices=(('cash', 'Cash'), ('gcash', 'GCash'))),
             'DineIn_Out': forms.RadioSelect(choices=(('IN', 'Dine In'), ('OUT', 'Dine Out'))),
+            'PWD_discount': forms.RadioSelect(choices=(('yes', 'YES'), ('no', 'NO'))),
         }

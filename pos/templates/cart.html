@@ -13,7 +13,7 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
     <!-- favcon -->
-    <link href="/static/img/logo.png" rel="icon">
+    <link href="/static/img/intelliserveFinal.png" rel="icon">
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -52,7 +52,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <a class="nav-link collapsed " href="{% url 'pos:reco' %}" style="font-size: 24px;">
-                <strong>Intelli<span style="color: #FF6000;">Serve</span></strong>
+                
                 </a>
               </li>
             <li class="nav-item">
@@ -258,15 +258,30 @@
                                 </div>
                                 </div>
 
-<div id="gcash-image" style="display: none;">
-  <img src="{% static 'img/qr code.png' %}" alt="GCash Image" style="max-width: 100%; height: auto;">
-</div>
+                                <div id="gcash-image" style="display: none;">
+                                <img src="{% static 'img/qr code.png' %}" alt="GCash Image" style="max-width: 100%; height: auto;">
+                                </div>
 
                               
-                            
-                                
-                                
-                          
+                                <h6>Are you PWD/Senior?</h6>
+                                <div class="d-flex px-2 justify-content-center">
+                                    <div>
+                                        <input type="radio" class="btn-check d-flex" name="PWD_discount"
+                                            id="btn-check-pwd" autocomplete="off" value="yes" {% if buyitemforms.PWD_discount.name == "yes" %}checked{% endif %} required>
+                                        <label class="btn" for="btn-check-pwd">Yes</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" class="btn-check d-flex" name="PWD_discount"
+                                            id="btn-check-not-pwd" autocomplete="off" value="no" {% if buyitemforms.PWD_discount == "no" %}checked{% endif %} required>
+                                        <label class="btn" for="btn-check-not-pwd">No</label>
+                                        
+                                    </div>
+                                </div>
+        
+                                <div id="tin-input" style="display: none;">
+                                    <br>
+                                    <input type="text" class="form-control" id="tin_number" name="PWD_Id" maxlength="12" placeholder="PWD ID" {% if buyitemforms.PWD_Id == "yes" %}required{% endif %}>
+                                </div>
                              
                                 <div>
                                   <div class="total-amount mt-4">
@@ -297,6 +312,56 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  
 </body>
+<script>
+    // Retrieve the radio buttons and the TIN input div
+    const pwdSeniorStudentRadioButton = document.getElementById('btn-check-pwd');
+    const tinInputDiv = document.getElementById('tin-input');
+
+    // Function to handle the change event
+    function handleRadioButtonChange() {
+        if (pwdSeniorStudentRadioButton.checked) {
+            // Show the TIN input div if "Yes" is selected
+            tinInputDiv.style.display = 'block';
+        } else {
+            // Hide the TIN input div if "No" is selected
+            tinInputDiv.style.display = 'none';
+        }
+    }
+
+    // Add an event listener to the PWD/Senior/Student radio button
+    pwdSeniorStudentRadioButton.addEventListener('change', handleRadioButtonChange);
+
+    // Initialize the TIN input div based on the initial radio button selection
+    handleRadioButtonChange();
+
+    // Retrieve the "No" radio button and the TIN input field
+    const noRadioButton = document.getElementById('btn-check-not-pwd');
+    const tinNumberInput = document.getElementById('tin_number');
+
+    // Add an event listener to the "No" radio button
+    noRadioButton.addEventListener('change', () => {
+        if (noRadioButton.checked) {
+            // Hide the TIN input field when "No" is selected
+            tinNumberInput.style.display = 'none';
+        } else {
+            // Show the TIN input field when "Yes" is selected
+            tinNumberInput.style.display = 'block';
+        }
+    });
+
+    // Retrieve the "Yes" radio button
+    const yesRadioButton = document.getElementById('btn-check-pwd');
+
+    // Add an event listener to the "Yes" radio button
+    yesRadioButton.addEventListener('change', () => {
+        if (yesRadioButton.checked) {
+            // Show the TIN input field when "Yes" is selected
+            tinNumberInput.style.display = 'block';
+        }
+    });
+</script>
+
+
 
 <script>
 // Retrieve the Cash and GCash radio buttons and the GCash image div

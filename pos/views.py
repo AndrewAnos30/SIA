@@ -283,23 +283,27 @@ def update_values(request):
         # Get the form data from the request
         payment_method = request.POST.get('payment_method')
         dine_in_out = request.POST.get('DineIn_Out')
+        pwd_discount = request.POST.get('PWD_discount')
+        pwd_id = request.POST.get('PWD_Id', '')  # Optional, set a default value
         AllPayment = float(request.POST.get('AllPayment'))
 
         # Generate a unique order number
         order_number = str(random.randint(1, 99999)).zfill(5)
 
-        # Get only the buyItem objects with buyOrBought=False
+        # Get only the buyItem objects with transaction=False
         buy_items = buyItem.objects.filter(transaction=False)
 
+
+        # Update other fields for each buyItem object
         for item in buy_items:
             if not item.transaction:
-                # Update the fields for each buyItem object
                 item.payment_method = payment_method
                 item.DineIn_Out = dine_in_out
-                item.AllPayment = AllPayment
+                item.PWD_discount = pwd_discount
+                item.PWD_Id = pwd_id
                 item.orderNumber = order_number
+                item.AllPayment = AllPayment
                 item.transaction = True
-
                 item.save()
 
         # Render the success page with the order number
@@ -307,8 +311,7 @@ def update_values(request):
         return render(request, 'success.html', context)
 
     # Render the form
-    return render(request, "home.html")
-
+    return render(request, 'cart.html')
 #home end
 
 @login_required
@@ -464,19 +467,42 @@ def update_cashier(request):
             item.dateordered = datetime.now()
             item.save()
 
-        change = tendered_payment - total_amount
+        
+
+
+        if item.PWD_discount == 'yes':
+            vat_amount = 0.88 * total_amount  # Calculate VAT as 88% of the total amount
+            discount_amount = 0.20 * total_amount  # Calculate PWD discount as 12% of the total amount
+        else:
+            vat_amount = 0.00  # No VAT if PWD discount is not applicable
+            discount_amount = 0.00  # No PWD discount if PWD discount is not applicable
+
+        total_payment = total_amount - discount_amount
+        change = tendered_payment - total_payment
 
         context = {
+            'dine_option': item.DineIn_Out,  # Assuming `item` represents a single buyItem object
+            'order_number': order_number,
             'buy_items': buy_items,
             'total_amount': total_amount,
             'tendered_payment': tendered_payment,
             'change': change,
+            'pwd_discount': item.PWD_discount,  # Assuming `item` represents a single buyItem object
+            'pwd_id': item.PWD_Id,  
+            'vat_amount': vat_amount,  # Include the calculated VAT amount in the context
+            'discount_amount': discount_amount,  
+            'total_payment': total_payment,
+            
         }
         return render(request, 'receipt_template.html', context)
 
     return redirect("pos:cashier")
 
   
+def delete_order(request, item_id):
+    item = get_object_or_404(buyItem, id=item_id)
+    item.delete()
+    return redirect('pos:cashier')
 
 
 
@@ -546,7 +572,6 @@ def receipt(request, orderNumber):
     return render(request, 'receipt.html', {'receipt_data': receipt_data})
 
 
-
 @login_required
 def Mcashier(request):
     buyitemform = BuyItemForms() 
@@ -588,27 +613,57 @@ def Mupdate_cashier(request):
             item.dateordered = datetime.now()
             item.save()
 
-        change = tendered_payment - total_amount
+        
+
+
+        if item.PWD_discount == 'yes':
+            vat_amount = 0.88 * total_amount  # Calculate VAT as 88% of the total amount
+            discount_amount = 0.20 * total_amount  # Calculate PWD discount as 12% of the total amount
+        else:
+            vat_amount = 0.00  # No VAT if PWD discount is not applicable
+            discount_amount = 0.00  # No PWD discount if PWD discount is not applicable
+
+        total_payment = total_amount - discount_amount
+        change = tendered_payment - total_payment
 
         context = {
+            'dine_option': item.DineIn_Out,  # Assuming `item` represents a single buyItem object
+            'order_number': order_number,
             'buy_items': buy_items,
             'total_amount': total_amount,
             'tendered_payment': tendered_payment,
             'change': change,
+            'pwd_discount': item.PWD_discount,  # Assuming `item` represents a single buyItem object
+            'pwd_id': item.PWD_Id,  
+            'vat_amount': vat_amount,  # Include the calculated VAT amount in the context
+            'discount_amount': discount_amount,  
+            'total_payment': total_payment,
+            
         }
         return render(request, 'Mreceipt.html', context)
 
     return redirect("pos:Mcashier")
 
+def Mdelete_order(request, item_id):
+    item = get_object_or_404(buyItem, id=item_id)
+    item.delete()
+    return redirect('pos:Mcashier')
+
 @login_required
 def Morder(request):
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        if item_id:
+            item = buyItem.objects.get(pk=item_id)
+            item.delete()
+            return redirect('pos:Morder')
+    
     buyitemform = BuyItemForms() 
     stocks = Stocks.objects.first()
     menuDrinks = MenuDrinks.objects.all()
     menuCategory = MenuCategory.objects.all()
     buyitem = buyItem.objects.all()
     total_price = calculate_total_price(buyitem)
-    
 
     context = {
         'buyitemform': buyitemform,
@@ -617,7 +672,6 @@ def Morder(request):
         'menuCategory': menuCategory,
         'buyitem': buyitem,
         'total_price': total_price
-
     }
   
     return render(request, 'Morder.html', context)
@@ -628,3 +682,20 @@ def Mupdate_done_order(request, pk):
     cart.save()
     return redirect('pos:Morder')  
     
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def update_all_payments(request):
+    if request.method == 'POST':
+        order_number = request.POST.get('order_number')
+        payment_amount = request.POST.get('payment_amount')
+        
+        # Update the AllPayment field for items with the specified order number
+        items = buyItem.objects.filter(orderNumber=order_number)
+        for item in items:
+            item.AllPayment = payment_amount
+            item.save()
+        
+        return JsonResponse({'message': 'AllPayment updated successfully.'})
+    
+    return JsonResponse({'message': 'Invalid request.'})

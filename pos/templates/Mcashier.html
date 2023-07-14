@@ -3,84 +3,98 @@
 
 {% block content %}
 
-    <div class="col-8">
-        {% for cart in buyitem %}
-        {% if not cart.buyOrBought %}
-        <div class="d-block order-card">
-            <!-- Add code for the order card here -->
+<div class="col-8">
+    {% for cart in buyitem %}
+    {% if not cart.buyOrBought %}
+    <div class="d-block order-card">
+        <!-- Add code for the order card here -->
 
-            <div class="card mb-3 m-1">
-                <div class="row g-1">
-                    <div class="col-12">
-                        <div class="card-body mb-0 p-0">
-                            <table class="table table-responsive table-borderless mb-0 p-0">
-                                <tbody>
-                                    <tr>
-                                        <td class="col-2" style="vertical-align: middle;">
-                                            <h4><strong>Order No. {{ cart.orderNumber }}</strong></h4>
-                                            <br>
-                                        </td>
-                                        <td class="col-2" style="vertical-align: middle;"></td>
-                                        <td class="col-2 text-center total-price" style="vertical-align: middle;">
-                                            <form action="{% url 'pos:Mupdate_cashier' %}" method="post" enctype="multipart/form-data" onsubmit="return validatePayment()">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="item_id" value="{{ cart.id }}">
-                                            
-                                                <div class="total-amount mt-4">
-                                                    <div class="d-flex justify-content-between">
-                                                        <strong>Tendered Payment</strong>
-                                                        <label for="tendered-payment">Tendered Payment:</label>
-                                                        <input id="tendered-payment" name="tendered_payment"
-                                                            step="0.01" type="number"
-                                                            class="form-control text-end ms-auto"
-                                                            inputmode="numeric" pattern="[0-9]*" required>
-                                                    </div>
+        <div class="card mb-3 m-1">
+            <div class="row g-1">
+                <div class="col-12">
+                    <div class="card-body mb-0 p-0">
+                        <table class="table table-responsive table-borderless mb-0 p-0">
+                            <tbody>
+                                <tr>
+                                    <td class="col-2" style="vertical-align: middle;">
+                                        <h4><strong>Order No. {{ cart.orderNumber }}</strong></h4>
+                                        <br>
+                                    </td>
+                                    <td class="col-2" style="vertical-align: middle;"></td>
+                                    <td class="col-2 text-center total-price" style="vertical-align: middle;">
+                                        <form action="{% url 'pos:Mupdate_cashier' %}" method="post"
+                                            enctype="multipart/form-data" onsubmit="return validatePayment()">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="item_id" value="{{ cart.id }}">
+
+                                            <div class="total-amount mt-4">
+                                                <div class="d-flex justify-content-between">
+                                                    <strong>Tendered Payment</strong>
+                                                    <label for="tendered-payment">Tendered Payment:</label>
+                                                    <input id="tendered-payment" name="tendered_payment" step="0.01"
+                                                        type="number" class="form-control text-end ms-auto"
+                                                        inputmode="numeric" pattern="[0-9]*" required>
                                                 </div>
-                                                <div class="total-amount mt-4">
-                                                    <div class="d-flex justify-content-between">
-                                                        <strong>Total Amount: ₱ {{cart.AllPayment|floatformat:2}}</strong>
-                                                        <input type="hidden" id="total-amount"
-                                                            value="{{ cart.AllPayment }}">
-                                                    </div>
+                                            </div>
+                                            <div class="total-amount mt-4">
+                                                <div class="d-flex justify-content-between">
+                                                    <strong>Total Amount: ₱ <span id="totalAmount">{{cart.AllPayment|floatformat:2 }}</span></strong>
+                                                    
+                                                    <script>
+                                                        // Check if PWD_discount is yes
+                                                        if (PWD_discount === 'yes') {
+                                                            // Get the total amount element
+                                                            const totalAmountElement = document.getElementById('totalAmount');
+
+                                                            // Multiply the value by 0.88
+                                                            const multipliedAmount = parseFloat(totalAmountElement.textContent) * 0.88;
+
+                                                            // Update the content of the total amount element with the multiplied value
+                                                            totalAmountElement.textContent = multipliedAmount.toFixed(2);
+                                                        }
+                                                    </script>
+
                                                 </div>
-                                                <div class="text-center col-12 d-grid">
-                                                    <button type="submit"
-                                                        class="btn place-order-btn btn-success">Process</button>
-                                                </div>
-                                            </form>
+                                            </div>
+                                            <div class="text-center col-12 d-grid">
+                                                <button type="submit"
+                                                    class="btn place-order-btn btn-success">Process</button>
+                                            </div>
+                                        </form>
 
-                                            <script>
-                                                function validatePayment() {
-                                                    var tenderedPayment = parseFloat(document.getElementById('tendered-payment').value);
-                                                    var totalAmount = parseFloat(document.getElementById('total-amount').value);
+                                        <script>
+                                            function validatePayment() {
+                                                var tenderedPayment = parseFloat(document.getElementById('tendered-payment').value);
+                                                var totalAmount = parseFloat(document.getElementById('total-amount').value);
 
-                                                    if (tenderedPayment < totalAmount) {
-                                                        alert('Tendered payment should not be lower than the total amount.');
-                                                        return false; // Prevent form submission
-                                                    }
-
-                                                    return true; // Proceed with form submission
+                                                if (tenderedPayment < totalAmount) {
+                                                    alert('Tendered payment should not be lower than the total amount.');
+                                                    return false; // Prevent form submission
                                                 }
-                                            </script>
 
-                                        </td>
-                                        <td class="col-1" style="vertical-align: middle;">
-                                            <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
-                                                data-bs-target="#deletemodal" data-menuid="{{ cart.id }}">
-                                                <i class='bx bx-trash'></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                                return true; // Proceed with form submission
+                                            }
+                                        </script>
+
+                                    </td>
+                                    <td class="col-1" style="vertical-align: middle;">
+                                        <form action="{% url 'pos:Mdelete_order' cart.pk %}" method="post">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm delete-btn" type="submit"><i
+                                                    class='bx bx-trash'></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        {% endif %}
-        {% endfor %}
     </div>
+    {% endif %}
+    {% endfor %}
+</div>
 
 
 
@@ -88,73 +102,73 @@
 
 
 <script>
-  // add an event listener to each select element
-  document.querySelectorAll('select').forEach(select => {
-      // get the corresponding input element
-      const input = document.getElementById(`inputquantityIng${select.id.slice(-1)}`);
-      // add an event listener to the select element
-      select.addEventListener('change', (event) => {
-          // get the selected option
-          const selectedOption = event.target.options[event.target.selectedIndex];
-          // get the price from the data-price attribute of the selected option
-          const price = selectedOption.getAttribute('data-price');
-          // set the placeholder of the input element to the price
-          input.placeholder = price;
-          // require the input field if a stock name is selected
-          input = !!selectedOption.value;
-      });
-  });
+    // add an event listener to each select element
+    document.querySelectorAll('select').forEach(select => {
+        // get the corresponding input element
+        const input = document.getElementById(`inputquantityIng${select.id.slice(-1)}`);
+        // add an event listener to the select element
+        select.addEventListener('change', (event) => {
+            // get the selected option
+            const selectedOption = event.target.options[event.target.selectedIndex];
+            // get the price from the data-price attribute of the selected option
+            const price = selectedOption.getAttribute('data-price');
+            // set the placeholder of the input element to the price
+            input.placeholder = price;
+            // require the input field if a stock name is selected
+            input = !!selectedOption.value;
+        });
+    });
 </script>
 
 
 
 <script>
-  // function to update addon prices
-  function updateAddonPrice(addonSelectID, addonPriceID) {
-      // get selected option value and price data attribute
-      var selectedOption = document.getElementById(addonSelectID).options[document.getElementById(addonSelectID).selectedIndex];
-      var addonPrice = selectedOption.getAttribute('data-price');
-      var addonName = selectedOption.innerText.trim(); // Get the text of the selected option
+    // function to update addon prices
+    function updateAddonPrice(addonSelectID, addonPriceID) {
+        // get selected option value and price data attribute
+        var selectedOption = document.getElementById(addonSelectID).options[document.getElementById(addonSelectID).selectedIndex];
+        var addonPrice = selectedOption.getAttribute('data-price');
+        var addonName = selectedOption.innerText.trim(); // Get the text of the selected option
 
-      // update price input value
-      document.getElementById(addonPriceID).value = addonPrice;
+        // update price input value
+        document.getElementById(addonPriceID).value = addonPrice;
 
-      // enable/disable fields based on the selection
-      var quantityField = document.getElementById('input' + addonPriceID.replace('menuAOPrice', 'quantityAO'));
-      quantityField.placeholder = 'Quantity ' + (addonName ? addonName : 'AO');
-      quantityField.required = !!addonName; // Require the field if a stock name is selected
+        // enable/disable fields based on the selection
+        var quantityField = document.getElementById('input' + addonPriceID.replace('menuAOPrice', 'quantityAO'));
+        quantityField.placeholder = 'Quantity ' + (addonName ? addonName : 'AO');
+        quantityField.required = !!addonName; // Require the field if a stock name is selected
 
-      var priceField = document.getElementById(addonPriceID);
-      priceField.required = !!addonName; // Require the field if a stock name is selected
-  }
+        var priceField = document.getElementById(addonPriceID);
+        priceField.required = !!addonName; // Require the field if a stock name is selected
+    }
 
-  // add onchange event listener to addon selects
-  document.getElementById('inputAddOns1').addEventListener('change', function () {
-      updateAddonPrice('inputAddOns1', 'menuAOPrice1');
-  });
+    // add onchange event listener to addon selects
+    document.getElementById('inputAddOns1').addEventListener('change', function () {
+        updateAddonPrice('inputAddOns1', 'menuAOPrice1');
+    });
 
-  document.getElementById('inputAddOns2').addEventListener('change', function () {
-      updateAddonPrice('inputAddOns2', 'menuAOPrice2');
-  });
+    document.getElementById('inputAddOns2').addEventListener('change', function () {
+        updateAddonPrice('inputAddOns2', 'menuAOPrice2');
+    });
 
-  document.getElementById('inputAddOns3').addEventListener('change', function () {
-      updateAddonPrice('inputAddOns3', 'menuAOPrice3');
-  });
+    document.getElementById('inputAddOns3').addEventListener('change', function () {
+        updateAddonPrice('inputAddOns3', 'menuAOPrice3');
+    });
 
-  document.getElementById('inputAddOns4').addEventListener('change', function () {
-      updateAddonPrice('inputAddOns4', 'menuAOPrice4');
-  });
+    document.getElementById('inputAddOns4').addEventListener('change', function () {
+        updateAddonPrice('inputAddOns4', 'menuAOPrice4');
+    });
 
-  document.getElementById('inputAddOns5').addEventListener('change', function () {
-      updateAddonPrice('inputAddOns5', 'menuAOPrice5');
-  });
+    document.getElementById('inputAddOns5').addEventListener('change', function () {
+        updateAddonPrice('inputAddOns5', 'menuAOPrice5');
+    });
 </script>
 
 <script type="text/javascript" src="/static/js/virtual-select.min.js"></script>
 <script type="text/javascript">
-  VirtualSelect.init({
-      ele: '#multiSelect'
-  });
+    VirtualSelect.init({
+        ele: '#multiSelect'
+    });
 </script>
 
 

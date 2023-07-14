@@ -99,8 +99,11 @@
                                     <h4><strong>&#8369; {{ cart.AllPayment }}</strong></h4>
                                   </td>
                                   <td class="col-1" style="vertical-align: middle;">
-                                    <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
-                                      data-bs-target="#deletemodal"><i class='bx bx-trash'></i></button>
+                                    <form action="{% url 'pos:Morder' %}" method="post">
+                                      {% csrf_token %}
+                                      <input type="hidden" name="item_id" value="{{ cart.pk }}">
+                                      <button class="btn btn-sm delete-btn" type="submit"><i class='bx bx-trash'></i></button>
+                                  </form>
                                       {% url 'pos:Mupdate_done_order' cart.pk as Mupdate_done_order_url %}
                                       <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{{ Mupdate_done_order_url }}'">OK</button>                                               </tr>
                               </tbody>

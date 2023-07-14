@@ -50,7 +50,7 @@ class MenuDrinksAdmin(admin.ModelAdmin):
 
 
 class BuyItemAdmin(admin.ModelAdmin):
-    list_display = ("transaction", "buyOrBought", "buySize", "priceSize", "buyQuantityMenu", "buyName", "buyPrice", "buyAddOns1", "buyAddOns2", "buyAddOns3", "buyAddOns4", "buyAddOns5", "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5", "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5", "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered", "DoneOrder", "buyingredient6", "buyingredient7", "buyingredient8", "buyingredient9", "buyingredient10")
+    list_display = ("PWD_Id","PWD_discount","transaction", "buyOrBought", "buySize", "priceSize", "buyQuantityMenu", "buyName", "buyPrice", "buyAddOns1", "buyAddOns2", "buyAddOns3", "buyAddOns4", "buyAddOns5", "menuAOPrice1", "menuAOPrice2", "menuAOPrice3", "menuAOPrice4", "menuAOPrice5", "buyingredient1", "buyingredient2", "buyingredient3", "buyingredient4", "buyingredient5", "payment_method", "DineIn_Out", "AllPayment", "tenderedPayment", "orderNumber", "dateordered", "DoneOrder", "buyingredient6", "buyingredient7", "buyingredient8", "buyingredient9", "buyingredient10")
 
 
 admin.site.register(Stocks, StocksAdmin)

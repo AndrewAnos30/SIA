@@ -107,7 +107,10 @@ IN_OUT = (
         ('IN', 'Dine In'),
         ('OUT', 'Dine Out'),
     )
-
+DISCOUNT = (
+        ('yes', 'YES'),
+        ('no', 'NO'),
+    )
 
 class buyItem(models.Model):
     buyName= models.CharField (max_length=255, null=True, blank=True)
@@ -144,6 +147,8 @@ class buyItem(models.Model):
     orderNumber = models.PositiveIntegerField (null=True, blank=True)
     dateordered = models.DateTimeField (null=True, blank=True)
     priceSize = models.FloatField( null=True, blank=True)
+    PWD_discount = models.CharField(max_length=255, choices=DISCOUNT, null=True, blank=True)
+    PWD_Id = models.CharField (max_length=12, null=True, blank=True)
 
     @property
     def total_price(self):
@@ -173,4 +178,12 @@ def total_AO(self):
     return round(menuAOPrice1 + menuAOPrice2 + menuAOPrice3 + menuAOPrice4 + menuAOPrice5, 2)
 
 
+@property
+def AllPayment(self):
+    if not self.buyOrBought:
+        total_price = self.total_price or 0.0
+        total_AO = self.total_AO or 0.0
+
+        return round(total_price + total_AO, 2)
+    return 0.0
 

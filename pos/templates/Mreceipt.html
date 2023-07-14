@@ -1,6 +1,7 @@
 {%load static%}
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Receipt</title>
@@ -56,10 +57,22 @@
         }
 
         .store-info {
+            text-align: center;
+            /* Center-align the content */
             margin-bottom: 20px;
         }
 
         .store-info p {
+            margin-bottom: 5px;
+        }
+
+        .vat-info {
+            text-align: center;
+            /* Center-align the content */
+            margin-bottom: 20px;
+        }
+
+        .vat-info p {
             margin-bottom: 5px;
         }
 
@@ -81,6 +94,7 @@
 
         /* Hide print button when printing */
         @media print {
+
             .print-button,
             #doneButton {
                 display: none;
@@ -88,36 +102,57 @@
         }
     </style>
 </head>
+
 <body>
     <div id="receiptBody">
         <div class="logo">
             <img src="your-logo.png" alt="Logo">
         </div>
 
-        <h1>Receipt</h1>
+
 
         <div class="store-info">
+            <p>operated by??</p>
+            <p>name company??</p>
+            <p>VAT Reg. TIN: 000-000-000-00000</p>
             <p>Your Store Name</p>
             <p>123 Store Street, City</p>
             <p>Phone: 123-456-7890</p>
+
         </div>
-
-        <h2>Items:</h2>
-        <ul>
+        <p>--------------------------------------------------------------</p>
+        <h2 style="text-align: center; font-weight: bold;">Order Number: {{ order_number }}</h2>
+        <p>--------------------------------------------------------------</p>
+        <ul>    
+            {% if dine_option == 'IN' %}
+            <h1 style="text-align: center; font-weight: bold;">DINE {{ dine_option }}</h1>
+            {%endif%}
+            {% if dine_option == 'OUT' %}
+            <h1 style="text-align: center; font-weight: bold;">TAKE {{ dine_option }}</h1>
+            {%endif%}
+            <strong>Items:</strong>
             {% for item in buy_items %}
-                <li>
-                    <strong>{{ item.buyName }}</strong><br>
-                    Size: {{ item.buySize }}<br>
-                    Quantity: {{ item.buyQuantityMenu }}<br>
-                    Price: ₱{{ item.buyPrice }}<br>
-                    <!-- Add other item details here -->
-                </li>
-            {% endfor %}
-        </ul>
+            <li>
+                <i> ({{ item.buyQuantityMenu }}) {{ item.buyName }} ₱{{ item.buyPrice|floatformat:2 }}</i><br>
 
-        <h2>Total Amount: ₱ {{ total_amount }}</h2>
-        <h2>Tendered Payment: ₱ {{ tendered_payment }}</h2>
-        <h2>Change: ₱ {{ change }}</h2>
+                <!-- Add other item details here -->
+            </li>
+            {% endfor %}
+            <p>--------------------------------------------------------------</p>
+        </ul>
+        <ul>
+
+            {% if pwd_discount == 'yes' %}
+            <p>VAT: ₱ {{ vat_amount|floatformat:2 }}</p>
+            <p>PWD Discount: ₱ {{ discount_amount|floatformat:2 }}</p>
+            {% else %}
+            <p>VAT: ₱ 0</p>
+            {% endif %}
+            <p>Tendered Payment: ₱ {{ tendered_payment|floatformat:2 }}</p>
+            Amount: ₱ <input id="paymentInput" class="payment-input" value="{{ total_payment|floatformat:2 }}">
+            <p><strong>Change: ₱ {{ change|floatformat:2 }}</strong></p>
+        </ul>
+        <p>--------------------------------------------------------------</p>
 
         <!-- Add any additional receipt details or formatting as needed -->
         <!-- ... -->
@@ -139,4 +174,9 @@
     </div>
 
 </body>
+<style>
+    .payment-input {
+        border: none;
+    }
+</style>
 </html>

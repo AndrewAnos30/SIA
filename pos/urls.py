@@ -38,9 +38,13 @@ urlpatterns = [
     path('success/', views.success, name='success'),
     path('cart/delete/<int:cart_item_id>/', views.delete_menu_from_cart, name='delete_menu_from_cart'),
 
+    path('order/<int:item_id>/delete/', views.delete_order, name='delete_order'),
+
     path('Mcashier', login_required(views.Mcashier), name='Mcashier'),
     path('Mupdate_cashier', views.Mupdate_cashier, name='Mupdate_cashier'),
+    path('morder/<int:item_id>/delete/', views.Mdelete_order, name='Mdelete_order'),
     path('Morder', views.Morder, name='Morder'),
     path('Mupdate_done_order/<int:pk>/', views.Mupdate_done_order, name='Mupdate_done_order'),
+    path('update-all-payments/', views.update_all_payments, name='update_all_payments'),
 
    ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

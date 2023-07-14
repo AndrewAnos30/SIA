@@ -13,7 +13,7 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
     <!-- favcon -->
-    <link href="/static/img/logo.png" rel="icon">
+    <link href="/static/img/intelliserveFinal.png" rel="icon">
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -40,62 +40,14 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
             <a href="#" class="logo d-flex align-items-center">
-                <img src="{% static 'img/intelliserve.png'%}" alt="">
+                <img src="{% static 'img/intelliserveFinal2.png'%}" alt="">
             </a>
             <i class='bx bx-menu toggle-sidebar-btn'></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-                <button type="submit" title="Search"><i class="bx bx-search"></i></button>
-            </form>
-        </div><!-- End Search Bar -->
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-
-                <li class="nav-item d-block d-lg-none">
-                    <a class="nav-link nav-icon search-bar-toggle " href="#">
-                        <i class="bx bx-search"></i>
-                    </a>
-                </li><!-- End Search Icon-->
-
-                <li class="nav-item dropdown">
-
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bx bx-bell"></i>
-                        <span class="badge bg-primary badge-number">1</span>
-                    </a><!-- End Notification Icon -->
-
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                        <li class="dropdown-header">
-                            You have 1 new notifications
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-info-circle text-primary"></i>
-                            <div>
-                                <h4>Low Stocks Alert!</h4>
-                                <p>Matcha ingredient stock is low</p>
-                                <p>1 min. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="dropdown-footer">
-                            <a href="#">Show all notifications</a>
-                        </li>
-
-                    </ul><!-- End Notification Dropdown Items -->
-
-                </li><!-- End Notification Nav -->
 
                 <li class="nav-item dropdown pe-3">
 
@@ -131,8 +83,6 @@
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
-    
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{% url 'pos:order' %}">
                     <i class='bx bx-cart-alt'></i><span>Orders</span>
@@ -152,44 +102,57 @@
 
 
     <main id="main" class="main">
-        <div class="col-8">
-            {% for cart in buyitem %}
-            {% if not cart.buyOrBought %}
-            <div class="d-block order-card">
-                <!-- Add code for the order card here -->
+        <div class="col-12">
+            <div class="row g-1">
+                {% for cart in buyitem %}
+                {% if not cart.buyOrBought %}
+                <div class="d-block order-card">
+                    <!-- Add code for the order card here -->
     
-                <div class="card mb-3 m-1">
-                    <div class="row g-1">
+                    <div class="card mb-3 m-1">
                         <div class="col-12">
                             <div class="card-body mb-0 p-0">
                                 <table class="table table-responsive table-borderless mb-0 p-0">
                                     <tbody>
                                         <tr>
-                                            <td class="col-2" style="vertical-align: middle;">
-                                                <h4><strong>Order No. {{ cart.orderNumber }}</strong></h4>
+                                            <td class="col-4" style="vertical-align: middle;">
+                                                <h4 class="text-center"><strong>Order No. {{ cart.orderNumber }}</strong></h4>
                                                 <br>
                                             </td>
-                                            <td class="col-2" style="vertical-align: middle;"></td>
-                                            <td class="col-2 text-center total-price" style="vertical-align: middle;">
-                                                <form action="{% url 'pos:update_cashier' %}" method="post" enctype="multipart/form-data" onsubmit="return validatePayment()">
+    
+                                            <td class="col-4 text-center total-price" style="vertical-align: middle;">
+                                                <form action="{% url 'pos:update_cashier' %}" method="post"
+                                                    enctype="multipart/form-data" onsubmit="return validatePayment()">
                                                     {% csrf_token %}
                                                     <input type="hidden" name="item_id" value="{{ cart.id }}">
-                                                
+    
                                                     <div class="total-amount mt-4">
                                                         <div class="d-flex justify-content-between">
-                                                            <strong>Tendered Payment</strong>
                                                             <label for="tendered-payment">Tendered Payment:</label>
                                                             <input id="tendered-payment" name="tendered_payment"
                                                                 step="0.01" type="number"
-                                                                class="form-control text-end ms-auto"
-                                                                inputmode="numeric" pattern="[0-9]*" required>
+                                                                class="form-control text-end ms-auto" inputmode="numeric"
+                                                                pattern="[0-9]*" required>
                                                         </div>
                                                     </div>
                                                     <div class="total-amount mt-4">
                                                         <div class="d-flex justify-content-between">
-                                                            <strong>Total Amount: ₱ {{cart.AllPayment|floatformat:2}}</strong>
-                                                            <input type="hidden" id="total-amount"
-                                                                value="{{ cart.AllPayment }}">
+                                                            <strong>Total Amount: ₱ <span id="totalAmount">{{cart.AllPayment|floatformat:2 }}</span></strong>
+        
+                                                            <script>
+                                                                // Check if PWD_discount is yes
+                                                                if (PWD_discount === 'yes') {
+                                                                    // Get the total amount element
+                                                                    const totalAmountElement = document.getElementById('totalAmount');
+        
+                                                                    // Multiply the value by 0.88
+                                                                    const multipliedAmount = parseFloat(totalAmountElement.textContent) * 0.88;
+        
+                                                                    // Update the content of the total amount element with the multiplied value
+                                                                    totalAmountElement.textContent = multipliedAmount.toFixed(2);
+                                                                }
+                                                            </script>
+        
                                                         </div>
                                                     </div>
                                                     <div class="text-center col-12 d-grid">
@@ -211,13 +174,14 @@
                                                         return true; // Proceed with form submission
                                                     }
                                                 </script>
-    
                                             </td>
+    
                                             <td class="col-1" style="vertical-align: middle;">
-                                                <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
-                                                    data-bs-target="#deletemodal" data-menuid="{{ cart.id }}">
-                                                    <i class='bx bx-trash'></i>
-                                                </button>
+                                                <form action="{% url 'pos:delete_order' cart.pk %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-sm delete-btn" type="submit"><i
+                                                            class='bx bx-trash'></i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -226,11 +190,11 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
             </div>
-            {% endif %}
-            {% endfor %}
         </div>
-    
+    </main>
     
     
     <!-- Template Main JS File -->
