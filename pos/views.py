@@ -435,6 +435,11 @@ def success(request):
 def cashier(request):
     buyitemform = BuyItemForms() 
     buyitem = buyItem.objects.all()
+
+    for item in buyitem:
+        if item.PWD_discount == 'yes':
+            item.AllPayment *= 0.80
+
     context = {
         'buyitemform': buyitemform,
         'buyitem': buyitem,
@@ -450,9 +455,40 @@ def update_cashier(request):
         buy_items = buyItem.objects.filter(orderNumber=order_number)
 
         # Calculate the total amount for all updated items, including quantity multiplication
-        total_amount = buy_items.aggregate(
+
+        total_buyitems = buy_items.aggregate(
             total=Sum(
-                F('buyPrice') * F('buyQuantityMenu') +
+                F('buyPrice') * F('buyQuantityMenu') 
+
+            )
+        )['total'] or 0.0
+
+        if item.PWD_discount == 'yes':
+              total_amount = buy_items.aggregate(
+              total=Sum(
+            F('buyPrice') * F('buyQuantityMenu') +
+            F('menuAOPrice1') * F('buyQuantityMenu') +
+            F('menuAOPrice2') * F('buyQuantityMenu') +
+            F('menuAOPrice3') * F('buyQuantityMenu') +
+            F('menuAOPrice4') * F('buyQuantityMenu') +
+            F('menuAOPrice5') * F('buyQuantityMenu')
+               )
+              )['total'] or 0.0
+        else:
+            total_amount = buy_items.aggregate(
+        total=Sum(
+            F('buyPrice') * F('buyQuantityMenu') +
+            F('menuAOPrice1') * F('buyQuantityMenu') +
+            F('menuAOPrice2') * F('buyQuantityMenu') +
+            F('menuAOPrice3') * F('buyQuantityMenu') +
+            F('menuAOPrice4') * F('buyQuantityMenu') +
+            F('menuAOPrice5') * F('buyQuantityMenu')
+        )
+    )['total'] or 0.0
+
+
+        total_add_ons = buy_items.aggregate(
+            total=Sum(
                 F('menuAOPrice1') * F('buyQuantityMenu') +
                 F('menuAOPrice2') * F('buyQuantityMenu') +
                 F('menuAOPrice3') * F('buyQuantityMenu') +
@@ -460,6 +496,7 @@ def update_cashier(request):
                 F('menuAOPrice5') * F('buyQuantityMenu')
             )
         )['total'] or 0.0
+
 
         for item in buy_items:
             item.buyOrBought = True
@@ -471,10 +508,12 @@ def update_cashier(request):
 
 
         if item.PWD_discount == 'yes':
-            vat_amount = 0.88 * total_amount  # Calculate VAT as 88% of the total amount
+            vat_amount = 0.88 * total_buyitems
+            vat_sales = 0.12 * total_buyitems  # Calculate VAT as 88% of the total amount
             discount_amount = 0.20 * total_amount  # Calculate PWD discount as 12% of the total amount
         else:
-            vat_amount = 0.00  # No VAT if PWD discount is not applicable
+            vat_amount = 0.00 
+            vat_sales = 0.00 # No VAT if PWD discount is not applicable
             discount_amount = 0.00  # No PWD discount if PWD discount is not applicable
 
         total_payment = total_amount - discount_amount
@@ -492,13 +531,16 @@ def update_cashier(request):
             'vat_amount': vat_amount,  # Include the calculated VAT amount in the context
             'discount_amount': discount_amount,  
             'total_payment': total_payment,
-            
+            'total_add_ons': total_add_ons,  # Include the total add-ons amount in the context
+            'total_buyitems':total_buyitems,
+            'vat_sales': vat_sales,
         }
         return render(request, 'receipt_template.html', context)
 
     return redirect("pos:cashier")
 
-  
+
+
 def delete_order(request, item_id):
     item = get_object_or_404(buyItem, id=item_id)
     item.delete()
@@ -576,6 +618,11 @@ def receipt(request, orderNumber):
 def Mcashier(request):
     buyitemform = BuyItemForms() 
     buyitem = buyItem.objects.all()
+
+    for item in buyitem:
+        if item.PWD_discount == 'yes':
+            item.AllPayment *= 0.80
+
     context = {
         'buyitemform': buyitemform,
         'buyitem': buyitem,
@@ -596,9 +643,40 @@ def Mupdate_cashier(request):
         buy_items = buyItem.objects.filter(orderNumber=order_number)
 
         # Calculate the total amount for all updated items, including quantity multiplication
-        total_amount = buy_items.aggregate(
+
+        total_buyitems = buy_items.aggregate(
             total=Sum(
-                F('buyPrice') * F('buyQuantityMenu') +
+                F('buyPrice') * F('buyQuantityMenu') 
+
+            )
+        )['total'] or 0.0
+
+        if item.PWD_discount == 'yes':
+              total_amount = buy_items.aggregate(
+              total=Sum(
+            F('buyPrice') * F('buyQuantityMenu') +
+            F('menuAOPrice1') * F('buyQuantityMenu') +
+            F('menuAOPrice2') * F('buyQuantityMenu') +
+            F('menuAOPrice3') * F('buyQuantityMenu') +
+            F('menuAOPrice4') * F('buyQuantityMenu') +
+            F('menuAOPrice5') * F('buyQuantityMenu')
+               )
+              )['total'] or 0.0
+        else:
+            total_amount = buy_items.aggregate(
+        total=Sum(
+            F('buyPrice') * F('buyQuantityMenu') +
+            F('menuAOPrice1') * F('buyQuantityMenu') +
+            F('menuAOPrice2') * F('buyQuantityMenu') +
+            F('menuAOPrice3') * F('buyQuantityMenu') +
+            F('menuAOPrice4') * F('buyQuantityMenu') +
+            F('menuAOPrice5') * F('buyQuantityMenu')
+        )
+    )['total'] or 0.0
+
+
+        total_add_ons = buy_items.aggregate(
+            total=Sum(
                 F('menuAOPrice1') * F('buyQuantityMenu') +
                 F('menuAOPrice2') * F('buyQuantityMenu') +
                 F('menuAOPrice3') * F('buyQuantityMenu') +
@@ -606,6 +684,7 @@ def Mupdate_cashier(request):
                 F('menuAOPrice5') * F('buyQuantityMenu')
             )
         )['total'] or 0.0
+
 
         for item in buy_items:
             item.buyOrBought = True
@@ -617,10 +696,12 @@ def Mupdate_cashier(request):
 
 
         if item.PWD_discount == 'yes':
-            vat_amount = 0.88 * total_amount  # Calculate VAT as 88% of the total amount
-            discount_amount = 0.20 * total_amount  # Calculate PWD discount as 12% of the total amount
+            vat_amount = 0.88 * total_buyitems
+            vat_sales = 0.12 * total_buyitems  # Calculate VAT as 88% of the total amount
+            discount_amount = 0.20 * total_buyitems  # Calculate PWD discount as 12% of the total amount
         else:
-            vat_amount = 0.00  # No VAT if PWD discount is not applicable
+            vat_amount = 0.00 
+            vat_sales = 0.00 # No VAT if PWD discount is not applicable
             discount_amount = 0.00  # No PWD discount if PWD discount is not applicable
 
         total_payment = total_amount - discount_amount
@@ -638,7 +719,9 @@ def Mupdate_cashier(request):
             'vat_amount': vat_amount,  # Include the calculated VAT amount in the context
             'discount_amount': discount_amount,  
             'total_payment': total_payment,
-            
+            'total_add_ons': total_add_ons,  # Include the total add-ons amount in the context
+            'total_buyitems':total_buyitems,
+            'vat_sales': vat_sales,
         }
         return render(request, 'Mreceipt.html', context)
 

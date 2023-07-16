@@ -1,3 +1,4 @@
+
 {%load static%}
 <!DOCTYPE html>
 <html>
@@ -123,35 +124,57 @@
         <p>--------------------------------------------------------------</p>
         <h2 style="text-align: center; font-weight: bold;">Order Number: {{ order_number }}</h2>
         <p>--------------------------------------------------------------</p>
-        <ul>    
-            {% if dine_option == 'IN' %}
+        <ul>
             <h1 style="text-align: center; font-weight: bold;">DINE {{ dine_option }}</h1>
-            {%endif%}
-            {% if dine_option == 'OUT' %}
-            <h1 style="text-align: center; font-weight: bold;">TAKE {{ dine_option }}</h1>
-            {%endif%}
             <strong>Items:</strong>
             {% for item in buy_items %}
             <li>
-                <i> ({{ item.buyQuantityMenu }}) {{ item.buyName }} ₱{{ item.buyPrice|floatformat:2 }}</i><br>
-
+                <i> <strong>({{ item.buyQuantityMenu }}) {{ item.buyName }} ₱{{ item.buyPrice|floatformat:2 }}</strong></i><br>
                 <!-- Add other item details here -->
+                <ul>
+                    {% if item.menuAOPrice1 != 0 %}
+                    <li>{{ item.buyAddOns1 }} ₱{{ item.menuAOPrice1|floatformat:2 }}</li>
+                    {% endif %}
+                    {% if item.menuAOPrice2 != 0 %}
+                    <li>{{ item.buyAddOns2 }} ₱{{ item.menuAOPrice2|floatformat:2 }}</li>
+                    {% endif %}
+                    {% if item.menuAOPrice3 != 0 %}
+                    <li>{{ item.buyAddOns3 }} ₱{{ item.menuAOPrice3|floatformat:2 }}</li>
+                    {% endif %}
+                    {% if item.menuAOPrice4 != 0 %}
+                    <li>{{ item.buyAddOns4 }} ₱{{ item.menuAOPrice4|floatformat:2 }}</li>
+                    {% endif %}
+                    {% if item.menuAOPrice5 != 0 %}
+                    <li>{{ item.buyAddOns5 }} ₱{{ item.menuAOPrice5|floatformat:2 }}</li>
+                    {% endif %}
+                </ul>
+                
             </li>
             {% endfor %}
             <p>--------------------------------------------------------------</p>
         </ul>
+        
         <ul>
-
+            <p><strong>Total Add-ons: ₱ {{ total_add_ons|floatformat:2 }}</strong></p>
+            <p><strong>Subtotal: ₱ {{ total_buyitems|floatformat:2 }}</strong></p>
             {% if pwd_discount == 'yes' %}
-            <p>VAT: ₱ {{ vat_amount|floatformat:2 }}</p>
+            <p>VAT Sales: ₱ {{ vat_amount|floatformat:2 }}</p>
+            <p>VAT Amount: ₱ {{ vat_sales|floatformat:2 }}</p>
             <p>PWD Discount: ₱ {{ discount_amount|floatformat:2 }}</p>
             {% else %}
-            <p>VAT: ₱ 0</p>
+            <p>VAT Sales: ₱ 0</p>
+            <p>VAT Amount: ₱ 0</p>
+            <p>PWD Discount: ₱ 0</p>
             {% endif %}
+            <p>--------------------------------------------------------------</p>
+            <p><strong>Total Amount: ₱ {{ total_payment|floatformat:2 }}</strong></p>
             <p>Tendered Payment: ₱ {{ tendered_payment|floatformat:2 }}</p>
-            Amount: ₱ <input id="paymentInput" class="payment-input" value="{{ total_payment|floatformat:2 }}">
-            <p><strong>Change: ₱ {{ change|floatformat:2 }}</strong></p>
+            <p>--------------------------------------------------------------</p>
+
+
+            <h2><strong>Change: ₱ {{ change|floatformat:2 }}</strong></h2>
         </ul>
+        
         <p>--------------------------------------------------------------</p>
 
         <!-- Add any additional receipt details or formatting as needed -->
@@ -174,9 +197,5 @@
     </div>
 
 </body>
-<style>
-    .payment-input {
-        border: none;
-    }
-</style>
+
 </html>
