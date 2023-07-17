@@ -32,12 +32,12 @@
                   <li><a class="dropdown-item" href="#">This week</a></li>
                   <li><a class="dropdown-item" href="#">This month</a></li>
                 </ul>
-              </div>
+              </div> 
 
               <div class="card-body pb-0">
                 <h5 class="card-title">Sales</h5>
 
-                <table class="table rounded table-striped table-warning" id="salesTable">
+                <table class="table rounded" id="salesTable">
                   <thead>
                     <tr>
                       <th scope="col">Order No.</th>
@@ -63,7 +63,7 @@
                             <td>{{ group.list.0.orderNumber }}</td>
                             <td id="date_{{ group.list.0.orderNumber }}">{{ group.list.0.dateordered.date }}</td>
                             <td>
-                              <a href="{% url 'pos:receipt' orderNumber=group.list.0.orderNumber %}" class="text-primary fw-bold">{{ group.list.0.buyName }}</a>
+                              <a href="{% url 'pos:receipt' orderNumber=group.list.0.orderNumber %}" class="text-primary text-decoration-none fw-bold">{{ group.list.0.buyName }}</a>
                             </td>
                             <td>{{ sale.buyQuantityMenu }}</td>
                             

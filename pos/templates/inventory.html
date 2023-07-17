@@ -17,7 +17,7 @@
         <!-- Button to trigger off-canvas update form -->
         <div class="row">
           <div class="col-4">
-          <button type="button" class="btn btn-success" data-bs-toggle="offcanvas"
+          <button type="button" class="btn" style="background-color: #FF6000; color: white;" data-bs-toggle="offcanvas"
           data-bs-target="#updateStockForm">Update Stock</button>
         </div>
         </div>
@@ -45,7 +45,7 @@
                         {% endfor %}
                       </select>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 mb-2 mb-2">
                       <label for="new_stockname">Change Stock Name</label>
                       <input type="text" name="new_stockname" class="form-control" value="{{ stock.stockname }}" required>
                     </div>
@@ -57,17 +57,17 @@
                         {% endfor %}
                       </select>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 mb-2">
                       <label for="stockdate_in">Change Date In</label>
                       <input type="date" name="stockdate_in" class="form-control" required>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 mb-2">
                       <label for="stockexpiration">Change Expiration Date</label>
                       <input type="date" name="stockexpiration" class="form-control" required>
                     </div>
-                    <div class="col-12 text-center d-grip gap-2 mt-3">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                      <button type="reset" class="btn btn-secondary">Reset</button>
+                    <div class="col-12  text-center d-grip gap-2 mt-3">
+                      <button type="submit" class="btn" style="background-color: #FF6000; color: white;">Save Changes</button>
+                      <button type="reset" class="btn btn-dark">Reset</button>
                     </div>
                   </form>
                 </div>
@@ -117,8 +117,8 @@
                           </div>
 
                           <div class="text-center d-grip gap-2  mt-3">
-                            <button type="submit" class="btn btn-warning">Add Ingredient</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
+                            <button type="submit" class="btn" style="background-color: #FF6000; color: white;">Add Ingredient</button>
+                            <button type="reset" class="btn btn-dark">Reset</button>
                           </div>
                         </div>
                       </form><!-- Vertical Form -->
@@ -171,8 +171,8 @@
                           </div>
 
                           <div class="text-center d-grip gap-2  mt-3">
-                            <button type="submit" class="btn btn-warning">Add Addon</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
+                            <button type="submit" class="btn" style="background-color: #FF6000; color: white;">Add Addon</button>
+                            <button type="reset" class="btn btn-dark">Reset</button>
                           </div>
                         </div>
 
@@ -229,8 +229,8 @@
                           </div>
 
                           <div class="text-center d-grip gap-2  mt-3">
-                            <button type="submit" class="btn btn-warning">Add Utensils</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
+                            <button type="submit" class="btn" style="background-color: #FF6000; color: white;">Add Utensils</button>
+                            <button type="reset" class="btn btn-dark">Reset</button>
                           </div>
                         </div>
 
@@ -248,13 +248,13 @@
               <!-- Nav tabs -->
               <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="tab" href="#ingredient">Ingredients</a>
+                  <a class="nav-link active" style="color:#454545; font-weight: bold;" data-bs-toggle="tab" href="#ingredient">Ingredients</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#addons">Add ons</a>
+                  <a class="nav-link" style="color:#454545; font-weight: bold;"  data-bs-toggle="tab" href="#addons">Add ons</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#utensils">Utensils</a>
+                  <a class="nav-link" style="color:#454545; font-weight: bold;"  data-bs-toggle="tab" href="#utensils">Utensils</a>
                 </li>
               </ul>
 
@@ -326,7 +326,7 @@
                       </div>
                      
 
-                      <table class="table rounded table-striped table-warning" id="AddonsTable">
+                      <table class="table rounded" id="AddonsTable">
                         <thead>
                           <tr>
                             <th scope="col">Category</th>
@@ -375,9 +375,7 @@
 
                      
                       
-           
-
-                      <table class="table rounded table-striped table-warning" id="UtensilsTable">
+                      <table class="table rounded" id="UtensilsTable">
                         <thead>
                           <tr>
                             <th scope="col">Category</th>
