@@ -44,6 +44,28 @@
     <script src="{% static 'js/virtual-select.min.js' %}"></script>
   
     <title>Menu</title>
+
+
+    <style>
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateY(0);
+        }
+        
+        40% {
+          transform: translateY(-10px);
+        }
+        
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+      
+      .chat-icon img {
+        animation: bounce 1s infinite;
+      }
+      </style>
+      
   </head>
 <body >
    
@@ -75,7 +97,7 @@
         <section class="section menu rounded">
          
           <button id="openChatModal">
-            <div class="chat-icon">
+          <div class="chat-icon">
            <img src="{% static 'img/chatbot.png'%}" alt="Chat Bot">
          </div>
          </button>
