@@ -98,18 +98,18 @@
      
       
  <!-- FOODS -->
-      <div class="tab-content rounded">
-        <div class="tab-content p-4" style="margin-left: 200px;" >
+      <div class="tab-content rounded" style="margin-left: 220px; margin-right: 20px;">
+        <div class="tab-content" >
           <div class="row row-cols-5 ">          
             {% for row in drinks %}
             {% if row.menucategory.categorytype == 'FOOD' and forloop.counter0 < 5 %}
             <div class="col"> 
               <div class="card">
-                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
+                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:150px; width:100%; object-fit: cover;">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-12">
-                      <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
+                      <a class="card-title text-nowrap text-decoration-none p-2 pb-0 mb-0" style="font-size: 12px; word-wrap: break-word;" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
                     </div>
                     <div class="col-12">
                       <div class="rating">
@@ -132,18 +132,18 @@
         </div>
       </div>
 <!--  DRINKS -->
-      <div class="tab-content rounded">
-        <div class="tab-content p-4" style="margin-left: 200px;" >
+      <div class="tab-content rounded" style="margin-left: 220px; margin-right: 20px;">
+        <div class="tab-content">
           <div class="row row-cols-5 ">          
             {% for row in menuDrinks %}
             {% if row.menucategory.categorytype == 'DRINKS' and forloop.counter0 < 5 %}
             <div class="col"> 
               <div class="card">
-                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:200px; width:100%; object-fit: cover;">
+                <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:150px; width:100%; object-fit: cover;">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-12">
-                      <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
+                      <a class="card-title text-nowrap text-decoration-none p-2 pb-0 mb-0" style="font-size: 12px; word-wrap: break-word;" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
                     </div>
                     <div class="col-12">
                       <div class="rating">
@@ -167,8 +167,8 @@
       </div>
  
     <!--  top sales -->  
-      <div class="tab-content rounded">
-        <div class="tab-content  p-4" style="margin-left: 200px;" >
+      <div class="tab-content rounded"  style="margin-left: 220px; margin-right: 20px;">
+        <div class="tab-content" >
           <div class="row row-cols-5 ">          
             {% for buyName, count in buyItems|dictsortreversed:"value" %}
             {% if forloop.counter0 < 5 %}
@@ -180,7 +180,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-12">
-                      <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
+                      <a class="card-title text-nowrap text-decoration-none p-2 pb-0 mb-0" style="font-size: 12px; word-wrap: break-word;" href="{% url 'pos:home' %}">{{ row.menuname }}</a>
                     </div>
                     <div class="col-12">
                       <div class="rating">
@@ -212,10 +212,11 @@
             {% if item.DoneOrder == True %}
                     <div class="col"> 
                       <div class="card">
+                        <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:150px; width:100%; object-fit: cover;">
                         <div class="card-body">
                           <div class="row">
                             <div class="col-12">
-                              <a class="card-title fs-6 text-nowrap text-decoration-none" href="{% url 'pos:home' %}">{{ item.buyName }}</a>
+                              <a class="card-title text-nowrap text-decoration-none p-2 pb-0 mb-0" style="font-size: 12px; word-wrap: break-word;" href="{% url 'pos:home' %}">{{ item.buyName }}</a>
                             </div>
                             <div class="col-12">
                               <div class="rating">
