@@ -1172,3 +1172,21 @@ input[type="number"]::-webkit-outer-spin-button {
   color: white !important;
   border-radius: 30px;
 }
+
+.chat-icon {
+  position: fixed;
+  left: 70px; /* Adjust the left value to position the icon as desired */
+  bottom: 20px; /* Adjust the bottom value to position the icon vertically */
+  z-index: 9999; /* Adjust the z-index value if necessary */
+}
+
+.delete-btn-cart{
+  font-size: 24px;
+  color: #FF6000;
+  border: none;
+}
+
+.btn-outline-custom {
+  color: #ff6000;
+  border-color: #ff6000;
+}

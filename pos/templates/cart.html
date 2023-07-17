@@ -51,8 +51,8 @@
     <aside id="sidebar" class="sidebar" data-bs-hidden="false">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link collapsed " href="{% url 'pos:reco' %}" style="font-size: 24px;">
-                
+                <a href="#" class="logo d-flex align-items-center">
+                    <img src="{% static 'img/intelliserveFinal2.png'%}" style="width: 100%;" alt="">
                 </a>
               </li>
             <li class="nav-item">
@@ -97,23 +97,24 @@
                                             <tbody>
 
                                                 <tr>
-                                                    <td class="col-2" style="vertical-align: middle;"> <img src="{{data.menuimage.url}}"
-                                                            class="img-preview rounded" alt=""></td>
+                                                    <!-- <td class="col-2" style="vertical-align: middle;"> <img src="{{data.menuimage.url}}"
+                                                            class="img-preview rounded" alt=""></td> -->
                                                     <td class="col-5">
                                                         <table class="table nested-table table-sm table-borderless p-0">
                                                             <tbody>
                                                                 <tr>
                                                                     <!--para sa main menu-->
-                                                                    <td class="main-menu">
+                                                                    <td class="main-menu text-center" style="vertical-align: middle;
+                                                                    text-align: center; justify-content: center; ">
                                                                         <strong>{{cart.buyName}}</strong></td>
                                                                     <td class="main-menu-price">
                                                                         <strong>&#8369 {{cart.buyPrice}}</strong></td>
                                                                 </tr>
                                                              
                                                                 <!--para sa addons-->
-                                                                <tr>
+                                                                <!-- <tr>
                                                                     <td class="td-text">Add Ons:</td>
-                                                                </tr>
+                                                                </tr> -->
                                                                 
                                                                 {% if cart.buyAddOns1 %}
                                                                     <tr>
@@ -160,8 +161,8 @@
                                                     </td>
                                                     <td class="col-2" style="vertical-align: middle;">
                                                         <div class="input-group my-auto">
-                                                            <input  class="form-control" style="text-align: center;"
-                                                                value="{{cart.buyQuantityMenu}}" readonly>
+                                                            <input  class="form-control" style="text-align: center; border: none;"
+                                                                value="{{cart.buyQuantityMenu}}" readonly> 
                                                         </div>
                                                     </td>
                                                     <td class="col-2 text-center total-price"
@@ -172,8 +173,8 @@
                                                 
 
 
-                                                        <button class="btn btn-sm delete-btn" data-bs-toggle="modal" data-bs-target="#deletemodal"
-                                                        data-menuid="{{ cart.id }}"><i class='bx bx-trash'></i></button>
+                                                        <button class="btn btn-sm delete-btn border-0" data-bs-toggle="modal" data-bs-target="#deletemodal"
+                                                        data-menuid="{{ cart.id }}"><i class='bx bx-trash delete-btn-cart' ></i></button>
                                                             <!--Delete function to delfete the menu in the cart-->
 
                                                             <!-- Modal -->
@@ -197,7 +198,7 @@
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                                             <!-- Pass the menu item ID to the delete function -->
-                                                                            <a href="{% url 'pos:delete_menu_from_cart' cart.id %}" class="btn btn-primary">Delete</a>
+                                                                            <a href="{% url 'pos:delete_menu_from_cart' cart.id %}" class="btn" style="background-color: #ff6000; color:white">Delete</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -225,7 +226,7 @@
                 {%endfor%}
 
 
-
+<!-- 
                 <div class="col-4">
                     <div class="card">
                         <div class="card-body">
@@ -299,10 +300,83 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
            
- 
+                <div class="col-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <form action="{% url 'pos:update_values' %}" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <input type="hidden" name="buyItem_{{ cart.id }}_buyOrBought" value="False">
+                          <h6>Order Method</h6>
+                          <div class="d-flex px-2 justify-content-center py-2 mb-2">
+                            <div class="btn-group mx-2">
+                              <input type="radio" class="btn-check" name="DineIn_Out" id="btn-check-4" autocomplete="off" value="IN" {% if buyitemforms.DineIn_Out.name == "IN" %}checked{% endif %} required>
+                              <label class="btn btn-outline-success" for="btn-check-4">Dine In</label>
+                            </div>
+                            <div class="btn-group mx-2">
+                              <input type="radio" class="btn-check" name="DineIn_Out" id="btn-check-3" autocomplete="off" value="OUT" {% if buyitemforms.DineIn_Out.name == "OUT" %}checked{% endif %} required>
+                              <label class="btn btn-outline-success" for="btn-check-3">Takeout</label>
+                            </div>
+                          </div>
+                  
+                          <h6>Payment Method</h6>
+                          <div class="d-flex px-2 justify-content-center  py-2  mb-2">
+                            <div class="btn-group mx-2">
+                              <input type="radio" class="btn-check" name="payment_method" id="btn-check-5" autocomplete="off" value="cash" {% if buyitemforms.payment_method.name == "cash" %}checked{% endif %} required>
+                              <label class="btn btn-outline-success" for="btn-check-5">Cash</label>
+                            </div>
+                            <div class="btn-group mx-2">
+                              <input type="radio" class="btn-check" name="payment_method" id="btn-check-6" autocomplete="off" value="gcash" {% if buyitemforms.payment_method.name == "gcash" %}checked{% endif %} required>
+                              <label class="btn btn-outline-success" for="btn-check-6">GCash</label>
+                            </div>
+                          </div>
+                  
+                          <div id="gcash-image" style="display: none;">
+                            <img src="{% static 'img/qr code.png' %}" alt="GCash Image" style="max-width: 100%; height: auto;">
+                          </div>
+                  
+                          <h6>Are you PWD/Senior?</h6>
+                          <div class="d-flex px-2 justify-content-center py-2  mb-2">
+                            <div class="btn-group mx-2">
+                              <input type="radio" class="btn-check" name="PWD_discount" id="btn-check-pwd" autocomplete="off" value="yes" {% if buyitemforms.PWD_discount.name == "yes" %}checked{% endif %} required>
+                              <label class="btn btn-outline-success" for="btn-check-pwd">Yes</label>
+                            </div>
+                            <div class="btn-group mx-2">
+                              <input type="radio" class="btn-check" name="PWD_discount" id="btn-check-not-pwd" autocomplete="off" value="no" {% if buyitemforms.PWD_discount == "no" %}checked{% endif %} required>
+                              <label class="btn btn-outline-success" for="btn-check-not-pwd">No</label>
+                            </div>
+                          </div>
+                  
+                          <div id="tin-input" style="display: none;">
+                            <br>
+                            <input type="text" class="form-control" id="tin_number" name="PWD_Id" maxlength="12" placeholder="PWD ID" {% if buyitemforms.PWD_Id == "yes" %}required{% endif %}>
+                          </div>
+                  
+                          <div>
+                            <div class="total-amount mt-4">
+                              <div class="d-flex justify-content-between">
+                                <div class="col-6">
+                                    <h5 class="my-auto"><strong>Total Amount</strong></h5>
+                                </div>
+                               
+                                <div class="col-6">
+                                    <input name="AllPayment" type="text" class="form-control bg-transparent border-0 fw-bold fs-3 text-end" value="{{ total_price }}" readonly>
+                                </div>
+                              
+                              </div>
+                            </div>
+                  
+                            <div class="text-center col-12 d-grid">
+                              <button type="submit" class="btn place-order-btn btn-success">Place Order</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  
            
             <!-- list of menus in the cart  -->
 

@@ -52,7 +52,7 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="{% static 'img/profile.png'%}" alt="Profile" class="rounded-circle">
+                        <!-- <img src="{% static 'img/profile.png'%}" alt="Profile" class="rounded-circle"> -->
                         <span class="d-none d-md-block dropdown-toggle ps-2">Cashier</span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -116,7 +116,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="col-4" style="vertical-align: middle;">
-                                                <h4 class="text-center"><strong>Order No. {{ cart.orderNumber }}</strong></h4>
+                                                <h4 class="text-center my-auto"><strong>Order # {{ cart.orderNumber }}</strong></h4>
                                                 <br>
                                             </td>
     
@@ -128,15 +128,20 @@
     
                                                     <div class="total-amount mt-4">
                                                         <div class="d-flex justify-content-between">
-                                                            <label for="tendered-payment">Tendered Payment:</label>
-                                                            <input id="tendered-payment" name="tendered_payment"
+                                                            <div class="col-4 my-auto">
+                                                                <label for="tendered-payment" class="text-center my-auto">Tendered Payment</label>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <input id="tendered-payment" name="tendered_payment"
                                                                 step="0.01" type="number"
                                                                 class="form-control text-end ms-auto" inputmode="numeric"
                                                                 pattern="[0-9]*" required>
+                                                            </div>
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="total-amount mt-4">
-                                                        <div class="d-flex justify-content-between">
+                                                        <div class="d-flex justify-content-between mb-2">
                                                             <strong>Total Amount: ₱ <span id="totalAmount">{{cart.AllPayment|floatformat:2 }}</span></strong>
         
                                                             <script>
@@ -176,11 +181,16 @@
                                                 </script>
                                             </td>
     
-                                            <td class="col-1" style="vertical-align: middle;">
+                                            <td class="col-1" style="vertical-align: middle; text-align: center;">
                                                 <form action="{% url 'pos:delete_order' cart.pk %}" method="post">
                                                     {% csrf_token %}
-                                                    <button class="btn btn-sm delete-btn" type="submit"><i
-                                                            class='bx bx-trash'></i></button>
+                                                    <button class="btn btn-sm delete-btn border-0 mx-auto" type="submit"><i
+                                                            class='bx bx-trash delete-btn-cart' style="
+                                                                font-size: 24px;
+                                                                color: #FF6000;
+                                                                border: none;
+                                                              
+                                                              "></i></button>
                                                 </form>
                                             </td>
                                         </tr>

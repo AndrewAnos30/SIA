@@ -16,7 +16,7 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
       rel="stylesheet">
     <!-- favcon -->
-    <link href="/static/img/logo.png" rel="icon">
+    <link href="/static/img/intelliserveFinal.png" rel="icon">
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -52,9 +52,9 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
           <li class="nav-item">
-            <a class="nav-link collapsed " href="{% url 'pos:reco' %}" style="font-size: 24px;">
-            <strong>Intelli<span style="color: #FF6000;">Serve</span></strong>
-            </a>
+            <a href="#" class="logo d-flex align-items-center">
+              <img src="{% static 'img/intelliserveFinal2.png'%}" style="width: 100%;" alt="">
+          </a>
           </li>
 
         <li class="nav-item">
@@ -71,22 +71,14 @@
         </ul>
       </aside><!-- End Sidebar-->
 
-      <main id="main" class="main">
+    
         <section class="section menu rounded">
-          <div class="container d-flex flex-column ">
-            <div class="position-relative">
-              <div class="row">
-                <div class="col">
-                  
-                </div>
-              </div>
-              <img src="{%static 'img/home.png' %}" alt="Home" class="header-image" style="height: 550px; width: 100%; object-fit: cover;">
-            
-              <button id="openChatModal" class="sample position-absolute top-50 start-50 translate-middle" style="margin-top: 100px; background-color: #FF6000; font-size: larger; height: 80px; padding-left: 20px;  padding-right: 20px; border-radius: 10px; border: none; color: #fefefe; font-weight: bolder;">CHAT NOW!</button>
-            </section>
-              </div>
-            </div>
-          </div>
+         
+          <button id="openChatModal">
+            <div class="chat-icon">
+           <img src="{% static 'img/chatbot.png'%}" alt="Chat Bot">
+         </div>
+         </button>
           
           <!-- Rest of your code... -->
       
@@ -94,21 +86,21 @@
           <div id="chatModal" class="modal" tabindex="-1" role="dialog">
             <div class="modal-content">
               <span class="close">&times;</span>
-              <h2>Ask AI for Recommendation</h2>
+              <!-- <h2>Ask AI for Recommendation</h2> -->
               <div id="chatMessages"></div>
               <form id="chatForm">
                 <input type="text" id="messageInput" placeholder="Type your message..." />
-                <button type="submit"><i class='bx bx-send fs-3' style="color: #FF6000;"></i></button>
+                <button type="submit"><i class='bx bx-send fs-3' style="color: #ffffff;"></i></button>
               </form>
             </div>
           </div>
         </section>
-      </main>
+     
       
  <!-- FOODS -->
       <div class="tab-content rounded">
-        <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
-          <div class="row row-cols-5 g-2">          
+        <div class="tab-content p-4" style="margin-left: 200px;" >
+          <div class="row row-cols-5 ">          
             {% for row in drinks %}
             {% if row.menucategory.categorytype == 'FOOD' and forloop.counter0 < 5 %}
             <div class="col"> 
@@ -141,8 +133,8 @@
       </div>
 <!--  DRINKS -->
       <div class="tab-content rounded">
-        <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
-          <div class="row row-cols-5 g-2">          
+        <div class="tab-content p-4" style="margin-left: 200px;" >
+          <div class="row row-cols-5 ">          
             {% for row in menuDrinks %}
             {% if row.menucategory.categorytype == 'DRINKS' and forloop.counter0 < 5 %}
             <div class="col"> 
@@ -176,8 +168,8 @@
  
     <!--  top sales -->  
       <div class="tab-content rounded">
-        <div class="tab-content mt-4 p-4" style="margin-left: 200px;" >
-          <div class="row row-cols-5 g-2">          
+        <div class="tab-content  p-4" style="margin-left: 200px;" >
+          <div class="row row-cols-5 ">          
             {% for buyName, count in buyItems|dictsortreversed:"value" %}
             {% if forloop.counter0 < 5 %}
               {% for row in menuDrinks %}
@@ -214,8 +206,8 @@
       </div>
 
       <div class="tab-content rounded">
-        <div class="tab-content mt-4 p-4" style="margin-left: 200px;">
-          <div class="row row-cols-5 g-2">
+        <div class="tab-content p-4" style="margin-left: 200px;">
+          <div class="row row-cols-5">
             {% for item in buyitem %}
             {% if item.DoneOrder == True %}
                     <div class="col"> 
@@ -244,6 +236,7 @@
           </div>
         </div>
       </div>
+      
       
  
                       <style>
@@ -278,15 +271,15 @@
                       top: 0;
                       width: 100%;
                       height: 100%;
-                      overflow: auto;
+                  
                       background-color: rgba(0, 0, 0, 0.5);
                     }
 
                     .modal-content {
                       background-color: #fefefe;
                       margin: 10% auto;
-                      padding: 20px;
-                      border: 1px solid #888;
+                      padding: 5px;
+                      /* border: 1px solid #888; */
                      
                       width: 90%;
                       max-width: 600px;
@@ -297,6 +290,8 @@
                       float: right;
                       font-size: 28px;
                       font-weight: bold;
+                      align-self: flex-end;
+                      margin-right: 10px;
                     }
 
                     .close:hover,
@@ -309,36 +304,80 @@
                     h2 {
                       margin-top: 0;
                     }
-
                     #chatMessages {
-                      height: 200px;
-                      overflow-y: auto;
-                      margin-bottom: 10px;
-                      border: 1px solid #ccc;
-                      padding: 10px;
-                      border-radius: 10px;
-                    }
+  height: 200px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
 
-                    #chatForm {
-                      display: flex;
+#chatMessages::-webkit-scrollbar {
+  width: 8px;
+}
 
-                    }
+#chatMessages::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
 
-                    #messageInput {
-                      flex-grow: 1;
-                      margin-right: 10px;
-                      padding: 10px;
-                      border-radius: 10px;
-                      border: 1px solid #FF6000;
-                    }
+#chatMessages::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
-                    #chatForm button {
-                      border: none;
-                      background-color: none;
-                      padding: 6px 12px;
-                      border-radius: 10px;
-                    }
-                    
+#chatForm {
+  display: flex;
+}
+
+#messageInput {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background-color: #fff;
+  color: #333;
+  outline: none; /* Remove the outline when the input is focused */
+}
+
+#messageInput::placeholder {
+  color: #999; /* Adjust the placeholder text color */
+}
+
+#chatForm button {
+  border: none;
+  background-color: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  /* Add any desired styles for the button */
+  background-color: #FF6000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.user-message {
+  background-color:  #FF6000;
+  color: #fff;
+  margin-bottom: 10px;
+  align-self: flex-end;
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 30%;
+}
+
+.ai-message {
+  background-color: #e9ecef;
+  color: #212529;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+
+}
+
                     </style>
                     
     <footer id="footer" class="footer">
