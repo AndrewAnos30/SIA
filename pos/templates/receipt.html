@@ -1,8 +1,12 @@
 {%load static%}
 <!DOCTYPE html>
+
+
 <html>
 <head>
     <meta charset="UTF-8">
+    
+    <link href="/static/img/intelliserveFinal.png" rel="icon">
     <title>Receipt</title>
     <style>
         body {
@@ -17,7 +21,7 @@
         }
 
         #receiptBody {
-            max-width: 600px;
+            min-width: 400px;
             background-color: #fff;
             border: 1px solid #ccc;
             padding: 20px;
@@ -96,7 +100,7 @@
             <p>Phone: 123-456-7890</p>
         </div>
 
-        <h2>Items:</h2>
+        <h5>Items:</h5>
         <ul>
             {% for item in buy_items %}
                 <li>
@@ -109,9 +113,9 @@
             {% endfor %}
         </ul>
 
-        <h2>Total Amount: ₱ {{ total_amount }}</h2>
-        <h2>Tendered Payment: ₱ {{ tendered_payment }}</h2>
-        <h2>Change: ₱ {{ change }}</h2>
+        <h5>Total Amount: ₱ {{ total_amount }}</h5>
+        <h5>Tendered Payment: ₱ {{ tendered_payment }}</h5>
+        <h5>Change: ₱ {{ change }}</h5>
 
         <!-- Add any additional receipt details or formatting as needed -->
         <!-- ... -->
@@ -122,12 +126,16 @@
             <p>Website: www.example.com</p>
         </div>
 
-        <div class="footer">
+        <div class="footer mb-4">
             <p>Thank you for your purchase!</p>
         </div>
 
-        <button onclick="window.location.href='/Mcashier'">DONE</button>
-        <button class="print-button" onclick="window.print()">Print</button>
+        <div class="mt-3" style="margin-left: 300px;">
+            <button onclick="window.location.href='/Mcashier'" style="border-radius: 5px; background-color: #FF6000; color: white; padding: 10px; border: none;">Done</button>
+            <button   style="border-radius: 5px; background-color: #FF6000; border: none; color: white; padding: 10px;" class="print-button"  onclick="window.print()">Print</button>
+       
+        </div>
+     
     </div>
 
 </body>

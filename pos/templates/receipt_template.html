@@ -107,7 +107,7 @@
 <body>
     <div id="receiptBody">
         <div class="logo">
-            <img src="your-logo.png" alt="Logo">
+            <img src="{% static 'img/intelliserveFinal2.png'%}" alt="Logo">
         </div>
 
 
@@ -129,17 +129,17 @@
             <strong>Items:</strong>
             {% for item in buy_items %}
             <li>
-                <i> <strong>({{ item.buyQuantityMenu }}) {{ item.buyName }} ₱{{ item.buyPrice|floatformat:2 }}</strong></i><br>
+                <i> <strong>({{ item.buyQuantityMenu }}) {{ item.buyName }}  ₱{{ item.buyPrice|floatformat:2 }}</strong></i><br>
                 <!-- Add other item details here -->
                 <ul>
                     {% if item.menuAOPrice1 != 0 %}
                     <li>{{ item.buyAddOns1 }} ₱{{ item.menuAOPrice1|floatformat:2 }}</li>
                     {% endif %}
                     {% if item.menuAOPrice2 != 0 %}
-                    <li>{{ item.buyAddOns2 }} ₱{{ item.menuAOPrice2|floatformat:2 }}</li>
+                    <li>{{ item.buyAddOns2 }}  ₱{{ item.menuAOPrice2|floatformat:2 }}</li>
                     {% endif %}
                     {% if item.menuAOPrice3 != 0 %}
-                    <li>{{ item.buyAddOns3 }} ₱{{ item.menuAOPrice3|floatformat:2 }}</li>
+                    <li>{{ item.buyAddOns3 }}  ₱{{ item.menuAOPrice3|floatformat:2 }}</li>
                     {% endif %}
                     {% if item.menuAOPrice4 != 0 %}
                     <li>{{ item.buyAddOns4 }} ₱{{ item.menuAOPrice4|floatformat:2 }}</li>
@@ -155,7 +155,7 @@
         </ul>
         
         <ul>
-            <p><strong>Total Add-ons: ₱ {{ total_add_ons|floatformat:2 }}</strong></p>
+            <p><strong>Total Add-ons:  ₱ {{ total_add_ons|floatformat:2 }}</strong></p>
             <p><strong>Subtotal: ₱ {{ total_buyitems|floatformat:2 }}</strong></p>
             {% if pwd_discount == 'yes' %}
             <p>VAT Sales: ₱ {{ vat_amount|floatformat:2 }}</p>
@@ -168,11 +168,11 @@
             {% endif %}
             <p>--------------------------------------------------------------</p>
             <p><strong>Total Amount: ₱ {{ total_payment|floatformat:2 }}</strong></p>
-            <p>Tendered Payment: ₱ {{ tendered_payment|floatformat:2 }}</p>
+            <p>Tendered Payment:  ₱ {{ tendered_payment|floatformat:2 }}</p>
             <p>--------------------------------------------------------------</p>
 
 
-            <h2><strong>Change: ₱ {{ change|floatformat:2 }}</strong></h2>
+            <h2><strong>Change:  ₱ {{ change|floatformat:2 }}</strong></h2>
         </ul>
         
         <p>--------------------------------------------------------------</p>
@@ -191,8 +191,8 @@
         </div>
 
         <div class="button-container">
-            <button id="doneButton" onclick="window.location.href='/cashier'">DONE</button>
-            <button class="print-button" onclick="window.print()">Print</button>
+            <button id="doneButton" style="border-radius: 5px; background-color: #FF6000; color: white; padding: 10px; border: none;" onclick="window.location.href='/cashier'">DONE</button>
+            <button class="print-button"  style="border-radius: 5px; background-color: #FF6000; border: none; color: white; padding: 10px;" onclick="window.print()">Print</button>
         </div>
     </div>
 

@@ -3,43 +3,48 @@
 
 {% block content %}
 
-<div class="col-8">
-    {% for cart in buyitem %}
-    {% if not cart.buyOrBought %}
-    <div class="d-block order-card">
-        <!-- Add code for the order card here -->
+<div class="col-12">
+    <div class="row g-1">
+        {% for cart in buyitem %}
+        {% if not cart.buyOrBought %}
+        <div class="d-block order-card">
+            <!-- Add code for the order card here -->
 
-        <div class="card mb-3 m-1">
-            <div class="row g-1">
+            <div class="card mb-3 m-1">
                 <div class="col-12">
                     <div class="card-body mb-0 p-0">
                         <table class="table table-responsive table-borderless mb-0 p-0">
                             <tbody>
                                 <tr>
-                                    <td class="col-2" style="vertical-align: middle;">
-                                        <h4><strong>Order No. {{ cart.orderNumber }}</strong></h4>
+                                    <td class="col-4" style="vertical-align: middle;">
+                                        <h4 class="text-center my-auto"><strong>Order # {{ cart.orderNumber }}</strong></h4>
                                         <br>
                                     </td>
-                                    <td class="col-2" style="vertical-align: middle;"></td>
-                                    <td class="col-2 text-center total-price" style="vertical-align: middle;">
-                                        <form action="{% url 'pos:Mupdate_cashier' %}" method="post"
+
+                                    <td class="col-4 text-center total-price" style="vertical-align: middle;">
+                                        <form action="{% url 'pos:update_cashier' %}" method="post"
                                             enctype="multipart/form-data" onsubmit="return validatePayment()">
                                             {% csrf_token %}
                                             <input type="hidden" name="item_id" value="{{ cart.id }}">
 
                                             <div class="total-amount mt-4">
                                                 <div class="d-flex justify-content-between">
-                                                    <strong>Tendered Payment</strong>
-                                                    <label for="tendered-payment">Tendered Payment:</label>
-                                                    <input id="tendered-payment" name="tendered_payment" step="0.01"
-                                                        type="number" class="form-control text-end ms-auto"
-                                                        inputmode="numeric" pattern="[0-9]*" required>
+                                                    <div class="col-4 my-auto">
+                                                        <label for="tendered-payment" class="text-center my-auto">Tendered Payment</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input id="tendered-payment" name="tendered_payment"
+                                                        step="0.01" type="number"
+                                                        class="form-control text-end ms-auto" inputmode="numeric"
+                                                        pattern="[0-9]*" required>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="total-amount mt-4">
-                                                <div class="d-flex justify-content-between">
+                                                <div class="d-flex justify-content-between mb-2">
                                                     <strong>Total Amount: ₱ <span id="totalAmount">{{cart.AllPayment|floatformat:2 }}</span></strong>
-                                                    
+
                                                     <script>
                                                         // Check if PWD_discount is yes
                                                         if (PWD_discount === 'yes') {
@@ -75,13 +80,18 @@
                                                 return true; // Proceed with form submission
                                             }
                                         </script>
-
                                     </td>
-                                    <td class="col-1" style="vertical-align: middle;">
-                                        <form action="{% url 'pos:Mdelete_order' cart.pk %}" method="post">
+
+                                    <td class="col-1" style="vertical-align: middle; text-align: center;">
+                                        <form action="{% url 'pos:delete_order' cart.pk %}" method="post">
                                             {% csrf_token %}
-                                            <button class="btn btn-sm delete-btn" type="submit"><i
-                                                    class='bx bx-trash'></i></button>
+                                            <button class="btn btn-sm delete-btn border-0 mx-auto" type="submit"><i
+                                                    class='bx bx-trash delete-btn-cart' style="
+                                                        font-size: 24px;
+                                                        color: #FF6000;
+                                                        border: none;
+                                                      
+                                                      "></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -91,9 +101,9 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
-    {% endif %}
-    {% endfor %}
 </div>
 
 

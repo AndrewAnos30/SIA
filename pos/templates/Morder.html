@@ -25,33 +25,32 @@
             {% for cart in buyitem %}
             {% if cart.buyOrBought and not cart.DoneOrder %}
               <div class="row">
-                <div class="col-8">
+                <div class="col-12 my-auto">
                   <div class="d-block order-card">
                     <div class="card mb-3 m-1">
                       <div class="row g-1">
-                        <div class="col-12">
+                        <div class="col-12 my-auto">
                           <div class="card-body mb-0 p-0">
                             <table class="table table-responsive table-borderless mb-0 p-0">
                               <tbody>
                                 <tr>
-                                  <td class="col-2" style="vertical-align: middle;">
+                                  <!-- <td class="col-2" style="vertical-align: middle;">
                                     <img src="{{ cart.data.menuimage.url }}" class="img-preview rounded" alt="">
-                                  </td>
-                                  <td class="col-5">
+                                  </td> -->
+                                  <td class="col-5 my-auto">
                                     <table class="table nested-table table-sm table-borderless p-0">
-                                      <tbody>
+                                      <tbody class="my-auto">
                                         <tr>
-                                          <td>
+                                          <td class="my-auto">
                                             <strong>{{ cart.orderNumber }}</strong>
                                           </td>
-                                          <td>{{ cart.buySize }}</td>
                                         </tr>
                                         <tr>
                                           <td class="main-menu">
                                             <strong>{{ cart.buyName }}</strong>
                                           </td>
                                           <td class="main-menu-price">
-                                            <strong>&#8369; {{ cart.buyPrice }}</td></strong>
+                                            <strong>&#8369; {{ cart.buyPrice }}</strong>
                                           </td>
                                         </tr>
                                         <tr>
@@ -72,7 +71,6 @@
                                             <td class="td-text">&#8369; {{ cart.menuAOPrice3 }}</td>
                                           {% endif %}
                                         </tr>
-                                        
                                         <tr>
                                           {% if cart.buyAddOns4 %}
                                             <td class="td-text">{{ cart.buyAddOns4 }}</td>
@@ -90,8 +88,8 @@
                                     </table>
                                   </td>
                                   <td class="col-2" style="vertical-align: middle;">
-                                    <div class="input-group my-auto">
-                                      <input class="form-control" style="text-align: center;" value="{{ cart.buyQuantityMenu }}"
+                                    <div class="input-group my-auto border-0">
+                                      <input class="form-control border-0" style="text-align: center;" value="{{ cart.buyQuantityMenu }}"
                                         readonly>
                                     </div>
                                   </td>
@@ -99,13 +97,18 @@
                                     <h4><strong>&#8369; {{ cart.AllPayment }}</strong></h4>
                                   </td>
                                   <td class="col-1" style="vertical-align: middle;">
-                                    <form action="{% url 'pos:Morder' %}" method="post">
-                                      {% csrf_token %}
-                                      <input type="hidden" name="item_id" value="{{ cart.pk }}">
-                                      <button class="btn btn-sm delete-btn" type="submit"><i class='bx bx-trash'></i></button>
-                                  </form>
-                                      {% url 'pos:Mupdate_done_order' cart.pk as Mupdate_done_order_url %}
-                                      <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{{ Mupdate_done_order_url }}'">OK</button>                                               </tr>
+                                    <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
+                                      data-bs-target="#deletemodal"><i class='bx bx-trash' style="
+                                      font-size: 24px;
+                                      color: #FF6000;
+                                      border: none;
+                                    
+                                    "></i></button>
+                                    {% url 'pos:update_done_order' cart.pk as update_done_order_url %}
+                                    <button type="button" class="btn btn-sm" style="background-color: #FF6000; color: white;"
+                                      onclick="location.href='{{ update_done_order_url }}'">OK</button>
+                                  </td>
+                                </tr>
                               </tbody>
                             </table>
                           </div>
@@ -122,7 +125,7 @@
           </div>
 
         </div>
-      </div><!-- End -->
+      </div><!-- End --><!-- End -->
     </div>
   </section>
 
