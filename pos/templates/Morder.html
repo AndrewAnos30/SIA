@@ -97,13 +97,7 @@
                                     <h4><strong>&#8369; {{ cart.AllPayment }}</strong></h4>
                                   </td>
                                   <td class="col-1" style="vertical-align: middle;">
-                                    <button class="btn btn-sm delete-btn" data-bs-toggle="modal"
-                                      data-bs-target="#deletemodal"><i class='bx bx-trash' style="
-                                      font-size: 24px;
-                                      color: #FF6000;
-                                      border: none;
-                                    
-                                    "></i></button>
+                               
                                     {% url 'pos:update_done_order' cart.pk as update_done_order_url %}
                                     <button type="button" class="btn btn-sm" style="background-color: #FF6000; color: white;"
                                       onclick="location.href='{{ update_done_order_url }}'">OK</button>

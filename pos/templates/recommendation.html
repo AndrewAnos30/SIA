@@ -235,7 +235,6 @@
             {% if item.DoneOrder == True %}
                     <div class="col"> 
                       <div class="card">
-                        <img src="{{ row.menuimage.url }}" class="card-img-top" alt="..." style="height:150px; width:100%; object-fit: cover;">
                         <div class="card-body">
                           <div class="row">
                             <div class="col-12">
@@ -469,9 +468,11 @@ function processUserInput(userInput) {
   let aiResponse = "";
 
   if (userInput.toLowerCase().includes("cheapest product")) {
-    aiResponse = "AI response: The price range for the cheapest product is 500 pesos ";
+    aiResponse = "AI response: The price range for the cheapest product is 90 pesos ";
   } else if (userInput.toLowerCase().includes("best sales")) {
-    aiResponse = "AI response: The best sales are on BEEF products.";
+    aiResponse = "AI response: The best sales are on FRAPPE products.";
+  } else if (userInput.toLowerCase().includes("cheapest product")) {
+    aiResponse = "AI response: The cheapest product is Caramel Macchiato.";
   } else {
     aiResponse = "AI response: Sorry, I don't have information on that specific query.";
   }

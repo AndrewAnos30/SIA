@@ -22,7 +22,7 @@
                                     </td>
 
                                     <td class="col-4 text-center total-price" style="vertical-align: middle;">
-                                        <form action="{% url 'pos:update_cashier' %}" method="post"
+                                        <form action="{% url 'pos:Mupdate_cashier' %}" method="post"
                                             enctype="multipart/form-data" onsubmit="return validatePayment()">
                                             {% csrf_token %}
                                             <input type="hidden" name="item_id" value="{{ cart.id }}">
